@@ -11,7 +11,7 @@ import dateutil.parser
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.code_and_amount import CodeAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -34,8 +34,8 @@ class Form1041K1(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,7 +53,7 @@ class Form1041K1(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         final_k_1 (bool): Final K-1
         amended_k_1 (bool): Amended K-1
@@ -86,10 +86,8 @@ class Form1041K1(object):
         fiduciary (TaxParty): Box C, Fiduciary's name and address
         amt_adjustments (List[CodeAndAmount]): Box 12, Alternative minimum tax
             adjustment
-        credits (List[CodeAndAmount]): Box 15, Credits
+        credits (List[CodeAndAmount]): Box 13, Credits and credit recapture
         other_info (List[CodeAndAmount]): Box 14, Other information
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -217,8 +215,7 @@ class Form1041K1(object):
                  fiduciary=APIHelper.SKIP,
                  amt_adjustments=APIHelper.SKIP,
                  credits=APIHelper.SKIP,
-                 other_info=APIHelper.SKIP,
-                 additional_properties=None):
+                 other_info=APIHelper.SKIP):
         """Constructor for the Form1041K1 class"""
 
         # Initialize members of the class
@@ -301,11 +298,6 @@ class Form1041K1(object):
         if other_info is not APIHelper.SKIP:
             self.other_info = other_info 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -342,7 +334,7 @@ class Form1041K1(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         final_k_1 = dictionary.get("finalK1") if "finalK1" in dictionary.keys() else APIHelper.SKIP
@@ -392,9 +384,6 @@ class Form1041K1(object):
             other_info = [CodeAndAmount.from_dictionary(x) for x in dictionary.get('otherInfo')]
         else:
             other_info = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -434,8 +423,7 @@ class Form1041K1(object):
                    fiduciary,
                    amt_adjustments,
                    credits,
-                   other_info,
-                   additional_properties)
+                   other_info)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -477,8 +465,7 @@ class Form1041K1(object):
                 f'fiduciary={(self.fiduciary if hasattr(self, "fiduciary") else None)!r}, '
                 f'amt_adjustments={(self.amt_adjustments if hasattr(self, "amt_adjustments") else None)!r}, '
                 f'credits={(self.credits if hasattr(self, "credits") else None)!r}, '
-                f'other_info={(self.other_info if hasattr(self, "other_info") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'other_info={(self.other_info if hasattr(self, "other_info") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -520,5 +507,4 @@ class Form1041K1(object):
                 f'fiduciary={(self.fiduciary if hasattr(self, "fiduciary") else None)!s}, '
                 f'amt_adjustments={(self.amt_adjustments if hasattr(self, "amt_adjustments") else None)!s}, '
                 f'credits={(self.credits if hasattr(self, "credits") else None)!s}, '
-                f'other_info={(self.other_info if hasattr(self, "other_info") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'other_info={(self.other_info if hasattr(self, "other_info") else None)!s})')

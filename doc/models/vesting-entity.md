@@ -3,8 +3,6 @@
 
 Provides the past, present, and future vesting schedule and percentages.
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `VestingEntity`
@@ -23,7 +21,6 @@ Provides the past, present, and future vesting schedule and percentages.
 | `un_vested_balance` | `float` | Optional | Unvested balance |
 | `vested_quantity` | `float` | Optional | Vested qualtity |
 | `un_vested_quantity` | `float` | Optional | Unvested quantity |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -33,11 +30,7 @@ Provides the past, present, and future vesting schedule and percentages.
   "symbol": "symbol0",
   "strikePrice": 216.86,
   "vestingPercentage": 250.28,
-  "otherVestAmount": 111.28,
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  "otherVestAmount": 111.28
 }
 ```
 

@@ -12,7 +12,7 @@ import unittest
 from tests.http_response_catcher import HttpResponseCatcher
 from akoyaapisv240.configuration import Configuration, Environment
 from akoyaapisv240.akoyaapisv_240_client import Akoyaapisv240Client
-from akoyaapisv240.http.auth.oauth_2 import AuthorizationCodeAuthCredentials
+from akoyaapisv240.http.auth.o_auth_2 import AuthorizationCodeAuthCredentials
 
 
 class ControllerTestBase(unittest.TestCase):
@@ -34,20 +34,20 @@ class ControllerTestBase(unittest.TestCase):
     @staticmethod
     def create_configuration():
         environment = os.getenv('AKOYAAPISV_240_ENVIRONMENT')
-        oauth_client_id = os.getenv('AKOYAAPISV_240_OAUTH_CLIENT_ID')
-        oauth_client_secret = os.getenv('AKOYAAPISV_240_OAUTH_CLIENT_SECRET')
-        oauth_redirect_uri = os.getenv('AKOYAAPISV_240_OAUTH_REDIRECT_URI')
+        o_auth_client_id = os.getenv('AKOYAAPISV_240_O_AUTH_CLIENT_ID')
+        o_auth_client_secret = os.getenv('AKOYAAPISV_240_O_AUTH_CLIENT_SECRET')
+        o_auth_redirect_uri = os.getenv('AKOYAAPISV_240_O_AUTH_REDIRECT_URI')
 
         if environment is not None:
             environment = Environment[environment.upper()]
         authorization_code_auth_credentials=None
-        if (oauth_client_id is not None
-                and oauth_client_secret is not None
-                and oauth_redirect_uri is not None):
+        if (o_auth_client_id is not None
+                and o_auth_client_secret is not None
+                and o_auth_redirect_uri is not None):
             authorization_code_auth_credentials=AuthorizationCodeAuthCredentials(
-                oauth_client_id=oauth_client_id,
-                oauth_client_secret=oauth_client_secret,
-                oauth_redirect_uri=oauth_redirect_uri)
+                o_auth_client_id=o_auth_client_id,
+                o_auth_client_secret=o_auth_client_secret,
+                o_auth_redirect_uri=o_auth_redirect_uri)
 
 
         config = Configuration(http_call_back=HttpResponseCatcher())

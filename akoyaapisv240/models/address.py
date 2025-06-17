@@ -20,6 +20,7 @@ class Address(object):
         line_2 (str): Address line 2
         line_3 (str): Address line 3
         city (str): City
+        state (str): State
         region (str): State, Province, Territory, Canton or Prefecture. From
             [Universal Postal
             Union](https://www.upu.int/en/Postal-Solutions/Programmes-Services/
@@ -29,9 +30,7 @@ class Address(object):
             _International-Addressing-Standards.pdf). For U.S. addresses can
             be 2-character code from '#/components/schemas/StateCode'
         postal_code (str): Postal code
-        country (Iso3166CountryCode): Country code
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        country (ISO3166CountryCode4Enum): Country code
 
     """
 
@@ -41,6 +40,7 @@ class Address(object):
         "line_2": 'line2',
         "line_3": 'line3',
         "city": 'city',
+        "state": 'state',
         "region": 'region',
         "postal_code": 'postalCode',
         "country": 'country'
@@ -51,6 +51,7 @@ class Address(object):
         'line_2',
         'line_3',
         'city',
+        'state',
         'region',
         'postal_code',
         'country',
@@ -61,10 +62,10 @@ class Address(object):
                  line_2=APIHelper.SKIP,
                  line_3=APIHelper.SKIP,
                  city=APIHelper.SKIP,
+                 state=APIHelper.SKIP,
                  region=APIHelper.SKIP,
                  postal_code=APIHelper.SKIP,
-                 country=APIHelper.SKIP,
-                 additional_properties=None):
+                 country=APIHelper.SKIP):
         """Constructor for the Address class"""
 
         # Initialize members of the class
@@ -76,17 +77,14 @@ class Address(object):
             self.line_3 = line_3 
         if city is not APIHelper.SKIP:
             self.city = city 
+        if state is not APIHelper.SKIP:
+            self.state = state 
         if region is not APIHelper.SKIP:
             self.region = region 
         if postal_code is not APIHelper.SKIP:
             self.postal_code = postal_code 
         if country is not APIHelper.SKIP:
             self.country = country 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -111,21 +109,19 @@ class Address(object):
         line_2 = dictionary.get("line2") if dictionary.get("line2") else APIHelper.SKIP
         line_3 = dictionary.get("line3") if dictionary.get("line3") else APIHelper.SKIP
         city = dictionary.get("city") if dictionary.get("city") else APIHelper.SKIP
+        state = dictionary.get("state") if dictionary.get("state") else APIHelper.SKIP
         region = dictionary.get("region") if dictionary.get("region") else APIHelper.SKIP
         postal_code = dictionary.get("postalCode") if dictionary.get("postalCode") else APIHelper.SKIP
         country = dictionary.get("country") if dictionary.get("country") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(line_1,
                    line_2,
                    line_3,
                    city,
+                   state,
                    region,
                    postal_code,
-                   country,
-                   additional_properties)
+                   country)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -133,10 +129,10 @@ class Address(object):
                 f'line_2={(self.line_2 if hasattr(self, "line_2") else None)!r}, '
                 f'line_3={(self.line_3 if hasattr(self, "line_3") else None)!r}, '
                 f'city={(self.city if hasattr(self, "city") else None)!r}, '
+                f'state={(self.state if hasattr(self, "state") else None)!r}, '
                 f'region={(self.region if hasattr(self, "region") else None)!r}, '
                 f'postal_code={(self.postal_code if hasattr(self, "postal_code") else None)!r}, '
-                f'country={(self.country if hasattr(self, "country") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'country={(self.country if hasattr(self, "country") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -144,7 +140,7 @@ class Address(object):
                 f'line_2={(self.line_2 if hasattr(self, "line_2") else None)!s}, '
                 f'line_3={(self.line_3 if hasattr(self, "line_3") else None)!s}, '
                 f'city={(self.city if hasattr(self, "city") else None)!s}, '
+                f'state={(self.state if hasattr(self, "state") else None)!s}, '
                 f'region={(self.region if hasattr(self, "region") else None)!s}, '
                 f'postal_code={(self.postal_code if hasattr(self, "postal_code") else None)!s}, '
-                f'country={(self.country if hasattr(self, "country") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'country={(self.country if hasattr(self, "country") else None)!s})')

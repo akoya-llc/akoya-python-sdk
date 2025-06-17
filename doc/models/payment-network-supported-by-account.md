@@ -3,8 +3,6 @@
 
 This provides details required to execute a transaction against the account within the payment network
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `PaymentNetworkSupportedByAccount`
@@ -19,7 +17,6 @@ This provides details required to execute a transaction against the account with
 | `mtype` | `str` | Optional | Type of payment network |
 | `transfer_in` | `bool` | Optional | Can transfer funds to the account using this information |
 | `transfer_out` | `bool` | Optional | Can transfer funds from the account using this information |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -29,11 +26,7 @@ This provides details required to execute a transaction against the account with
   "identifier": "identifier2",
   "identifierType": "identifierType4",
   "type": "type0",
-  "transferIn": false,
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  "transferIn": false
 }
 ```
 

@@ -33,8 +33,6 @@ class Name(object):
         email (List[str]): An array of the end-user's electronic mail addresses
         accounts (List[AccountRelationship]): List of accounts related to this
             end-user
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -75,8 +73,7 @@ class Name(object):
                  addresses=APIHelper.SKIP,
                  telephones=APIHelper.SKIP,
                  email=APIHelper.SKIP,
-                 accounts=APIHelper.SKIP,
-                 additional_properties=None):
+                 accounts=APIHelper.SKIP):
         """Constructor for the Name class"""
 
         # Initialize members of the class
@@ -100,11 +97,6 @@ class Name(object):
             self.email = email 
         if accounts is not APIHelper.SKIP:
             self.accounts = accounts 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -147,9 +139,6 @@ class Name(object):
             accounts = [AccountRelationship.from_dictionary(x) for x in dictionary.get('accounts')]
         else:
             accounts = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(first,
                    middle,
@@ -160,8 +149,7 @@ class Name(object):
                    addresses,
                    telephones,
                    email,
-                   accounts,
-                   additional_properties)
+                   accounts)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -174,8 +162,7 @@ class Name(object):
                 f'addresses={(self.addresses if hasattr(self, "addresses") else None)!r}, '
                 f'telephones={(self.telephones if hasattr(self, "telephones") else None)!r}, '
                 f'email={(self.email if hasattr(self, "email") else None)!r}, '
-                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -188,5 +175,4 @@ class Name(object):
                 f'addresses={(self.addresses if hasattr(self, "addresses") else None)!s}, '
                 f'telephones={(self.telephones if hasattr(self, "telephones") else None)!s}, '
                 f'email={(self.email if hasattr(self, "email") else None)!s}, '
-                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!s})')

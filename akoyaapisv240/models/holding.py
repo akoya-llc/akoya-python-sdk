@@ -17,10 +17,8 @@ class Holding(object):
     Attributes:
         holding_id (str): Long term persistent identity of the holding
         security_id (str): Unique identifier of the security.
-        security_id_type (SecurityIdType): Security identifier type
+        security_id_type (SecurityIdTypeEnum): Security identifier type
         tax_lots (List[Items]): Breakdown by tax lot.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -43,8 +41,7 @@ class Holding(object):
                  holding_id=APIHelper.SKIP,
                  security_id=APIHelper.SKIP,
                  security_id_type=APIHelper.SKIP,
-                 tax_lots=APIHelper.SKIP,
-                 additional_properties=None):
+                 tax_lots=APIHelper.SKIP):
         """Constructor for the Holding class"""
 
         # Initialize members of the class
@@ -56,11 +53,6 @@ class Holding(object):
             self.security_id_type = security_id_type 
         if tax_lots is not APIHelper.SKIP:
             self.tax_lots = tax_lots 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -89,28 +81,22 @@ class Holding(object):
             tax_lots = [Items.from_dictionary(x) for x in dictionary.get('taxLots')]
         else:
             tax_lots = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(holding_id,
                    security_id,
                    security_id_type,
-                   tax_lots,
-                   additional_properties)
+                   tax_lots)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'holding_id={(self.holding_id if hasattr(self, "holding_id") else None)!r}, '
                 f'security_id={(self.security_id if hasattr(self, "security_id") else None)!r}, '
                 f'security_id_type={(self.security_id_type if hasattr(self, "security_id_type") else None)!r}, '
-                f'tax_lots={(self.tax_lots if hasattr(self, "tax_lots") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'tax_lots={(self.tax_lots if hasattr(self, "tax_lots") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'holding_id={(self.holding_id if hasattr(self, "holding_id") else None)!s}, '
                 f'security_id={(self.security_id if hasattr(self, "security_id") else None)!s}, '
                 f'security_id_type={(self.security_id_type if hasattr(self, "security_id_type") else None)!s}, '
-                f'tax_lots={(self.tax_lots if hasattr(self, "tax_lots") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'tax_lots={(self.tax_lots if hasattr(self, "tax_lots") else None)!s})')

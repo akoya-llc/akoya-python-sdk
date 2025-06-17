@@ -19,8 +19,6 @@ class StateTaxWithholding(object):
         tax_withheld (float): Amount of state income tax withheld
         tax_id (str): Filer's state tax id
         income (float): Income amount for state tax purposes
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -40,8 +38,7 @@ class StateTaxWithholding(object):
     def __init__(self,
                  tax_withheld=APIHelper.SKIP,
                  tax_id=APIHelper.SKIP,
-                 income=APIHelper.SKIP,
-                 additional_properties=None):
+                 income=APIHelper.SKIP):
         """Constructor for the StateTaxWithholding class"""
 
         # Initialize members of the class
@@ -51,11 +48,6 @@ class StateTaxWithholding(object):
             self.tax_id = tax_id 
         if income is not APIHelper.SKIP:
             self.income = income 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -79,25 +71,19 @@ class StateTaxWithholding(object):
         tax_withheld = dictionary.get("taxWithheld") if dictionary.get("taxWithheld") else APIHelper.SKIP
         tax_id = dictionary.get("taxId") if dictionary.get("taxId") else APIHelper.SKIP
         income = dictionary.get("income") if dictionary.get("income") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_withheld,
                    tax_id,
-                   income,
-                   additional_properties)
+                   income)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'tax_withheld={(self.tax_withheld if hasattr(self, "tax_withheld") else None)!r}, '
                 f'tax_id={(self.tax_id if hasattr(self, "tax_id") else None)!r}, '
-                f'income={(self.income if hasattr(self, "income") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'income={(self.income if hasattr(self, "income") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'tax_withheld={(self.tax_withheld if hasattr(self, "tax_withheld") else None)!s}, '
                 f'tax_id={(self.tax_id if hasattr(self, "tax_id") else None)!s}, '
-                f'income={(self.income if hasattr(self, "income") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'income={(self.income if hasattr(self, "income") else None)!s})')

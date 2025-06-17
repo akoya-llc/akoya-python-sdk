@@ -21,10 +21,8 @@ class AccountHolderEntity(object):
         customer_id (str): Long-term persistent identity of the end-user. This
             identity must be unique to the owning institution
         name (Name): The end-user's name
-        relationship (AccountHolderRelationship): Customer's relationship to
-            the account
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        relationship (AccountHolderEntityRelationshipEnum): Customer's
+            relationship to the account
 
     """
 
@@ -44,8 +42,7 @@ class AccountHolderEntity(object):
     def __init__(self,
                  customer_id=APIHelper.SKIP,
                  name=APIHelper.SKIP,
-                 relationship=APIHelper.SKIP,
-                 additional_properties=None):
+                 relationship=APIHelper.SKIP):
         """Constructor for the AccountHolderEntity class"""
 
         # Initialize members of the class
@@ -55,11 +52,6 @@ class AccountHolderEntity(object):
             self.name = name 
         if relationship is not APIHelper.SKIP:
             self.relationship = relationship 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -83,25 +75,19 @@ class AccountHolderEntity(object):
         customer_id = dictionary.get("customerId") if dictionary.get("customerId") else APIHelper.SKIP
         name = Name.from_dictionary(dictionary.get('name')) if 'name' in dictionary.keys() else APIHelper.SKIP
         relationship = dictionary.get("relationship") if dictionary.get("relationship") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(customer_id,
                    name,
-                   relationship,
-                   additional_properties)
+                   relationship)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'customer_id={(self.customer_id if hasattr(self, "customer_id") else None)!r}, '
                 f'name={(self.name if hasattr(self, "name") else None)!r}, '
-                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'customer_id={(self.customer_id if hasattr(self, "customer_id") else None)!s}, '
                 f'name={(self.name if hasattr(self, "name") else None)!s}, '
-                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!s})')

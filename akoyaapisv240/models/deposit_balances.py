@@ -35,14 +35,14 @@ class DepositBalances(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -61,8 +61,6 @@ class DepositBalances(object):
         available_balance (float): Balance of funds available for use
         interest_ytd (float): YTD Interest
         current_balance (float): Balance of funds in account
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -157,8 +155,7 @@ class DepositBalances(object):
                  opening_day_balance=APIHelper.SKIP,
                  available_balance=APIHelper.SKIP,
                  interest_ytd=APIHelper.SKIP,
-                 current_balance=APIHelper.SKIP,
-                 additional_properties=None):
+                 current_balance=APIHelper.SKIP):
         """Constructor for the DepositBalances class"""
 
         # Initialize members of the class
@@ -219,11 +216,6 @@ class DepositBalances(object):
         if current_balance is not APIHelper.SKIP:
             self.current_balance = current_balance 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -275,9 +267,6 @@ class DepositBalances(object):
         available_balance = dictionary.get("availableBalance") if dictionary.get("availableBalance") else APIHelper.SKIP
         interest_ytd = dictionary.get("interestYtd") if dictionary.get("interestYtd") else APIHelper.SKIP
         current_balance = dictionary.get("currentBalance") if dictionary.get("currentBalance") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -306,8 +295,7 @@ class DepositBalances(object):
                    opening_day_balance,
                    available_balance,
                    interest_ytd,
-                   current_balance,
-                   additional_properties)
+                   current_balance)
 
     @classmethod
     def validate(cls, dictionary):
@@ -360,8 +348,7 @@ class DepositBalances(object):
                 f'opening_day_balance={(self.opening_day_balance if hasattr(self, "opening_day_balance") else None)!r}, '
                 f'available_balance={(self.available_balance if hasattr(self, "available_balance") else None)!r}, '
                 f'interest_ytd={(self.interest_ytd if hasattr(self, "interest_ytd") else None)!r}, '
-                f'current_balance={(self.current_balance if hasattr(self, "current_balance") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'current_balance={(self.current_balance if hasattr(self, "current_balance") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -392,5 +379,4 @@ class DepositBalances(object):
                 f'opening_day_balance={(self.opening_day_balance if hasattr(self, "opening_day_balance") else None)!s}, '
                 f'available_balance={(self.available_balance if hasattr(self, "available_balance") else None)!s}, '
                 f'interest_ytd={(self.interest_ytd if hasattr(self, "interest_ytd") else None)!s}, '
-                f'current_balance={(self.current_balance if hasattr(self, "current_balance") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'current_balance={(self.current_balance if hasattr(self, "current_balance") else None)!s})')

@@ -44,20 +44,21 @@ class AnInvestmentHolding(object):
             FI-specific asset class percentage breakdown
         fi_attributes (List[FiAttributeEntity]): The model property of type
             List[FiAttributeEntity].
-        held_in_account (HeldInAccount): Sub-account
+        held_in_account (HeldInAccountEnum): Sub-account
         holding_id (str): Long term persistent identity of the holding
         holding_name (str): Holding name or security name
-        holding_sub_type (HoldingSubType): The model property of type
-            HoldingSubType.
-        holding_type (HoldingType): The model property of type HoldingType.
-        inv_401_k_surce (Inv401KSurce): Source for money for this security.
+        holding_sub_type (HoldingSubTypeEnum): The model property of type
+            HoldingSubTypeEnum.
+        holding_type (HoldingTypeEnum): The model property of type
+            HoldingTypeEnum.
+        inv_401_k_surce (Inv401kSurceEnum): Source for money for this security.
         market_value (float): Market value at the time of data retrieved
         original_purchase_date (datetime): Date of original purchase
-        position_type (PositionType): LONG, SHORT.
+        position_type (PositionTypeEnum): LONG, SHORT.
         purchased_price (float): Price of holding at the time of purchase
         rate (float): For CDs, bonds, and other rate based holdings.
         security_id (str): Unique identifier of security
-        security_id_type (SecurityIdType): Security identifier type
+        security_id_type (SecurityIdTypeEnum): Security identifier type
         symbol (str): Ticker / Market symbol
         tax_lots (List[Items]): Breakdown by tax lot.
         units (float): Number of shares (with decimals).
@@ -73,8 +74,6 @@ class AnInvestmentHolding(object):
             security specific to the type of security
         debt_security (DebtSecurityEntity): Information about the debt
             security specific to the type of security
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -187,8 +186,7 @@ class AnInvestmentHolding(object):
                  other_security=APIHelper.SKIP,
                  stock_security=APIHelper.SKIP,
                  sweep_security=APIHelper.SKIP,
-                 debt_security=APIHelper.SKIP,
-                 additional_properties=None):
+                 debt_security=APIHelper.SKIP):
         """Constructor for the AnInvestmentHolding class"""
 
         # Initialize members of the class
@@ -261,11 +259,6 @@ class AnInvestmentHolding(object):
         if debt_security is not APIHelper.SKIP:
             self.debt_security = debt_security 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -335,9 +328,6 @@ class AnInvestmentHolding(object):
         stock_security = StockSecurityEntity.from_dictionary(dictionary.get('stockSecurity')) if 'stockSecurity' in dictionary.keys() else APIHelper.SKIP
         sweep_security = SweepSecurityEntity.from_dictionary(dictionary.get('sweepSecurity')) if 'sweepSecurity' in dictionary.keys() else APIHelper.SKIP
         debt_security = DebtSecurityEntity.from_dictionary(dictionary.get('debtSecurity')) if 'debtSecurity' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(asset_classes,
                    average_cost,
@@ -372,8 +362,7 @@ class AnInvestmentHolding(object):
                    other_security,
                    stock_security,
                    sweep_security,
-                   debt_security,
-                   additional_properties)
+                   debt_security)
 
     @classmethod
     def validate(cls, dictionary):
@@ -432,8 +421,7 @@ class AnInvestmentHolding(object):
                 f'other_security={(self.other_security if hasattr(self, "other_security") else None)!r}, '
                 f'stock_security={(self.stock_security if hasattr(self, "stock_security") else None)!r}, '
                 f'sweep_security={(self.sweep_security if hasattr(self, "sweep_security") else None)!r}, '
-                f'debt_security={(self.debt_security if hasattr(self, "debt_security") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'debt_security={(self.debt_security if hasattr(self, "debt_security") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -470,5 +458,4 @@ class AnInvestmentHolding(object):
                 f'other_security={(self.other_security if hasattr(self, "other_security") else None)!s}, '
                 f'stock_security={(self.stock_security if hasattr(self, "stock_security") else None)!s}, '
                 f'sweep_security={(self.sweep_security if hasattr(self, "sweep_security") else None)!s}, '
-                f'debt_security={(self.debt_security if hasattr(self, "debt_security") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'debt_security={(self.debt_security if hasattr(self, "debt_security") else None)!s})')

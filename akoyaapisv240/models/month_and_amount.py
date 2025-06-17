@@ -16,10 +16,8 @@ class MonthAndAmount(object):
     Month and amount pair used on IRS Form 1099-K, etc.
 
     Attributes:
-        month (MonthAbbreviation): Month
+        month (MonthAbbreviationEnum): Month
         amount (float): Amount
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -36,8 +34,7 @@ class MonthAndAmount(object):
 
     def __init__(self,
                  month=APIHelper.SKIP,
-                 amount=APIHelper.SKIP,
-                 additional_properties=None):
+                 amount=APIHelper.SKIP):
         """Constructor for the MonthAndAmount class"""
 
         # Initialize members of the class
@@ -45,11 +42,6 @@ class MonthAndAmount(object):
             self.month = month 
         if amount is not APIHelper.SKIP:
             self.amount = amount 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -72,22 +64,16 @@ class MonthAndAmount(object):
         # Extract variables from the dictionary
         month = dictionary.get("month") if dictionary.get("month") else APIHelper.SKIP
         amount = dictionary.get("amount") if dictionary.get("amount") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(month,
-                   amount,
-                   additional_properties)
+                   amount)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'month={(self.month if hasattr(self, "month") else None)!r}, '
-                f'amount={(self.amount if hasattr(self, "amount") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'amount={(self.amount if hasattr(self, "amount") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'month={(self.month if hasattr(self, "month") else None)!s}, '
-                f'amount={(self.amount if hasattr(self, "amount") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'amount={(self.amount if hasattr(self, "amount") else None)!s})')

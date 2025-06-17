@@ -15,8 +15,6 @@ class HrefLink(object):
 
     Attributes:
         href (str): The model property of type str.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -30,18 +28,12 @@ class HrefLink(object):
     ]
 
     def __init__(self,
-                 href=APIHelper.SKIP,
-                 additional_properties=None):
+                 href=APIHelper.SKIP):
         """Constructor for the HrefLink class"""
 
         # Initialize members of the class
         if href is not APIHelper.SKIP:
             self.href = href 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -63,12 +55,8 @@ class HrefLink(object):
 
         # Extract variables from the dictionary
         href = dictionary.get("href") if dictionary.get("href") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(href,
-                   additional_properties)
+        return cls(href)
 
     @classmethod
     def validate(cls, dictionary):
@@ -94,10 +82,8 @@ class HrefLink(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'href={(self.href if hasattr(self, "href") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'href={(self.href if hasattr(self, "href") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'href={(self.href if hasattr(self, "href") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'href={(self.href if hasattr(self, "href") else None)!s})')

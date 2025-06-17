@@ -15,11 +15,9 @@ class Telephone(object):
 
     Attributes:
         number (str): The model property of type str.
-        mtype (PhoneType): The model property of type PhoneType.
+        mtype (PhoneTypeEnum): The model property of type PhoneTypeEnum.
         country (str): Country calling codes defined by ITU-T recommendations
             E.123 and E.164
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -39,8 +37,7 @@ class Telephone(object):
     def __init__(self,
                  number=APIHelper.SKIP,
                  mtype=APIHelper.SKIP,
-                 country=APIHelper.SKIP,
-                 additional_properties=None):
+                 country=APIHelper.SKIP):
         """Constructor for the Telephone class"""
 
         # Initialize members of the class
@@ -50,11 +47,6 @@ class Telephone(object):
             self.mtype = mtype 
         if country is not APIHelper.SKIP:
             self.country = country 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -78,25 +70,19 @@ class Telephone(object):
         number = dictionary.get("number") if dictionary.get("number") else APIHelper.SKIP
         mtype = dictionary.get("type") if dictionary.get("type") else APIHelper.SKIP
         country = dictionary.get("country") if dictionary.get("country") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(number,
                    mtype,
-                   country,
-                   additional_properties)
+                   country)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'number={(self.number if hasattr(self, "number") else None)!r}, '
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!r}, '
-                f'country={(self.country if hasattr(self, "country") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'country={(self.country if hasattr(self, "country") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'number={(self.number if hasattr(self, "number") else None)!s}, '
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!s}, '
-                f'country={(self.country if hasattr(self, "country") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'country={(self.country if hasattr(self, "country") else None)!s})')

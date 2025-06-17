@@ -28,8 +28,6 @@ class Error(object):
             Can change at any time and should only be used for consumer to
             communicate with the data provider about an issue. Provider can
             include an error GUID in message for their use.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -49,8 +47,7 @@ class Error(object):
     def __init__(self,
                  code=APIHelper.SKIP,
                  message=APIHelper.SKIP,
-                 debug_message=APIHelper.SKIP,
-                 additional_properties=None):
+                 debug_message=APIHelper.SKIP):
         """Constructor for the Error class"""
 
         # Initialize members of the class
@@ -60,11 +57,6 @@ class Error(object):
             self.message = message 
         if debug_message is not APIHelper.SKIP:
             self.debug_message = debug_message 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -88,25 +80,19 @@ class Error(object):
         code = dictionary.get("code") if dictionary.get("code") else APIHelper.SKIP
         message = dictionary.get("message") if dictionary.get("message") else APIHelper.SKIP
         debug_message = dictionary.get("debugMessage") if dictionary.get("debugMessage") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(code,
                    message,
-                   debug_message,
-                   additional_properties)
+                   debug_message)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'code={(self.code if hasattr(self, "code") else None)!r}, '
                 f'message={(self.message if hasattr(self, "message") else None)!r}, '
-                f'debug_message={(self.debug_message if hasattr(self, "debug_message") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'debug_message={(self.debug_message if hasattr(self, "debug_message") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'code={(self.code if hasattr(self, "code") else None)!s}, '
                 f'message={(self.message if hasattr(self, "message") else None)!s}, '
-                f'debug_message={(self.debug_message if hasattr(self, "debug_message") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'debug_message={(self.debug_message if hasattr(self, "debug_message") else None)!s})')

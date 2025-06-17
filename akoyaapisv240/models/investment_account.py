@@ -35,14 +35,14 @@ class InvestmentAccount(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -61,8 +61,6 @@ class InvestmentAccount(object):
         employer_name (str): Name of the employer in investment 401k Plan
         margin (bool): Margin trading is allowed
         plan_id (str): Plan number for Investment 401k plan
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -154,8 +152,7 @@ class InvestmentAccount(object):
                  calendar_year_for_401_k=APIHelper.SKIP,
                  employer_name=APIHelper.SKIP,
                  margin=APIHelper.SKIP,
-                 plan_id=APIHelper.SKIP,
-                 additional_properties=None):
+                 plan_id=APIHelper.SKIP):
         """Constructor for the InvestmentAccount class"""
 
         # Initialize members of the class
@@ -214,11 +211,6 @@ class InvestmentAccount(object):
         if plan_id is not APIHelper.SKIP:
             self.plan_id = plan_id 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -269,9 +261,6 @@ class InvestmentAccount(object):
         employer_name = dictionary.get("employerName") if dictionary.get("employerName") else APIHelper.SKIP
         margin = dictionary.get("margin") if "margin" in dictionary.keys() else APIHelper.SKIP
         plan_id = dictionary.get("planId") if dictionary.get("planId") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -299,8 +288,7 @@ class InvestmentAccount(object):
                    calendar_year_for_401_k,
                    employer_name,
                    margin,
-                   plan_id,
-                   additional_properties)
+                   plan_id)
 
     @classmethod
     def validate(cls, dictionary):
@@ -352,8 +340,7 @@ class InvestmentAccount(object):
                 f'calendar_year_for_401_k={(self.calendar_year_for_401_k if hasattr(self, "calendar_year_for_401_k") else None)!r}, '
                 f'employer_name={(self.employer_name if hasattr(self, "employer_name") else None)!r}, '
                 f'margin={(self.margin if hasattr(self, "margin") else None)!r}, '
-                f'plan_id={(self.plan_id if hasattr(self, "plan_id") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'plan_id={(self.plan_id if hasattr(self, "plan_id") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -383,5 +370,4 @@ class InvestmentAccount(object):
                 f'calendar_year_for_401_k={(self.calendar_year_for_401_k if hasattr(self, "calendar_year_for_401_k") else None)!s}, '
                 f'employer_name={(self.employer_name if hasattr(self, "employer_name") else None)!s}, '
                 f'margin={(self.margin if hasattr(self, "margin") else None)!s}, '
-                f'plan_id={(self.plan_id if hasattr(self, "plan_id") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'plan_id={(self.plan_id if hasattr(self, "plan_id") else None)!s})')

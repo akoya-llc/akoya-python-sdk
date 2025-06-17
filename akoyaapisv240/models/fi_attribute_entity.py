@@ -18,8 +18,6 @@ class FiAttributeEntity(object):
     Attributes:
         name (str): Name of attribute
         value (str): Value of attribute
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -36,8 +34,7 @@ class FiAttributeEntity(object):
 
     def __init__(self,
                  name=APIHelper.SKIP,
-                 value=APIHelper.SKIP,
-                 additional_properties=None):
+                 value=APIHelper.SKIP):
         """Constructor for the FiAttributeEntity class"""
 
         # Initialize members of the class
@@ -45,11 +42,6 @@ class FiAttributeEntity(object):
             self.name = name 
         if value is not APIHelper.SKIP:
             self.value = value 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -72,13 +64,9 @@ class FiAttributeEntity(object):
         # Extract variables from the dictionary
         name = dictionary.get("name") if dictionary.get("name") else APIHelper.SKIP
         value = dictionary.get("value") if dictionary.get("value") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(name,
-                   value,
-                   additional_properties)
+                   value)
 
     @classmethod
     def validate(cls, dictionary):
@@ -105,11 +93,9 @@ class FiAttributeEntity(object):
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'name={(self.name if hasattr(self, "name") else None)!r}, '
-                f'value={(self.value if hasattr(self, "value") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'value={(self.value if hasattr(self, "value") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'name={(self.name if hasattr(self, "name") else None)!s}, '
-                f'value={(self.value if hasattr(self, "value") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'value={(self.value if hasattr(self, "value") else None)!s})')

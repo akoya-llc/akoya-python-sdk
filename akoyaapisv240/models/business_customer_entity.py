@@ -28,8 +28,6 @@ class BusinessCustomerEntity(object):
         industry_code (IndustryCode): Industry code and type
         domicile (Domicile): The country and region of the business customer's
             location
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -55,8 +53,7 @@ class BusinessCustomerEntity(object):
                  registered_agents=APIHelper.SKIP,
                  registered_id=APIHelper.SKIP,
                  industry_code=APIHelper.SKIP,
-                 domicile=APIHelper.SKIP,
-                 additional_properties=None):
+                 domicile=APIHelper.SKIP):
         """Constructor for the BusinessCustomerEntity class"""
 
         # Initialize members of the class
@@ -70,11 +67,6 @@ class BusinessCustomerEntity(object):
             self.industry_code = industry_code 
         if domicile is not APIHelper.SKIP:
             self.domicile = domicile 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -104,16 +96,12 @@ class BusinessCustomerEntity(object):
         registered_id = dictionary.get("registeredId") if dictionary.get("registeredId") else APIHelper.SKIP
         industry_code = IndustryCode.from_dictionary(dictionary.get('industryCode')) if 'industryCode' in dictionary.keys() else APIHelper.SKIP
         domicile = Domicile.from_dictionary(dictionary.get('domicile')) if 'domicile' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(name,
                    registered_agents,
                    registered_id,
                    industry_code,
-                   domicile,
-                   additional_properties)
+                   domicile)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -121,8 +109,7 @@ class BusinessCustomerEntity(object):
                 f'registered_agents={(self.registered_agents if hasattr(self, "registered_agents") else None)!r}, '
                 f'registered_id={(self.registered_id if hasattr(self, "registered_id") else None)!r}, '
                 f'industry_code={(self.industry_code if hasattr(self, "industry_code") else None)!r}, '
-                f'domicile={(self.domicile if hasattr(self, "domicile") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'domicile={(self.domicile if hasattr(self, "domicile") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -130,5 +117,4 @@ class BusinessCustomerEntity(object):
                 f'registered_agents={(self.registered_agents if hasattr(self, "registered_agents") else None)!s}, '
                 f'registered_id={(self.registered_id if hasattr(self, "registered_id") else None)!s}, '
                 f'industry_code={(self.industry_code if hasattr(self, "industry_code") else None)!s}, '
-                f'domicile={(self.domicile if hasattr(self, "domicile") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'domicile={(self.domicile if hasattr(self, "domicile") else None)!s})')

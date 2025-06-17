@@ -36,14 +36,14 @@ class InvestmentBalances(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -73,8 +73,6 @@ class InvestmentBalances(object):
         percentage_change (float): Percentage change
         rollover_amount (float): Rollover amount
         short_balance (float): Short balance
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -193,8 +191,7 @@ class InvestmentBalances(object):
                  margin_balance=APIHelper.SKIP,
                  percentage_change=APIHelper.SKIP,
                  rollover_amount=APIHelper.SKIP,
-                 short_balance=APIHelper.SKIP,
-                 additional_properties=None):
+                 short_balance=APIHelper.SKIP):
         """Constructor for the InvestmentBalances class"""
 
         # Initialize members of the class
@@ -271,11 +268,6 @@ class InvestmentBalances(object):
         if short_balance is not APIHelper.SKIP:
             self.short_balance = short_balance 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -339,9 +331,6 @@ class InvestmentBalances(object):
         percentage_change = dictionary.get("percentageChange") if dictionary.get("percentageChange") else APIHelper.SKIP
         rollover_amount = dictionary.get("rolloverAmount") if dictionary.get("rolloverAmount") else APIHelper.SKIP
         short_balance = dictionary.get("shortBalance") if dictionary.get("shortBalance") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -378,8 +367,7 @@ class InvestmentBalances(object):
                    margin_balance,
                    percentage_change,
                    rollover_amount,
-                   short_balance,
-                   additional_properties)
+                   short_balance)
 
     @classmethod
     def validate(cls, dictionary):
@@ -440,8 +428,7 @@ class InvestmentBalances(object):
                 f'margin_balance={(self.margin_balance if hasattr(self, "margin_balance") else None)!r}, '
                 f'percentage_change={(self.percentage_change if hasattr(self, "percentage_change") else None)!r}, '
                 f'rollover_amount={(self.rollover_amount if hasattr(self, "rollover_amount") else None)!r}, '
-                f'short_balance={(self.short_balance if hasattr(self, "short_balance") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'short_balance={(self.short_balance if hasattr(self, "short_balance") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -480,5 +467,4 @@ class InvestmentBalances(object):
                 f'margin_balance={(self.margin_balance if hasattr(self, "margin_balance") else None)!s}, '
                 f'percentage_change={(self.percentage_change if hasattr(self, "percentage_change") else None)!s}, '
                 f'rollover_amount={(self.rollover_amount if hasattr(self, "rollover_amount") else None)!s}, '
-                f'short_balance={(self.short_balance if hasattr(self, "short_balance") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'short_balance={(self.short_balance if hasattr(self, "short_balance") else None)!s})')

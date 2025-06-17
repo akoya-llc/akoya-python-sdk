@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.state_and_local_tax_withholding import StateAndLocalTaxWithholding
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
@@ -34,8 +34,8 @@ class Form1099G(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,7 +53,7 @@ class Form1099G(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         unemployment_compensation (float): Box 1, Unemployment compensation
@@ -67,11 +67,9 @@ class Form1099G(object):
         business_income (bool): Box 8, If checked, box 2 is trade or business
             income
         market_gain (float): Box 9, Market gain
-        state_and_local (List[StateAndLocalTaxWithholding]): Boxes 14-16,
+        state_and_local (List[StateAndLocalTaxWithholding]): Boxes 10-11,
             State and Local tax withholding
         second_tin_notice (bool): Second TIN Notice
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -154,8 +152,7 @@ class Form1099G(object):
                  business_income=APIHelper.SKIP,
                  market_gain=APIHelper.SKIP,
                  state_and_local=APIHelper.SKIP,
-                 second_tin_notice=APIHelper.SKIP,
-                 additional_properties=None):
+                 second_tin_notice=APIHelper.SKIP):
         """Constructor for the Form1099G class"""
 
         # Initialize members of the class
@@ -208,11 +205,6 @@ class Form1099G(object):
         if second_tin_notice is not APIHelper.SKIP:
             self.second_tin_notice = second_tin_notice 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -249,7 +241,7 @@ class Form1099G(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -268,9 +260,6 @@ class Form1099G(object):
         else:
             state_and_local = APIHelper.SKIP
         second_tin_notice = dictionary.get("secondTinNotice") if "secondTinNotice" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -295,8 +284,7 @@ class Form1099G(object):
                    business_income,
                    market_gain,
                    state_and_local,
-                   second_tin_notice,
-                   additional_properties)
+                   second_tin_notice)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -323,8 +311,7 @@ class Form1099G(object):
                 f'business_income={(self.business_income if hasattr(self, "business_income") else None)!r}, '
                 f'market_gain={(self.market_gain if hasattr(self, "market_gain") else None)!r}, '
                 f'state_and_local={(self.state_and_local if hasattr(self, "state_and_local") else None)!r}, '
-                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -351,5 +338,4 @@ class Form1099G(object):
                 f'business_income={(self.business_income if hasattr(self, "business_income") else None)!s}, '
                 f'market_gain={(self.market_gain if hasattr(self, "market_gain") else None)!s}, '
                 f'state_and_local={(self.state_and_local if hasattr(self, "state_and_local") else None)!s}, '
-                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!s})')

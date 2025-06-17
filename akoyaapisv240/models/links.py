@@ -17,8 +17,6 @@ class Links(object):
     Attributes:
         next (HrefLink): The model property of type HrefLink.
         prev (HrefLink): The model property of type HrefLink.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -35,8 +33,7 @@ class Links(object):
 
     def __init__(self,
                  next=APIHelper.SKIP,
-                 prev=APIHelper.SKIP,
-                 additional_properties=None):
+                 prev=APIHelper.SKIP):
         """Constructor for the Links class"""
 
         # Initialize members of the class
@@ -44,11 +41,6 @@ class Links(object):
             self.next = next 
         if prev is not APIHelper.SKIP:
             self.prev = prev 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -71,13 +63,9 @@ class Links(object):
         # Extract variables from the dictionary
         next = HrefLink.from_dictionary(dictionary.get('next')) if 'next' in dictionary.keys() else APIHelper.SKIP
         prev = HrefLink.from_dictionary(dictionary.get('prev')) if 'prev' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(next,
-                   prev,
-                   additional_properties)
+                   prev)
 
     @classmethod
     def validate(cls, dictionary):
@@ -104,11 +92,9 @@ class Links(object):
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'next={(self.next if hasattr(self, "next") else None)!r}, '
-                f'prev={(self.prev if hasattr(self, "prev") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'prev={(self.prev if hasattr(self, "prev") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'next={(self.next if hasattr(self, "next") else None)!s}, '
-                f'prev={(self.prev if hasattr(self, "prev") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'prev={(self.prev if hasattr(self, "prev") else None)!s})')

@@ -45,11 +45,11 @@ def get_statement_list(self,
 | `end_time` | `date` | Query, Optional | End date for use in retrieval of statements (ISO 8601) |
 | `offset` | `str` | Query, Optional | The number of items to skip before the first in the response. The default is 0.<br><br>**Default**: `'0'` |
 | `limit` | `int` | Query, Optional | The maximum number of items to be returned in the response. The default is 50.<br><br>**Default**: `50` |
-| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
 
 ## Response Type
 
-This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`PaginatedArray`](../../doc/models/paginated-array.md).
+[`PaginatedArray`](../../doc/models/paginated-array.md)
 
 ## Example Usage
 
@@ -85,9 +85,9 @@ result = statements_controller.get_statement_list(
 |  --- | --- | --- |
 | 400 | Start or end date value is not in the ISO 8601 format. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | 404 - Not found | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `ApiException` |
+| 405 | Method Not Allowed | `APIException` |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 500 | Internal Server Error. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
+| 500 | Catch-all exception where request was not processed due to an internal outage/issue. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 501 | FdxVersion in header is not implemented. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 503 | System is down for maintenance. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 
@@ -123,11 +123,11 @@ def get_statements(self,
 | `version` | `str` | Template, Required | Akoya major version number. Do not use minor version numbers. For instance, use v2 and not v2.2 |
 | `provider_id` | `str` | Template, Required | Id of provider |
 | `statement_id` | `str` | Template, Required | Statement Identifier |
-| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
 
 ## Response Type
 
-This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type `Any`.
+`Any`
 
 ## Example Usage
 
@@ -154,10 +154,10 @@ result = statements_controller.get_statements(
 |  --- | --- | --- |
 | 400 | Statement is processing and is not yet available. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | Account exists but contains no statements. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `ApiException` |
+| 405 | Method Not Allowed | `APIException` |
 | 406 | Content Type not Supported | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 500 | Internal Server Error. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
+| 500 | Catch-all exception where request was not processed due to an internal outage/issue. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 501 | FdxVersion in header is not implemented. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 503 | System is down for maintenance. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 

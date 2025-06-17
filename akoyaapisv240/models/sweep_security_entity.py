@@ -20,8 +20,6 @@ class SweepSecurityEntity(object):
         available_balance (float): Balance of funds available for use
         balance_as_of (datetime): As-of date of balances
         checks (bool): Whether or not checks can be written on the account
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -44,8 +42,7 @@ class SweepSecurityEntity(object):
                  current_balance=APIHelper.SKIP,
                  available_balance=APIHelper.SKIP,
                  balance_as_of=APIHelper.SKIP,
-                 checks=APIHelper.SKIP,
-                 additional_properties=None):
+                 checks=APIHelper.SKIP):
         """Constructor for the SweepSecurityEntity class"""
 
         # Initialize members of the class
@@ -57,11 +54,6 @@ class SweepSecurityEntity(object):
             self.balance_as_of = APIHelper.apply_datetime_converter(balance_as_of, APIHelper.RFC3339DateTime) if balance_as_of else None 
         if checks is not APIHelper.SKIP:
             self.checks = checks 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -86,15 +78,11 @@ class SweepSecurityEntity(object):
         available_balance = dictionary.get("availableBalance") if dictionary.get("availableBalance") else APIHelper.SKIP
         balance_as_of = APIHelper.RFC3339DateTime.from_value(dictionary.get("balanceAsOf")).datetime if dictionary.get("balanceAsOf") else APIHelper.SKIP
         checks = dictionary.get("checks") if "checks" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(current_balance,
                    available_balance,
                    balance_as_of,
-                   checks,
-                   additional_properties)
+                   checks)
 
     @classmethod
     def validate(cls, dictionary):
@@ -123,13 +111,11 @@ class SweepSecurityEntity(object):
                 f'current_balance={(self.current_balance if hasattr(self, "current_balance") else None)!r}, '
                 f'available_balance={(self.available_balance if hasattr(self, "available_balance") else None)!r}, '
                 f'balance_as_of={(self.balance_as_of if hasattr(self, "balance_as_of") else None)!r}, '
-                f'checks={(self.checks if hasattr(self, "checks") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'checks={(self.checks if hasattr(self, "checks") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'current_balance={(self.current_balance if hasattr(self, "current_balance") else None)!s}, '
                 f'available_balance={(self.available_balance if hasattr(self, "available_balance") else None)!s}, '
                 f'balance_as_of={(self.balance_as_of if hasattr(self, "balance_as_of") else None)!s}, '
-                f'checks={(self.checks if hasattr(self, "checks") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'checks={(self.checks if hasattr(self, "checks") else None)!s})')

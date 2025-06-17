@@ -35,14 +35,14 @@ class LineOfCreditBalances(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -74,8 +74,6 @@ class LineOfCreditBalances(object):
         principal_balance (float): Principal balance
         points_redeemed (float): Points redeemed
         purchases_apr (float): Purchases APR
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -209,8 +207,7 @@ class LineOfCreditBalances(object):
                  points_accrued=APIHelper.SKIP,
                  principal_balance=APIHelper.SKIP,
                  points_redeemed=APIHelper.SKIP,
-                 purchases_apr=APIHelper.SKIP,
-                 additional_properties=None):
+                 purchases_apr=APIHelper.SKIP):
         """Constructor for the LineOfCreditBalances class"""
 
         # Initialize members of the class
@@ -297,11 +294,6 @@ class LineOfCreditBalances(object):
         if purchases_apr is not APIHelper.SKIP:
             self.purchases_apr = purchases_apr 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -366,9 +358,6 @@ class LineOfCreditBalances(object):
         principal_balance = dictionary.get("principalBalance") if dictionary.get("principalBalance") else APIHelper.SKIP
         points_redeemed = dictionary.get("pointsRedeemed") if dictionary.get("pointsRedeemed") else APIHelper.SKIP
         purchases_apr = dictionary.get("purchasesApr") if dictionary.get("purchasesApr") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -410,8 +399,7 @@ class LineOfCreditBalances(object):
                    points_accrued,
                    principal_balance,
                    points_redeemed,
-                   purchases_apr,
-                   additional_properties)
+                   purchases_apr)
 
     @classmethod
     def validate(cls, dictionary):
@@ -477,8 +465,7 @@ class LineOfCreditBalances(object):
                 f'points_accrued={(self.points_accrued if hasattr(self, "points_accrued") else None)!r}, '
                 f'principal_balance={(self.principal_balance if hasattr(self, "principal_balance") else None)!r}, '
                 f'points_redeemed={(self.points_redeemed if hasattr(self, "points_redeemed") else None)!r}, '
-                f'purchases_apr={(self.purchases_apr if hasattr(self, "purchases_apr") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'purchases_apr={(self.purchases_apr if hasattr(self, "purchases_apr") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -522,5 +509,4 @@ class LineOfCreditBalances(object):
                 f'points_accrued={(self.points_accrued if hasattr(self, "points_accrued") else None)!s}, '
                 f'principal_balance={(self.principal_balance if hasattr(self, "principal_balance") else None)!s}, '
                 f'points_redeemed={(self.points_redeemed if hasattr(self, "points_redeemed") else None)!s}, '
-                f'purchases_apr={(self.purchases_apr if hasattr(self, "purchases_apr") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'purchases_apr={(self.purchases_apr if hasattr(self, "purchases_apr") else None)!s})')

@@ -18,8 +18,6 @@ class IndustryCode(object):
     Attributes:
         mtype (str): The model property of type str.
         code (str): The model property of type str.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -36,8 +34,7 @@ class IndustryCode(object):
 
     def __init__(self,
                  mtype=APIHelper.SKIP,
-                 code=APIHelper.SKIP,
-                 additional_properties=None):
+                 code=APIHelper.SKIP):
         """Constructor for the IndustryCode class"""
 
         # Initialize members of the class
@@ -45,11 +42,6 @@ class IndustryCode(object):
             self.mtype = mtype 
         if code is not APIHelper.SKIP:
             self.code = code 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -72,22 +64,16 @@ class IndustryCode(object):
         # Extract variables from the dictionary
         mtype = dictionary.get("type") if dictionary.get("type") else APIHelper.SKIP
         code = dictionary.get("code") if dictionary.get("code") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(mtype,
-                   code,
-                   additional_properties)
+                   code)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!r}, '
-                f'code={(self.code if hasattr(self, "code") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'code={(self.code if hasattr(self, "code") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!s}, '
-                f'code={(self.code if hasattr(self, "code") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'code={(self.code if hasattr(self, "code") else None)!s})')

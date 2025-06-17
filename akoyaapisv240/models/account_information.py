@@ -33,14 +33,14 @@ class AccountInformation(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -51,8 +51,6 @@ class AccountInformation(object):
         prior_interest_rate (float): Previous Interest Rate of Account
         transfer_in (bool): Account is eligible for incoming transfers
         transfer_out (bool): Account is eligible for outgoing transfers
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -123,8 +121,7 @@ class AccountInformation(object):
                  parent_account_id=APIHelper.SKIP,
                  prior_interest_rate=APIHelper.SKIP,
                  transfer_in=APIHelper.SKIP,
-                 transfer_out=APIHelper.SKIP,
-                 additional_properties=None):
+                 transfer_out=APIHelper.SKIP):
         """Constructor for the AccountInformation class"""
 
         # Initialize members of the class
@@ -169,11 +166,6 @@ class AccountInformation(object):
         if transfer_out is not APIHelper.SKIP:
             self.transfer_out = transfer_out 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -217,9 +209,6 @@ class AccountInformation(object):
         prior_interest_rate = dictionary.get("priorInterestRate") if dictionary.get("priorInterestRate") else APIHelper.SKIP
         transfer_in = dictionary.get("transferIn") if "transferIn" in dictionary.keys() else APIHelper.SKIP
         transfer_out = dictionary.get("transferOut") if "transferOut" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -240,8 +229,7 @@ class AccountInformation(object):
                    parent_account_id,
                    prior_interest_rate,
                    transfer_in,
-                   transfer_out,
-                   additional_properties)
+                   transfer_out)
 
     @classmethod
     def validate(cls, dictionary):
@@ -286,8 +274,7 @@ class AccountInformation(object):
                 f'parent_account_id={(self.parent_account_id if hasattr(self, "parent_account_id") else None)!r}, '
                 f'prior_interest_rate={(self.prior_interest_rate if hasattr(self, "prior_interest_rate") else None)!r}, '
                 f'transfer_in={(self.transfer_in if hasattr(self, "transfer_in") else None)!r}, '
-                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -310,5 +297,4 @@ class AccountInformation(object):
                 f'parent_account_id={(self.parent_account_id if hasattr(self, "parent_account_id") else None)!s}, '
                 f'prior_interest_rate={(self.prior_interest_rate if hasattr(self, "prior_interest_rate") else None)!s}, '
                 f'transfer_in={(self.transfer_in if hasattr(self, "transfer_in") else None)!s}, '
-                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s})')

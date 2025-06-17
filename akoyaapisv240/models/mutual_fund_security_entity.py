@@ -16,15 +16,13 @@ class MutualFundSecurityEntity(object):
     Information about the mutual fund security specific to the type of security
 
     Attributes:
-        mutual_fund_type (MutualFundType): Mutual fund type
+        mutual_fund_type (MutualFundTypeEnum): Mutual fund type
         units_street (float): Units in the FI's street name, positive quantity
         units_user (float): Units in user's name directly, positive  quantity
         reinvest_dividends (bool): Reinvest dividends
         reinvest_capital_gains (bool): Reinvest capital gains
         myield (float): Current yield reported as portion of the fund's assets
         yield_as_of_date (datetime): As-of date for yield value
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -56,8 +54,7 @@ class MutualFundSecurityEntity(object):
                  reinvest_dividends=APIHelper.SKIP,
                  reinvest_capital_gains=APIHelper.SKIP,
                  myield=APIHelper.SKIP,
-                 yield_as_of_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 yield_as_of_date=APIHelper.SKIP):
         """Constructor for the MutualFundSecurityEntity class"""
 
         # Initialize members of the class
@@ -75,11 +72,6 @@ class MutualFundSecurityEntity(object):
             self.myield = myield 
         if yield_as_of_date is not APIHelper.SKIP:
             self.yield_as_of_date = APIHelper.apply_datetime_converter(yield_as_of_date, APIHelper.RFC3339DateTime) if yield_as_of_date else None 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -107,9 +99,6 @@ class MutualFundSecurityEntity(object):
         reinvest_capital_gains = dictionary.get("reinvestCapitalGains") if "reinvestCapitalGains" in dictionary.keys() else APIHelper.SKIP
         myield = dictionary.get("yield") if dictionary.get("yield") else APIHelper.SKIP
         yield_as_of_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("yieldAsOfDate")).datetime if dictionary.get("yieldAsOfDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(mutual_fund_type,
                    units_street,
@@ -117,8 +106,7 @@ class MutualFundSecurityEntity(object):
                    reinvest_dividends,
                    reinvest_capital_gains,
                    myield,
-                   yield_as_of_date,
-                   additional_properties)
+                   yield_as_of_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -150,8 +138,7 @@ class MutualFundSecurityEntity(object):
                 f'reinvest_dividends={(self.reinvest_dividends if hasattr(self, "reinvest_dividends") else None)!r}, '
                 f'reinvest_capital_gains={(self.reinvest_capital_gains if hasattr(self, "reinvest_capital_gains") else None)!r}, '
                 f'myield={(self.myield if hasattr(self, "myield") else None)!r}, '
-                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -161,5 +148,4 @@ class MutualFundSecurityEntity(object):
                 f'reinvest_dividends={(self.reinvest_dividends if hasattr(self, "reinvest_dividends") else None)!s}, '
                 f'reinvest_capital_gains={(self.reinvest_capital_gains if hasattr(self, "reinvest_capital_gains") else None)!s}, '
                 f'myield={(self.myield if hasattr(self, "myield") else None)!s}, '
-                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!s})')

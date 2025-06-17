@@ -24,9 +24,9 @@ class Form1042SRecipient(object):
     Attributes:
         tin (str): Issuer or recipient Tax Identification Number. Usually EIN
             for issuer and SSN for recipient
-        party_type (TaxPartyType): Type of issuer or recipient legal entity,
-            as "BUSINESS" or "INDIVIDUAL". Commonly BUSINESS for issuer and
-            INDIVIDUAL for recipient
+        party_type (TaxPartyTypeEnum): Type of issuer or recipient legal
+            entity, as "BUSINESS" or "INDIVIDUAL". Commonly BUSINESS for
+            issuer and INDIVIDUAL for recipient
         individual_name (IndividualName): Individual issuer or recipient name
         business_name (BusinessName): Business issuer or recipient name
         address (Address): Issuer or recipient address
@@ -48,8 +48,6 @@ class Form1042SRecipient(object):
             Intermediary or flow-through entity
         lob_code (str): Box 13j, Recipient's LOB code, if any
         date_of_birth (date): Box 13l, Recipient's date of birth
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -99,8 +97,7 @@ class Form1042SRecipient(object):
                  giin=APIHelper.SKIP,
                  foreign_tin=APIHelper.SKIP,
                  lob_code=APIHelper.SKIP,
-                 date_of_birth=APIHelper.SKIP,
-                 additional_properties=None):
+                 date_of_birth=APIHelper.SKIP):
         """Constructor for the Form1042SRecipient class"""
 
         # Initialize members of the class
@@ -130,11 +127,6 @@ class Form1042SRecipient(object):
             self.lob_code = lob_code 
         if date_of_birth is not APIHelper.SKIP:
             self.date_of_birth = date_of_birth 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -168,9 +160,6 @@ class Form1042SRecipient(object):
         foreign_tin = dictionary.get("foreignTin") if dictionary.get("foreignTin") else APIHelper.SKIP
         lob_code = dictionary.get("lobCode") if dictionary.get("lobCode") else APIHelper.SKIP
         date_of_birth = dateutil.parser.parse(dictionary.get('dateOfBirth')).date() if dictionary.get('dateOfBirth') else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tin,
                    party_type,
@@ -184,8 +173,7 @@ class Form1042SRecipient(object):
                    giin,
                    foreign_tin,
                    lob_code,
-                   date_of_birth,
-                   additional_properties)
+                   date_of_birth)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -201,8 +189,7 @@ class Form1042SRecipient(object):
                 f'giin={(self.giin if hasattr(self, "giin") else None)!r}, '
                 f'foreign_tin={(self.foreign_tin if hasattr(self, "foreign_tin") else None)!r}, '
                 f'lob_code={(self.lob_code if hasattr(self, "lob_code") else None)!r}, '
-                f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -218,5 +205,4 @@ class Form1042SRecipient(object):
                 f'giin={(self.giin if hasattr(self, "giin") else None)!s}, '
                 f'foreign_tin={(self.foreign_tin if hasattr(self, "foreign_tin") else None)!s}, '
                 f'lob_code={(self.lob_code if hasattr(self, "lob_code") else None)!s}, '
-                f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!s})')

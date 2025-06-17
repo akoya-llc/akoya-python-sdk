@@ -13,14 +13,12 @@ class LocalTaxWithholding(object):
 
     """Implementation of the 'Local Tax Withholding' model.
 
-    Amount of local income tax withheld, if any
+    Income in a locality and its tax withholding
 
     Attributes:
         tax_withheld (float): Amount of local income tax withheld
         locality_name (str): Locality name
         income (float): Income amount for local tax purposes
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -40,8 +38,7 @@ class LocalTaxWithholding(object):
     def __init__(self,
                  tax_withheld=APIHelper.SKIP,
                  locality_name=APIHelper.SKIP,
-                 income=APIHelper.SKIP,
-                 additional_properties=None):
+                 income=APIHelper.SKIP):
         """Constructor for the LocalTaxWithholding class"""
 
         # Initialize members of the class
@@ -51,11 +48,6 @@ class LocalTaxWithholding(object):
             self.locality_name = locality_name 
         if income is not APIHelper.SKIP:
             self.income = income 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -79,25 +71,19 @@ class LocalTaxWithholding(object):
         tax_withheld = dictionary.get("taxWithheld") if dictionary.get("taxWithheld") else APIHelper.SKIP
         locality_name = dictionary.get("localityName") if dictionary.get("localityName") else APIHelper.SKIP
         income = dictionary.get("income") if dictionary.get("income") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_withheld,
                    locality_name,
-                   income,
-                   additional_properties)
+                   income)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'tax_withheld={(self.tax_withheld if hasattr(self, "tax_withheld") else None)!r}, '
                 f'locality_name={(self.locality_name if hasattr(self, "locality_name") else None)!r}, '
-                f'income={(self.income if hasattr(self, "income") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'income={(self.income if hasattr(self, "income") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'tax_withheld={(self.tax_withheld if hasattr(self, "tax_withheld") else None)!s}, '
                 f'locality_name={(self.locality_name if hasattr(self, "locality_name") else None)!s}, '
-                f'income={(self.income if hasattr(self, "income") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'income={(self.income if hasattr(self, "income") else None)!s})')

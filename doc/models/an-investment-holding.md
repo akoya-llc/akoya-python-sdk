@@ -1,8 +1,6 @@
 
 # An Investment Holding
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `AnInvestmentHolding`
@@ -23,19 +21,19 @@
 | `face_value` | `float` | Optional | Face value at the time of data retrieved. |
 | `fi_asset_classes` | [`List[FiAssetClassItem]`](../../doc/models/fi-asset-class-item.md) | Optional | Percent breakdown by FI-specific asset class percentage breakdown |
 | `fi_attributes` | [`List[FiAttributeEntity]`](../../doc/models/fi-attribute-entity.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
-| `held_in_account` | [`HeldInAccount`](../../doc/models/held-in-account.md) | Optional | Sub-account |
+| `held_in_account` | [`HeldInAccountEnum`](../../doc/models/held-in-account-enum.md) | Optional | Sub-account |
 | `holding_id` | `str` | Optional | Long term persistent identity of the holding |
 | `holding_name` | `str` | Optional | Holding name or security name |
-| `holding_sub_type` | [`HoldingSubType`](../../doc/models/holding-sub-type.md) | Optional | - |
-| `holding_type` | [`HoldingType`](../../doc/models/holding-type.md) | Optional | - |
-| `inv_401_k_surce` | [`Inv401KSurce`](../../doc/models/inv-401-k-surce.md) | Optional | Source for money for this security. |
+| `holding_sub_type` | [`HoldingSubTypeEnum`](../../doc/models/holding-sub-type-enum.md) | Optional | - |
+| `holding_type` | [`HoldingTypeEnum`](../../doc/models/holding-type-enum.md) | Optional | - |
+| `inv_401_k_surce` | [`Inv401kSurceEnum`](../../doc/models/inv-401-k-surce-enum.md) | Optional | Source for money for this security. |
 | `market_value` | `float` | Optional | Market value at the time of data retrieved |
 | `original_purchase_date` | `datetime` | Optional | Date of original purchase |
-| `position_type` | [`PositionType`](../../doc/models/position-type.md) | Optional | LONG, SHORT. |
+| `position_type` | [`PositionTypeEnum`](../../doc/models/position-type-enum.md) | Optional | LONG, SHORT. |
 | `purchased_price` | `float` | Optional | Price of holding at the time of purchase |
 | `rate` | `float` | Optional | For CDs, bonds, and other rate based holdings. |
 | `security_id` | `str` | Optional | Unique identifier of security |
-| `security_id_type` | [`SecurityIdType`](../../doc/models/security-id-type.md) | Optional | Security identifier type |
+| `security_id_type` | [`SecurityIdTypeEnum`](../../doc/models/security-id-type-enum.md) | Optional | Security identifier type |
 | `symbol` | `str` | Optional | Ticker / Market symbol |
 | `tax_lots` | [`List[Items]`](../../doc/models/items.md) | Optional | Breakdown by tax lot.<br><br>**Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
 | `units` | `float` | Optional | Number of shares (with decimals). |
@@ -45,7 +43,6 @@
 | `stock_security` | [`StockSecurityEntity`](../../doc/models/stock-security-entity.md) | Optional | Information about the stock security specific to the type of security |
 | `sweep_security` | [`SweepSecurityEntity`](../../doc/models/sweep-security-entity.md) | Optional | Information about the sweep security specific to the type of security |
 | `debt_security` | [`DebtSecurityEntity`](../../doc/models/debt-security-entity.md) | Optional | Information about the debt security specific to the type of security |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -54,19 +51,11 @@
   "assetClasses": [
     {
       "assetClass": "DOMESTICBOND",
-      "percent": 174.1,
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "percent": 174.1
     },
     {
       "assetClass": "DOMESTICBOND",
-      "percent": 174.1,
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "percent": 174.1
     }
   ],
   "averageCost": false,
@@ -75,15 +64,7 @@
   "currency": {
     "currencyCode": "currencyCode0",
     "currencyRate": 27.48,
-    "originalCurrencyCode": "originalCurrencyCode4",
-    "exampleAdditionalProperty": {
-      "key1": "val1",
-      "key2": "val2"
-    }
-  },
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
+    "originalCurrencyCode": "originalCurrencyCode4"
   }
 }
 ```

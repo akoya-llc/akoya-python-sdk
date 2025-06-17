@@ -10,12 +10,12 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
 
-class Form5498Esa(object):
+class Form5498ESA(object):
 
     """Implementation of the 'Form 5498-ESA' model.
 
@@ -33,8 +33,8 @@ class Form5498Esa(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,13 +52,11 @@ class Form5498Esa(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         coverdell_esa_contributions (float): Box 1, Coverdell ESA contributions
         rollover_contributions (float): Box 2, Rollover contributions
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -114,9 +112,8 @@ class Form5498Esa(object):
                  links=APIHelper.SKIP,
                  account_number=APIHelper.SKIP,
                  coverdell_esa_contributions=APIHelper.SKIP,
-                 rollover_contributions=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the Form5498Esa class"""
+                 rollover_contributions=APIHelper.SKIP):
+        """Constructor for the Form5498ESA class"""
 
         # Initialize members of the class
         if tax_year is not APIHelper.SKIP:
@@ -149,11 +146,6 @@ class Form5498Esa(object):
             self.coverdell_esa_contributions = coverdell_esa_contributions 
         if rollover_contributions is not APIHelper.SKIP:
             self.rollover_contributions = rollover_contributions 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -191,15 +183,12 @@ class Form5498Esa(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
         coverdell_esa_contributions = dictionary.get("coverdellEsaContributions") if dictionary.get("coverdellEsaContributions") else APIHelper.SKIP
         rollover_contributions = dictionary.get("rolloverContributions") if dictionary.get("rolloverContributions") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -215,8 +204,7 @@ class Form5498Esa(object):
                    links,
                    account_number,
                    coverdell_esa_contributions,
-                   rollover_contributions,
-                   additional_properties)
+                   rollover_contributions)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -234,8 +222,7 @@ class Form5498Esa(object):
                 f'links={(self.links if hasattr(self, "links") else None)!r}, '
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!r}, '
                 f'coverdell_esa_contributions={(self.coverdell_esa_contributions if hasattr(self, "coverdell_esa_contributions") else None)!r}, '
-                f'rollover_contributions={(self.rollover_contributions if hasattr(self, "rollover_contributions") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'rollover_contributions={(self.rollover_contributions if hasattr(self, "rollover_contributions") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -253,5 +240,4 @@ class Form5498Esa(object):
                 f'links={(self.links if hasattr(self, "links") else None)!s}, '
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!s}, '
                 f'coverdell_esa_contributions={(self.coverdell_esa_contributions if hasattr(self, "coverdell_esa_contributions") else None)!s}, '
-                f'rollover_contributions={(self.rollover_contributions if hasattr(self, "rollover_contributions") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'rollover_contributions={(self.rollover_contributions if hasattr(self, "rollover_contributions") else None)!s})')

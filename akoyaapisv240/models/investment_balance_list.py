@@ -17,14 +17,12 @@ class InvestmentBalanceList(object):
     Attributes:
         balance_name (str): Name of the balance.
         balance_description (str): Description of balance.
-        balance_type (InvestmentBalanceType): The type of an investment
+        balance_type (InvestmentBalanceTypeEnum): The type of an investment
             balance. AMOUNT or PERCENTAGE.
         balance_value (float): Value of balance name.
         balance_date (datetime): Date as of this balance.
         currency (CurrencyEntity): Indicates the currency code used by the
             account. May also include currency rate.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -53,8 +51,7 @@ class InvestmentBalanceList(object):
                  balance_type=APIHelper.SKIP,
                  balance_value=APIHelper.SKIP,
                  balance_date=APIHelper.SKIP,
-                 currency=APIHelper.SKIP,
-                 additional_properties=None):
+                 currency=APIHelper.SKIP):
         """Constructor for the InvestmentBalanceList class"""
 
         # Initialize members of the class
@@ -70,11 +67,6 @@ class InvestmentBalanceList(object):
             self.balance_date = APIHelper.apply_datetime_converter(balance_date, APIHelper.RFC3339DateTime) if balance_date else None 
         if currency is not APIHelper.SKIP:
             self.currency = currency 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -101,17 +93,13 @@ class InvestmentBalanceList(object):
         balance_value = dictionary.get("balanceValue") if dictionary.get("balanceValue") else APIHelper.SKIP
         balance_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("balanceDate")).datetime if dictionary.get("balanceDate") else APIHelper.SKIP
         currency = CurrencyEntity.from_dictionary(dictionary.get('currency')) if 'currency' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(balance_name,
                    balance_description,
                    balance_type,
                    balance_value,
                    balance_date,
-                   currency,
-                   additional_properties)
+                   currency)
 
     @classmethod
     def validate(cls, dictionary):
@@ -142,8 +130,7 @@ class InvestmentBalanceList(object):
                 f'balance_type={(self.balance_type if hasattr(self, "balance_type") else None)!r}, '
                 f'balance_value={(self.balance_value if hasattr(self, "balance_value") else None)!r}, '
                 f'balance_date={(self.balance_date if hasattr(self, "balance_date") else None)!r}, '
-                f'currency={(self.currency if hasattr(self, "currency") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'currency={(self.currency if hasattr(self, "currency") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -152,5 +139,4 @@ class InvestmentBalanceList(object):
                 f'balance_type={(self.balance_type if hasattr(self, "balance_type") else None)!s}, '
                 f'balance_value={(self.balance_value if hasattr(self, "balance_value") else None)!s}, '
                 f'balance_date={(self.balance_date if hasattr(self, "balance_date") else None)!s}, '
-                f'currency={(self.currency if hasattr(self, "currency") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'currency={(self.currency if hasattr(self, "currency") else None)!s})')

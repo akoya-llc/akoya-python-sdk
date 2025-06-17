@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form1099C(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1099C(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         date_of_event (date): Box 1, Date of identifiable event
@@ -63,8 +63,6 @@ class Form1099C(object):
             liable for repayment of the debt
         debt_code (str): Box 6, Identifiable debt code
         fair_market_value (float): Box 7, Fair market value of property
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -135,8 +133,7 @@ class Form1099C(object):
                  debt_description=APIHelper.SKIP,
                  personally_liable=APIHelper.SKIP,
                  debt_code=APIHelper.SKIP,
-                 fair_market_value=APIHelper.SKIP,
-                 additional_properties=None):
+                 fair_market_value=APIHelper.SKIP):
         """Constructor for the Form1099C class"""
 
         # Initialize members of the class
@@ -181,11 +178,6 @@ class Form1099C(object):
         if fair_market_value is not APIHelper.SKIP:
             self.fair_market_value = fair_market_value 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -222,7 +214,7 @@ class Form1099C(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -233,9 +225,6 @@ class Form1099C(object):
         personally_liable = dictionary.get("personallyLiable") if "personallyLiable" in dictionary.keys() else APIHelper.SKIP
         debt_code = dictionary.get("debtCode") if dictionary.get("debtCode") else APIHelper.SKIP
         fair_market_value = dictionary.get("fairMarketValue") if dictionary.get("fairMarketValue") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -256,8 +245,7 @@ class Form1099C(object):
                    debt_description,
                    personally_liable,
                    debt_code,
-                   fair_market_value,
-                   additional_properties)
+                   fair_market_value)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -280,8 +268,7 @@ class Form1099C(object):
                 f'debt_description={(self.debt_description if hasattr(self, "debt_description") else None)!r}, '
                 f'personally_liable={(self.personally_liable if hasattr(self, "personally_liable") else None)!r}, '
                 f'debt_code={(self.debt_code if hasattr(self, "debt_code") else None)!r}, '
-                f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -304,5 +291,4 @@ class Form1099C(object):
                 f'debt_description={(self.debt_description if hasattr(self, "debt_description") else None)!s}, '
                 f'personally_liable={(self.personally_liable if hasattr(self, "personally_liable") else None)!s}, '
                 f'debt_code={(self.debt_code if hasattr(self, "debt_code") else None)!s}, '
-                f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!s})')

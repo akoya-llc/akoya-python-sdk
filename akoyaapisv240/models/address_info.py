@@ -14,7 +14,7 @@ class AddressInfo(object):
     """Implementation of the 'AddressInfo' model.
 
     Attributes:
-        mtype (LocationType): The location type of an address
+        mtype (LocationTypeEnum): The location type of an address
         line_1 (str): May contain full address if not separated
         line_2 (str): The model property of type str.
         line_3 (str): The model property of type str.
@@ -22,8 +22,6 @@ class AddressInfo(object):
         state (str): The model property of type str.
         postal_code (str): The model property of type str.
         country (str): ISO 3166 Country Code
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -58,8 +56,7 @@ class AddressInfo(object):
                  city=APIHelper.SKIP,
                  state=APIHelper.SKIP,
                  postal_code=APIHelper.SKIP,
-                 country=APIHelper.SKIP,
-                 additional_properties=None):
+                 country=APIHelper.SKIP):
         """Constructor for the AddressInfo class"""
 
         # Initialize members of the class
@@ -79,11 +76,6 @@ class AddressInfo(object):
             self.postal_code = postal_code 
         if country is not APIHelper.SKIP:
             self.country = country 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -112,9 +104,6 @@ class AddressInfo(object):
         state = dictionary.get("state") if dictionary.get("state") else APIHelper.SKIP
         postal_code = dictionary.get("postalCode") if dictionary.get("postalCode") else APIHelper.SKIP
         country = dictionary.get("country") if dictionary.get("country") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(mtype,
                    line_1,
@@ -123,8 +112,7 @@ class AddressInfo(object):
                    city,
                    state,
                    postal_code,
-                   country,
-                   additional_properties)
+                   country)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -135,8 +123,7 @@ class AddressInfo(object):
                 f'city={(self.city if hasattr(self, "city") else None)!r}, '
                 f'state={(self.state if hasattr(self, "state") else None)!r}, '
                 f'postal_code={(self.postal_code if hasattr(self, "postal_code") else None)!r}, '
-                f'country={(self.country if hasattr(self, "country") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'country={(self.country if hasattr(self, "country") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -147,5 +134,4 @@ class AddressInfo(object):
                 f'city={(self.city if hasattr(self, "city") else None)!s}, '
                 f'state={(self.state if hasattr(self, "state") else None)!s}, '
                 f'postal_code={(self.postal_code if hasattr(self, "postal_code") else None)!s}, '
-                f'country={(self.country if hasattr(self, "country") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'country={(self.country if hasattr(self, "country") else None)!s})')

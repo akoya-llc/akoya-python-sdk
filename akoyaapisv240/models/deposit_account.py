@@ -35,14 +35,14 @@ class DepositAccount(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -56,8 +56,6 @@ class DepositAccount(object):
         annual_percentage_yield (float): Annual Percentage Yield.
         term (int): Term of CD in months
         maturity_date (datetime): Maturity date for CDs.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -137,8 +135,7 @@ class DepositAccount(object):
                  transfer_out=APIHelper.SKIP,
                  annual_percentage_yield=APIHelper.SKIP,
                  term=APIHelper.SKIP,
-                 maturity_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 maturity_date=APIHelper.SKIP):
         """Constructor for the DepositAccount class"""
 
         # Initialize members of the class
@@ -189,11 +186,6 @@ class DepositAccount(object):
         if maturity_date is not APIHelper.SKIP:
             self.maturity_date = APIHelper.apply_datetime_converter(maturity_date, APIHelper.RFC3339DateTime) if maturity_date else None 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -240,9 +232,6 @@ class DepositAccount(object):
         annual_percentage_yield = dictionary.get("annualPercentageYield") if dictionary.get("annualPercentageYield") else APIHelper.SKIP
         term = dictionary.get("term") if dictionary.get("term") else APIHelper.SKIP
         maturity_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("maturityDate")).datetime if dictionary.get("maturityDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -266,8 +255,7 @@ class DepositAccount(object):
                    transfer_out,
                    annual_percentage_yield,
                    term,
-                   maturity_date,
-                   additional_properties)
+                   maturity_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -315,8 +303,7 @@ class DepositAccount(object):
                 f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r}, '
                 f'annual_percentage_yield={(self.annual_percentage_yield if hasattr(self, "annual_percentage_yield") else None)!r}, '
                 f'term={(self.term if hasattr(self, "term") else None)!r}, '
-                f'maturity_date={(self.maturity_date if hasattr(self, "maturity_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'maturity_date={(self.maturity_date if hasattr(self, "maturity_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -342,5 +329,4 @@ class DepositAccount(object):
                 f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s}, '
                 f'annual_percentage_yield={(self.annual_percentage_yield if hasattr(self, "annual_percentage_yield") else None)!s}, '
                 f'term={(self.term if hasattr(self, "term") else None)!s}, '
-                f'maturity_date={(self.maturity_date if hasattr(self, "maturity_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'maturity_date={(self.maturity_date if hasattr(self, "maturity_date") else None)!s})')

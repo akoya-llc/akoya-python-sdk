@@ -18,8 +18,6 @@ class TaxStatementList(object):
 
     Attributes:
         statements (List[TaxStatement]): The list of tax statements
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -33,18 +31,12 @@ class TaxStatementList(object):
     ]
 
     def __init__(self,
-                 statements=APIHelper.SKIP,
-                 additional_properties=None):
+                 statements=APIHelper.SKIP):
         """Constructor for the TaxStatementList class"""
 
         # Initialize members of the class
         if statements is not APIHelper.SKIP:
             self.statements = statements 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -70,19 +62,13 @@ class TaxStatementList(object):
             statements = [TaxStatement.from_dictionary(x) for x in dictionary.get('statements')]
         else:
             statements = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(statements,
-                   additional_properties)
+        return cls(statements)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'statements={(self.statements if hasattr(self, "statements") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'statements={(self.statements if hasattr(self, "statements") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'statements={(self.statements if hasattr(self, "statements") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'statements={(self.statements if hasattr(self, "statements") else None)!s})')

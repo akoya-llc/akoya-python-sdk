@@ -19,11 +19,9 @@ class StockSecurityEntity(object):
         units_street (float): Units in the FI's street name, positive quantity
         units_user (float): Units in user's name directly, positive  quantity
         reinvest_dividends (bool): Reinvest dividends
-        stock_type (StockType): The model property of type StockType.
+        stock_type (StockTypeEnum): The model property of type StockTypeEnum.
         myield (float): Current yield
         yield_as_of_date (datetime): Yield as-of date
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -52,8 +50,7 @@ class StockSecurityEntity(object):
                  reinvest_dividends=APIHelper.SKIP,
                  stock_type=APIHelper.SKIP,
                  myield=APIHelper.SKIP,
-                 yield_as_of_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 yield_as_of_date=APIHelper.SKIP):
         """Constructor for the StockSecurityEntity class"""
 
         # Initialize members of the class
@@ -69,11 +66,6 @@ class StockSecurityEntity(object):
             self.myield = myield 
         if yield_as_of_date is not APIHelper.SKIP:
             self.yield_as_of_date = APIHelper.apply_datetime_converter(yield_as_of_date, APIHelper.RFC3339DateTime) if yield_as_of_date else None 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -100,17 +92,13 @@ class StockSecurityEntity(object):
         stock_type = dictionary.get("stockType") if dictionary.get("stockType") else APIHelper.SKIP
         myield = dictionary.get("yield") if dictionary.get("yield") else APIHelper.SKIP
         yield_as_of_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("yieldAsOfDate")).datetime if dictionary.get("yieldAsOfDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(units_street,
                    units_user,
                    reinvest_dividends,
                    stock_type,
                    myield,
-                   yield_as_of_date,
-                   additional_properties)
+                   yield_as_of_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -141,8 +129,7 @@ class StockSecurityEntity(object):
                 f'reinvest_dividends={(self.reinvest_dividends if hasattr(self, "reinvest_dividends") else None)!r}, '
                 f'stock_type={(self.stock_type if hasattr(self, "stock_type") else None)!r}, '
                 f'myield={(self.myield if hasattr(self, "myield") else None)!r}, '
-                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -151,5 +138,4 @@ class StockSecurityEntity(object):
                 f'reinvest_dividends={(self.reinvest_dividends if hasattr(self, "reinvest_dividends") else None)!s}, '
                 f'stock_type={(self.stock_type if hasattr(self, "stock_type") else None)!s}, '
                 f'myield={(self.myield if hasattr(self, "myield") else None)!s}, '
-                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'yield_as_of_date={(self.yield_as_of_date if hasattr(self, "yield_as_of_date") else None)!s})')

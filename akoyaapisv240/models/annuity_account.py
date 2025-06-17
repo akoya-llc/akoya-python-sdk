@@ -35,14 +35,14 @@ class AnnuityAccount(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -53,14 +53,12 @@ class AnnuityAccount(object):
         prior_interest_rate (float): Previous Interest Rate of Account
         transfer_in (bool): Account is eligible for incoming transfers
         transfer_out (bool): Account is eligible for outgoing transfers
-        annuity_product_type (AnnunityProductType): The model property of type
-            AnnunityProductType.
-        annuity_value_basis (AnnunityValueBasis): The model property of type
-            AnnunityValueBasis.
-        payment_frequency (AnnuityAccountPaymentFrequency): The model property
-            of type AnnuityAccountPaymentFrequency.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        annuity_product_type (AnnunityProductTypeEnum): The model property of
+            type AnnunityProductTypeEnum.
+        annuity_value_basis (AnnunityValueBasisEnum): The model property of
+            type AnnunityValueBasisEnum.
+        payment_frequency (AnnuityAccountPaymentFrequencyEnum): The model
+            property of type AnnuityAccountPaymentFrequencyEnum.
 
     """
 
@@ -140,8 +138,7 @@ class AnnuityAccount(object):
                  transfer_out=APIHelper.SKIP,
                  annuity_product_type=APIHelper.SKIP,
                  annuity_value_basis=APIHelper.SKIP,
-                 payment_frequency=APIHelper.SKIP,
-                 additional_properties=None):
+                 payment_frequency=APIHelper.SKIP):
         """Constructor for the AnnuityAccount class"""
 
         # Initialize members of the class
@@ -192,11 +189,6 @@ class AnnuityAccount(object):
         if payment_frequency is not APIHelper.SKIP:
             self.payment_frequency = payment_frequency 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -243,9 +235,6 @@ class AnnuityAccount(object):
         annuity_product_type = dictionary.get("annuityProductType") if dictionary.get("annuityProductType") else APIHelper.SKIP
         annuity_value_basis = dictionary.get("annuityValueBasis") if dictionary.get("annuityValueBasis") else APIHelper.SKIP
         payment_frequency = dictionary.get("paymentFrequency") if dictionary.get("paymentFrequency") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -269,8 +258,7 @@ class AnnuityAccount(object):
                    transfer_out,
                    annuity_product_type,
                    annuity_value_basis,
-                   payment_frequency,
-                   additional_properties)
+                   payment_frequency)
 
     @classmethod
     def validate(cls, dictionary):
@@ -318,8 +306,7 @@ class AnnuityAccount(object):
                 f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r}, '
                 f'annuity_product_type={(self.annuity_product_type if hasattr(self, "annuity_product_type") else None)!r}, '
                 f'annuity_value_basis={(self.annuity_value_basis if hasattr(self, "annuity_value_basis") else None)!r}, '
-                f'payment_frequency={(self.payment_frequency if hasattr(self, "payment_frequency") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'payment_frequency={(self.payment_frequency if hasattr(self, "payment_frequency") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -345,5 +332,4 @@ class AnnuityAccount(object):
                 f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s}, '
                 f'annuity_product_type={(self.annuity_product_type if hasattr(self, "annuity_product_type") else None)!s}, '
                 f'annuity_value_basis={(self.annuity_value_basis if hasattr(self, "annuity_value_basis") else None)!s}, '
-                f'payment_frequency={(self.payment_frequency if hasattr(self, "payment_frequency") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'payment_frequency={(self.payment_frequency if hasattr(self, "payment_frequency") else None)!s})')

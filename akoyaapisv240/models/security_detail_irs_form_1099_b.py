@@ -13,7 +13,7 @@ from akoyaapisv240.models.code_and_amount import CodeAndAmount
 from akoyaapisv240.models.state_and_local_tax_withholding import StateAndLocalTaxWithholding
 
 
-class SecurityDetailIrsForm1099B(object):
+class SecurityDetailIRSForm1099B(object):
 
     """Implementation of the 'Security Detail, IRS Form 1099-B' model.
 
@@ -37,25 +37,24 @@ class SecurityDetailIrsForm1099B(object):
             correctedCostBasis are supplied, costBasis plus adjustmentCode B
             should equal correctedCostBasis
         wash_sale_loss_disallowed (float): Box 1g, Wash sale loss disallowed
-        long_or_short (SaleTermType): LONG or SHORT (1099-B box 2)
+        long_or_short (SaleTermTypeEnum): LONG or SHORT (1099-B box 2)
         ordinary (bool): Box 2, Ordinary
         collectible (bool): Box 3, Collectibles
         qof (bool): Box 3, Qualified Opportunity Fund (QOF)
         federal_tax_withheld (float): Box 4, Federal income tax withheld
         noncovered_security (bool): Box 5, Noncovered security
-        gross_or_net (SaleProceedsType): Box 6, Reported to IRS: GROSS or NET
+        gross_or_net (SaleProceedsTypeEnum): Box 6, Reported to IRS: GROSS or
+            NET
         loss_not_allowed (bool): Box 7, Loss not allowed based on proceeds
         basis_reported (bool): Box 12, Basis reported to IRS
         state_and_local (List[StateAndLocalTaxWithholding]): Boxes 14-16,
             State and Local tax withholding
         cusip (str): CUSIP number
         foreign_account_tax_compliance (bool): Foreign account tax compliance
-        expired_option (ExpiredOptionType): To indicate gain or loss resulted
-            from option expiration. If salesPrice (1d, proceeds) is zero, use
-            PURCHASED. If costBasis (1e) is zero, use GRANTED
-        investment_sale_type (InvestmentSaleType): Type of investment sale
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        expired_option (ExpiredOptionType1Enum): To indicate gain or loss
+            resulted from option expiration. If salesPrice (1d, proceeds) is
+            zero, use PURCHASED. If costBasis (1e) is zero, use GRANTED
+        investment_sale_type (InvestmentSaleTypeEnum): Type of investment sale
 
     """
 
@@ -147,9 +146,8 @@ class SecurityDetailIrsForm1099B(object):
                  cusip=APIHelper.SKIP,
                  foreign_account_tax_compliance=APIHelper.SKIP,
                  expired_option=APIHelper.SKIP,
-                 investment_sale_type=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the SecurityDetailIrsForm1099B class"""
+                 investment_sale_type=APIHelper.SKIP):
+        """Constructor for the SecurityDetailIRSForm1099B class"""
 
         # Initialize members of the class
         if checkbox_on_form_8949 is not APIHelper.SKIP:
@@ -207,11 +205,6 @@ class SecurityDetailIrsForm1099B(object):
         if investment_sale_type is not APIHelper.SKIP:
             self.investment_sale_type = investment_sale_type 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -266,9 +259,6 @@ class SecurityDetailIrsForm1099B(object):
         foreign_account_tax_compliance = dictionary.get("foreignAccountTaxCompliance") if "foreignAccountTaxCompliance" in dictionary.keys() else APIHelper.SKIP
         expired_option = dictionary.get("expiredOption") if dictionary.get("expiredOption") else APIHelper.SKIP
         investment_sale_type = dictionary.get("investmentSaleType") if dictionary.get("investmentSaleType") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(checkbox_on_form_8949,
                    security_name,
@@ -296,8 +286,7 @@ class SecurityDetailIrsForm1099B(object):
                    cusip,
                    foreign_account_tax_compliance,
                    expired_option,
-                   investment_sale_type,
-                   additional_properties)
+                   investment_sale_type)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -327,8 +316,7 @@ class SecurityDetailIrsForm1099B(object):
                 f'cusip={(self.cusip if hasattr(self, "cusip") else None)!r}, '
                 f'foreign_account_tax_compliance={(self.foreign_account_tax_compliance if hasattr(self, "foreign_account_tax_compliance") else None)!r}, '
                 f'expired_option={(self.expired_option if hasattr(self, "expired_option") else None)!r}, '
-                f'investment_sale_type={(self.investment_sale_type if hasattr(self, "investment_sale_type") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'investment_sale_type={(self.investment_sale_type if hasattr(self, "investment_sale_type") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -358,5 +346,4 @@ class SecurityDetailIrsForm1099B(object):
                 f'cusip={(self.cusip if hasattr(self, "cusip") else None)!s}, '
                 f'foreign_account_tax_compliance={(self.foreign_account_tax_compliance if hasattr(self, "foreign_account_tax_compliance") else None)!s}, '
                 f'expired_option={(self.expired_option if hasattr(self, "expired_option") else None)!s}, '
-                f'investment_sale_type={(self.investment_sale_type if hasattr(self, "investment_sale_type") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'investment_sale_type={(self.investment_sale_type if hasattr(self, "investment_sale_type") else None)!s})')

@@ -23,9 +23,7 @@ class HealthInsuranceCoveredIndividual(object):
         tin (str): Social security number or other TIN
         date_of_birth (date): Date of birth
         covered_all_12_months (bool): Covered all 12 months
-        covered_months (List[MonthAbbreviation]): Months covered
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        covered_months (List[MonthAbbreviationEnum]): Months covered
 
     """
 
@@ -51,8 +49,7 @@ class HealthInsuranceCoveredIndividual(object):
                  tin=APIHelper.SKIP,
                  date_of_birth=APIHelper.SKIP,
                  covered_all_12_months=APIHelper.SKIP,
-                 covered_months=APIHelper.SKIP,
-                 additional_properties=None):
+                 covered_months=APIHelper.SKIP):
         """Constructor for the HealthInsuranceCoveredIndividual class"""
 
         # Initialize members of the class
@@ -66,11 +63,6 @@ class HealthInsuranceCoveredIndividual(object):
             self.covered_all_12_months = covered_all_12_months 
         if covered_months is not APIHelper.SKIP:
             self.covered_months = covered_months 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -96,16 +88,12 @@ class HealthInsuranceCoveredIndividual(object):
         date_of_birth = dateutil.parser.parse(dictionary.get('dateOfBirth')).date() if dictionary.get('dateOfBirth') else APIHelper.SKIP
         covered_all_12_months = dictionary.get("coveredAll12Months") if "coveredAll12Months" in dictionary.keys() else APIHelper.SKIP
         covered_months = dictionary.get("coveredMonths") if dictionary.get("coveredMonths") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(name,
                    tin,
                    date_of_birth,
                    covered_all_12_months,
-                   covered_months,
-                   additional_properties)
+                   covered_months)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -113,8 +101,7 @@ class HealthInsuranceCoveredIndividual(object):
                 f'tin={(self.tin if hasattr(self, "tin") else None)!r}, '
                 f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!r}, '
                 f'covered_all_12_months={(self.covered_all_12_months if hasattr(self, "covered_all_12_months") else None)!r}, '
-                f'covered_months={(self.covered_months if hasattr(self, "covered_months") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'covered_months={(self.covered_months if hasattr(self, "covered_months") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -122,5 +109,4 @@ class HealthInsuranceCoveredIndividual(object):
                 f'tin={(self.tin if hasattr(self, "tin") else None)!s}, '
                 f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!s}, '
                 f'covered_all_12_months={(self.covered_all_12_months if hasattr(self, "covered_all_12_months") else None)!s}, '
-                f'covered_months={(self.covered_months if hasattr(self, "covered_months") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'covered_months={(self.covered_months if hasattr(self, "covered_months") else None)!s})')

@@ -8,5 +8,5 @@ __all__ = [
     'statements_controller',
     'tax_beta_controller',
     'transactions_controller',
-    'oauth_authorization_controller',
+    'o_auth_authorization_controller',
 ]

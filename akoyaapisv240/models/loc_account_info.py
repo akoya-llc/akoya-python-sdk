@@ -16,8 +16,6 @@ class LocAccountInfo(object):
 
     Attributes:
         loc_account (AccountInformation): Line of Credit Account
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -31,18 +29,12 @@ class LocAccountInfo(object):
     ]
 
     def __init__(self,
-                 loc_account=APIHelper.SKIP,
-                 additional_properties=None):
+                 loc_account=APIHelper.SKIP):
         """Constructor for the LocAccountInfo class"""
 
         # Initialize members of the class
         if loc_account is not APIHelper.SKIP:
             self.loc_account = loc_account 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -64,12 +56,8 @@ class LocAccountInfo(object):
 
         # Extract variables from the dictionary
         loc_account = AccountInformation.from_dictionary(dictionary.get('locAccount')) if 'locAccount' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(loc_account,
-                   additional_properties)
+        return cls(loc_account)
 
     @classmethod
     def validate(cls, dictionary):
@@ -95,10 +83,8 @@ class LocAccountInfo(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'loc_account={(self.loc_account if hasattr(self, "loc_account") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'loc_account={(self.loc_account if hasattr(self, "loc_account") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'loc_account={(self.loc_account if hasattr(self, "loc_account") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'loc_account={(self.loc_account if hasattr(self, "loc_account") else None)!s})')

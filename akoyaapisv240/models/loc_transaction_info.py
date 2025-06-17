@@ -16,8 +16,6 @@ class LocTransactionInfo(object):
 
     Attributes:
         loc_transaction (LocTransaction): A line of credit transaction of type
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -31,18 +29,12 @@ class LocTransactionInfo(object):
     ]
 
     def __init__(self,
-                 loc_transaction=APIHelper.SKIP,
-                 additional_properties=None):
+                 loc_transaction=APIHelper.SKIP):
         """Constructor for the LocTransactionInfo class"""
 
         # Initialize members of the class
         if loc_transaction is not APIHelper.SKIP:
             self.loc_transaction = loc_transaction 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -64,12 +56,8 @@ class LocTransactionInfo(object):
 
         # Extract variables from the dictionary
         loc_transaction = LocTransaction.from_dictionary(dictionary.get('locTransaction')) if 'locTransaction' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(loc_transaction,
-                   additional_properties)
+        return cls(loc_transaction)
 
     @classmethod
     def validate(cls, dictionary):
@@ -95,10 +83,8 @@ class LocTransactionInfo(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'loc_transaction={(self.loc_transaction if hasattr(self, "loc_transaction") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'loc_transaction={(self.loc_transaction if hasattr(self, "loc_transaction") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'loc_transaction={(self.loc_transaction if hasattr(self, "loc_transaction") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'loc_transaction={(self.loc_transaction if hasattr(self, "loc_transaction") else None)!s})')

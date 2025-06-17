@@ -23,8 +23,6 @@ class TransactionsEntity(object):
             InsuranceTransactionInfo] | None): An array of transactions with
             entity types dependent on the account type (deposit, investment,
             loan, or line of credit)
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -41,8 +39,7 @@ class TransactionsEntity(object):
 
     def __init__(self,
                  links=APIHelper.SKIP,
-                 transactions=APIHelper.SKIP,
-                 additional_properties=None):
+                 transactions=APIHelper.SKIP):
         """Constructor for the TransactionsEntity class"""
 
         # Initialize members of the class
@@ -50,11 +47,6 @@ class TransactionsEntity(object):
             self.links = links 
         if transactions is not APIHelper.SKIP:
             self.transactions = transactions 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -78,22 +70,16 @@ class TransactionsEntity(object):
         # Extract variables from the dictionary
         links = Links.from_dictionary(dictionary.get('links')) if 'links' in dictionary.keys() else APIHelper.SKIP
         transactions = APIHelper.deserialize_union_type(UnionTypeLookUp.get('TransactionsEntityTransactions'), dictionary.get('transactions'), False) if dictionary.get('transactions') is not None else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(links,
-                   transactions,
-                   additional_properties)
+                   transactions)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'links={(self.links if hasattr(self, "links") else None)!r}, '
-                f'transactions={(self.transactions if hasattr(self, "transactions") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'transactions={(self.transactions if hasattr(self, "transactions") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'links={(self.links if hasattr(self, "links") else None)!s}, '
-                f'transactions={(self.transactions if hasattr(self, "transactions") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'transactions={(self.transactions if hasattr(self, "transactions") else None)!s})')

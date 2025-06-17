@@ -11,7 +11,7 @@ import dateutil.parser
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.code_and_amount import CodeAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -34,8 +34,8 @@ class Form1065K1(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,7 +53,7 @@ class Form1065K1(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         fiscal_year_begin (date): Fiscal year begin date
         fiscal_year_end (date): Fiscal year end data
@@ -146,24 +146,22 @@ class Form1065K1(object):
         net_1231_gain (float): Box 10, Net section 1231 gain (loss)
         other_income (List[CodeAndAmount]): Box 11, Other income
         section_179_deduction (float): Box 12, Section 179 deduction
-        other_deductions (List[CodeAndAmount]): Box 12, Other deductions
+        other_deductions (List[CodeAndAmount]): Box 13, Other deductions
         self_employment (List[CodeAndAmount]): Box 14, Self-employment
             earnings (loss)
         credits (List[CodeAndAmount]): Box 15, Credits
         schedule_k_3 (bool): Box 16, Schedule K-3 is attached
-        amt_items (List[CodeAndAmount]): Box 15, Alternative minimum tax (AMT)
+        amt_items (List[CodeAndAmount]): Box 17, Alternative minimum tax (AMT)
             items
         tax_exempt_income (List[CodeAndAmount]): Box 18, Tax-exempt income and
             nondeductible expenses
         distributions (List[CodeAndAmount]): Box 19, Distributions
-        other_info (List[CodeAndAmount]): Box 14, Other information
+        other_info (List[CodeAndAmount]): Box 20, Other information
         foreign_tax_paid (float): Box 21, Foreign taxes paid or accrued
         multiple_at_risk_activities (bool): Box 22, More than one activity for
             at-risk purposes
         multiple_passive_activities (bool): Box 23, More than one activity for
             passive activity purposes
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -420,8 +418,7 @@ class Form1065K1(object):
                  other_info=APIHelper.SKIP,
                  foreign_tax_paid=APIHelper.SKIP,
                  multiple_at_risk_activities=APIHelper.SKIP,
-                 multiple_passive_activities=APIHelper.SKIP,
-                 additional_properties=None):
+                 multiple_passive_activities=APIHelper.SKIP):
         """Constructor for the Form1065K1 class"""
 
         # Initialize members of the class
@@ -590,11 +587,6 @@ class Form1065K1(object):
         if multiple_passive_activities is not APIHelper.SKIP:
             self.multiple_passive_activities = multiple_passive_activities 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -631,7 +623,7 @@ class Form1065K1(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         fiscal_year_begin = dateutil.parser.parse(dictionary.get('fiscalYearBegin')).date() if dictionary.get('fiscalYearBegin') else APIHelper.SKIP
@@ -736,9 +728,6 @@ class Form1065K1(object):
         foreign_tax_paid = dictionary.get("foreignTaxPaid") if dictionary.get("foreignTaxPaid") else APIHelper.SKIP
         multiple_at_risk_activities = dictionary.get("multipleAtRiskActivities") if "multipleAtRiskActivities" in dictionary.keys() else APIHelper.SKIP
         multiple_passive_activities = dictionary.get("multiplePassiveActivities") if "multiplePassiveActivities" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -821,8 +810,7 @@ class Form1065K1(object):
                    other_info,
                    foreign_tax_paid,
                    multiple_at_risk_activities,
-                   multiple_passive_activities,
-                   additional_properties)
+                   multiple_passive_activities)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -907,8 +895,7 @@ class Form1065K1(object):
                 f'other_info={(self.other_info if hasattr(self, "other_info") else None)!r}, '
                 f'foreign_tax_paid={(self.foreign_tax_paid if hasattr(self, "foreign_tax_paid") else None)!r}, '
                 f'multiple_at_risk_activities={(self.multiple_at_risk_activities if hasattr(self, "multiple_at_risk_activities") else None)!r}, '
-                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -993,5 +980,4 @@ class Form1065K1(object):
                 f'other_info={(self.other_info if hasattr(self, "other_info") else None)!s}, '
                 f'foreign_tax_paid={(self.foreign_tax_paid if hasattr(self, "foreign_tax_paid") else None)!s}, '
                 f'multiple_at_risk_activities={(self.multiple_at_risk_activities if hasattr(self, "multiple_at_risk_activities") else None)!s}, '
-                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!s})')

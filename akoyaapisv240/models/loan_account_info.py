@@ -16,8 +16,6 @@ class LoanAccountInfo(object):
 
     Attributes:
         loan_account (LoanAccount): Loan Account
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -31,18 +29,12 @@ class LoanAccountInfo(object):
     ]
 
     def __init__(self,
-                 loan_account=APIHelper.SKIP,
-                 additional_properties=None):
+                 loan_account=APIHelper.SKIP):
         """Constructor for the LoanAccountInfo class"""
 
         # Initialize members of the class
         if loan_account is not APIHelper.SKIP:
             self.loan_account = loan_account 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -64,12 +56,8 @@ class LoanAccountInfo(object):
 
         # Extract variables from the dictionary
         loan_account = LoanAccount.from_dictionary(dictionary.get('loanAccount')) if 'loanAccount' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(loan_account,
-                   additional_properties)
+        return cls(loan_account)
 
     @classmethod
     def validate(cls, dictionary):
@@ -95,10 +83,8 @@ class LoanAccountInfo(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'loan_account={(self.loan_account if hasattr(self, "loan_account") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'loan_account={(self.loan_account if hasattr(self, "loan_account") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'loan_account={(self.loan_account if hasattr(self, "loan_account") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'loan_account={(self.loan_account if hasattr(self, "loan_account") else None)!s})')

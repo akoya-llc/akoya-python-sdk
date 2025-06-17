@@ -22,9 +22,9 @@ class TaxParty(object):
     Attributes:
         tin (str): Issuer or recipient Tax Identification Number. Usually EIN
             for issuer and SSN for recipient
-        party_type (TaxPartyType): Type of issuer or recipient legal entity,
-            as "BUSINESS" or "INDIVIDUAL". Commonly BUSINESS for issuer and
-            INDIVIDUAL for recipient
+        party_type (TaxPartyTypeEnum): Type of issuer or recipient legal
+            entity, as "BUSINESS" or "INDIVIDUAL". Commonly BUSINESS for
+            issuer and INDIVIDUAL for recipient
         individual_name (IndividualName): Individual issuer or recipient name
         business_name (BusinessName): Business issuer or recipient name
         address (Address): Issuer or recipient address
@@ -32,8 +32,6 @@ class TaxParty(object):
             number
         email (str): Issuer or recipient email address. (Additional
             information, not part of IRS forms)
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -65,8 +63,7 @@ class TaxParty(object):
                  business_name=APIHelper.SKIP,
                  address=APIHelper.SKIP,
                  phone=APIHelper.SKIP,
-                 email=APIHelper.SKIP,
-                 additional_properties=None):
+                 email=APIHelper.SKIP):
         """Constructor for the TaxParty class"""
 
         # Initialize members of the class
@@ -84,11 +81,6 @@ class TaxParty(object):
             self.phone = phone 
         if email is not APIHelper.SKIP:
             self.email = email 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -116,9 +108,6 @@ class TaxParty(object):
         address = Address.from_dictionary(dictionary.get('address')) if 'address' in dictionary.keys() else APIHelper.SKIP
         phone = TelephoneNumberPlusExtension.from_dictionary(dictionary.get('phone')) if 'phone' in dictionary.keys() else APIHelper.SKIP
         email = dictionary.get("email") if dictionary.get("email") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tin,
                    party_type,
@@ -126,8 +115,7 @@ class TaxParty(object):
                    business_name,
                    address,
                    phone,
-                   email,
-                   additional_properties)
+                   email)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -137,8 +125,7 @@ class TaxParty(object):
                 f'business_name={(self.business_name if hasattr(self, "business_name") else None)!r}, '
                 f'address={(self.address if hasattr(self, "address") else None)!r}, '
                 f'phone={(self.phone if hasattr(self, "phone") else None)!r}, '
-                f'email={(self.email if hasattr(self, "email") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'email={(self.email if hasattr(self, "email") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -148,5 +135,4 @@ class TaxParty(object):
                 f'business_name={(self.business_name if hasattr(self, "business_name") else None)!s}, '
                 f'address={(self.address if hasattr(self, "address") else None)!s}, '
                 f'phone={(self.phone if hasattr(self, "phone") else None)!s}, '
-                f'email={(self.email if hasattr(self, "email") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'email={(self.email if hasattr(self, "email") else None)!s})')

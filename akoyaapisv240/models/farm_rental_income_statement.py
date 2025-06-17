@@ -12,7 +12,7 @@ from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.date_and_amount import DateAndAmount
 from akoyaapisv240.models.description_and_amount import DescriptionAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -35,8 +35,8 @@ class FarmRentalIncomeStatement(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -54,7 +54,7 @@ class FarmRentalIncomeStatement(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         income_from_production (float): Box 1, Income from production of
             livestock, produce, grains, and other crops
@@ -64,7 +64,7 @@ class FarmRentalIncomeStatement(object):
             reported under election
         crop_insurance_proceeds (float): Box 5a, Crop insurance proceeds and
             federal crop disaster payments
-        other_income (List[DescriptionAndAmount]): Box 8, Other income
+        other_income (List[DescriptionAndAmount]): Box 6, Other income
         car_and_truck (float): Box 8, Car and truck expenses
         chemicals (float): Box 9, Chemicals
         conservation (float): Box 10, Conservation expenses
@@ -90,11 +90,9 @@ class FarmRentalIncomeStatement(object):
         taxes (float): Box 27, Taxes
         utilities (float): Box 28, Utilities
         veterinary (float): Box 29, Veterinary, breeding, and medicine
-        other_expenses (List[DescriptionAndAmount]): Box 32, Other expenses
+        other_expenses (List[DescriptionAndAmount]): Box 30, Other expenses
         capital_expenditures (List[DateAndAmount]): Capital expenditures, for
             use in calculating Depreciation
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -237,8 +235,7 @@ class FarmRentalIncomeStatement(object):
                  utilities=APIHelper.SKIP,
                  veterinary=APIHelper.SKIP,
                  other_expenses=APIHelper.SKIP,
-                 capital_expenditures=APIHelper.SKIP,
-                 additional_properties=None):
+                 capital_expenditures=APIHelper.SKIP):
         """Constructor for the FarmRentalIncomeStatement class"""
 
         # Initialize members of the class
@@ -331,11 +328,6 @@ class FarmRentalIncomeStatement(object):
         if capital_expenditures is not APIHelper.SKIP:
             self.capital_expenditures = capital_expenditures 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -372,7 +364,7 @@ class FarmRentalIncomeStatement(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         income_from_production = dictionary.get("incomeFromProduction") if dictionary.get("incomeFromProduction") else APIHelper.SKIP
@@ -419,9 +411,6 @@ class FarmRentalIncomeStatement(object):
             capital_expenditures = [DateAndAmount.from_dictionary(x) for x in dictionary.get('capitalExpenditures')]
         else:
             capital_expenditures = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -466,8 +455,7 @@ class FarmRentalIncomeStatement(object):
                    utilities,
                    veterinary,
                    other_expenses,
-                   capital_expenditures,
-                   additional_properties)
+                   capital_expenditures)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -514,8 +502,7 @@ class FarmRentalIncomeStatement(object):
                 f'utilities={(self.utilities if hasattr(self, "utilities") else None)!r}, '
                 f'veterinary={(self.veterinary if hasattr(self, "veterinary") else None)!r}, '
                 f'other_expenses={(self.other_expenses if hasattr(self, "other_expenses") else None)!r}, '
-                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -562,5 +549,4 @@ class FarmRentalIncomeStatement(object):
                 f'utilities={(self.utilities if hasattr(self, "utilities") else None)!s}, '
                 f'veterinary={(self.veterinary if hasattr(self, "veterinary") else None)!s}, '
                 f'other_expenses={(self.other_expenses if hasattr(self, "other_expenses") else None)!s}, '
-                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!s})')

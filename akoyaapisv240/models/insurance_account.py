@@ -35,14 +35,14 @@ class InsuranceAccount(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -53,11 +53,9 @@ class InsuranceAccount(object):
         prior_interest_rate (float): Previous Interest Rate of Account
         transfer_in (bool): Account is eligible for incoming transfers
         transfer_out (bool): Account is eligible for outgoing transfers
-        account_category (AccountCategory): The account category of the
+        account_category (AccountCategoryEnum): The account category of the
             insurance account. Possible enums: DEPOSIT_ACCOUNT,
             INVESTMENT_ACCOUNT, LOAN_ACCOUNT, LOC_ACCOUNT, INSURANCE_ACCOUNT
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -131,8 +129,7 @@ class InsuranceAccount(object):
                  prior_interest_rate=APIHelper.SKIP,
                  transfer_in=APIHelper.SKIP,
                  transfer_out=APIHelper.SKIP,
-                 account_category=APIHelper.SKIP,
-                 additional_properties=None):
+                 account_category=APIHelper.SKIP):
         """Constructor for the InsuranceAccount class"""
 
         # Initialize members of the class
@@ -179,11 +176,6 @@ class InsuranceAccount(object):
         if account_category is not APIHelper.SKIP:
             self.account_category = account_category 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -228,9 +220,6 @@ class InsuranceAccount(object):
         transfer_in = dictionary.get("transferIn") if "transferIn" in dictionary.keys() else APIHelper.SKIP
         transfer_out = dictionary.get("transferOut") if "transferOut" in dictionary.keys() else APIHelper.SKIP
         account_category = dictionary.get("accountCategory") if dictionary.get("accountCategory") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -252,8 +241,7 @@ class InsuranceAccount(object):
                    prior_interest_rate,
                    transfer_in,
                    transfer_out,
-                   account_category,
-                   additional_properties)
+                   account_category)
 
     @classmethod
     def validate(cls, dictionary):
@@ -299,8 +287,7 @@ class InsuranceAccount(object):
                 f'prior_interest_rate={(self.prior_interest_rate if hasattr(self, "prior_interest_rate") else None)!r}, '
                 f'transfer_in={(self.transfer_in if hasattr(self, "transfer_in") else None)!r}, '
                 f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r}, '
-                f'account_category={(self.account_category if hasattr(self, "account_category") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'account_category={(self.account_category if hasattr(self, "account_category") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -324,5 +311,4 @@ class InsuranceAccount(object):
                 f'prior_interest_rate={(self.prior_interest_rate if hasattr(self, "prior_interest_rate") else None)!s}, '
                 f'transfer_in={(self.transfer_in if hasattr(self, "transfer_in") else None)!s}, '
                 f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s}, '
-                f'account_category={(self.account_category if hasattr(self, "account_category") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'account_category={(self.account_category if hasattr(self, "account_category") else None)!s})')

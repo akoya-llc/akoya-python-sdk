@@ -35,14 +35,14 @@ class InsuranceBalances(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -53,18 +53,16 @@ class InsuranceBalances(object):
         prior_interest_rate (float): Previous Interest Rate of Account
         transfer_in (bool): Account is eligible for incoming transfers
         transfer_out (bool): Account is eligible for outgoing transfers
-        account_category (AccountCategory): The account category of the
+        account_category (AccountCategoryEnum): The account category of the
             insurance account. Possible enums: DEPOSIT_ACCOUNT,
             INVESTMENT_ACCOUNT, LOAN_ACCOUNT, LOC_ACCOUNT, INSURANCE_ACCOUNT
         policy_coverage_amount (float): Total amount of money the user is
             insured for.
         policy_end_date (datetime): The premium end date.
         policy_premium (float): The amount of the user's premium.
-        policy_premium_term (PolicyPremiumTerm): he payment term for the
+        policy_premium_term (PolicyPremiumTermEnum): he payment term for the
             premium. MONTHLY or ANNUAL.
         policy_start_date (datetime): The premium start date.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -153,8 +151,7 @@ class InsuranceBalances(object):
                  policy_end_date=APIHelper.SKIP,
                  policy_premium=APIHelper.SKIP,
                  policy_premium_term=APIHelper.SKIP,
-                 policy_start_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 policy_start_date=APIHelper.SKIP):
         """Constructor for the InsuranceBalances class"""
 
         # Initialize members of the class
@@ -211,11 +208,6 @@ class InsuranceBalances(object):
         if policy_start_date is not APIHelper.SKIP:
             self.policy_start_date = APIHelper.apply_datetime_converter(policy_start_date, APIHelper.RFC3339DateTime) if policy_start_date else None 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -265,9 +257,6 @@ class InsuranceBalances(object):
         policy_premium = dictionary.get("policyPremium") if dictionary.get("policyPremium") else APIHelper.SKIP
         policy_premium_term = dictionary.get("policyPremiumTerm") if dictionary.get("policyPremiumTerm") else APIHelper.SKIP
         policy_start_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("policyStartDate")).datetime if dictionary.get("policyStartDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -294,8 +283,7 @@ class InsuranceBalances(object):
                    policy_end_date,
                    policy_premium,
                    policy_premium_term,
-                   policy_start_date,
-                   additional_properties)
+                   policy_start_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -346,8 +334,7 @@ class InsuranceBalances(object):
                 f'policy_end_date={(self.policy_end_date if hasattr(self, "policy_end_date") else None)!r}, '
                 f'policy_premium={(self.policy_premium if hasattr(self, "policy_premium") else None)!r}, '
                 f'policy_premium_term={(self.policy_premium_term if hasattr(self, "policy_premium_term") else None)!r}, '
-                f'policy_start_date={(self.policy_start_date if hasattr(self, "policy_start_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'policy_start_date={(self.policy_start_date if hasattr(self, "policy_start_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -376,5 +363,4 @@ class InsuranceBalances(object):
                 f'policy_end_date={(self.policy_end_date if hasattr(self, "policy_end_date") else None)!s}, '
                 f'policy_premium={(self.policy_premium if hasattr(self, "policy_premium") else None)!s}, '
                 f'policy_premium_term={(self.policy_premium_term if hasattr(self, "policy_premium_term") else None)!s}, '
-                f'policy_start_date={(self.policy_start_date if hasattr(self, "policy_start_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'policy_start_date={(self.policy_start_date if hasattr(self, "policy_start_date") else None)!s})')

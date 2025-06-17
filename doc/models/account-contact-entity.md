@@ -3,8 +3,6 @@
 
 Contact information for the account
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `AccountContactEntity`
@@ -15,9 +13,8 @@ Contact information for the account
 |  --- | --- | --- | --- |
 | `holders` | [`List[AccountHolderEntity]`](../../doc/models/account-holder-entity.md) | Optional | Owners of the account |
 | `emails` | `List[str]` | Optional | Email addresses associated with the account |
-| `addresses` | [`List[DeliveryAddressDetails]`](../../doc/models/delivery-address-details.md) | Optional | - |
+| `addresses` | [`List[DeliveryAddress]`](../../doc/models/delivery-address.md) | Optional | - |
 | `telephones` | [`List[TelephoneNumber]`](../../doc/models/telephone-number.md) | Optional | Telephone numbers associated with the account. |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -31,17 +28,9 @@ Contact information for the account
         "middle": "middle6",
         "last": "last0",
         "prefix": "prefix8",
-        "suffix": "suffix0",
-        "exampleAdditionalProperty": {
-          "key1": "val1",
-          "key2": "val2"
-        }
+        "suffix": "suffix0"
       },
-      "relationship": "FOR_BENEFIT_OF_SECONDARY_JOINT_RESTRICTED",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "relationship": "PRIMARY"
     },
     {
       "customerId": "customerId0",
@@ -50,17 +39,9 @@ Contact information for the account
         "middle": "middle6",
         "last": "last0",
         "prefix": "prefix8",
-        "suffix": "suffix0",
-        "exampleAdditionalProperty": {
-          "key1": "val1",
-          "key2": "val2"
-        }
+        "suffix": "suffix0"
       },
-      "relationship": "FOR_BENEFIT_OF_SECONDARY_JOINT_RESTRICTED",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "relationship": "PRIMARY"
     }
   ],
   "emails": [
@@ -68,46 +49,30 @@ Contact information for the account
   ],
   "addresses": [
     {
-      "type": "type6",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "line1": "line16",
+      "line2": "line28",
+      "line3": "line36",
+      "city": "city4",
+      "state": "state0"
     }
   ],
   "telephones": [
     {
       "type": "FAX",
-      "country": "country0",
-      "number": "number4",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "country": "GB",
+      "number": "number4"
     },
     {
       "type": "FAX",
-      "country": "country0",
-      "number": "number4",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "country": "GB",
+      "number": "number4"
     },
     {
       "type": "FAX",
-      "country": "country0",
-      "number": "number4",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "country": "GB",
+      "number": "number4"
     }
-  ],
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  ]
 }
 ```
 

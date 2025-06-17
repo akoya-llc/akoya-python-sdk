@@ -12,7 +12,7 @@ from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.code_and_amount import CodeAndAmount
 from akoyaapisv240.models.description_and_amount import DescriptionAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -35,8 +35,8 @@ class Form1120SK1(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -54,7 +54,7 @@ class Form1120SK1(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         final_k_1 (bool): Final K-1
         amended_k_1 (bool): Amended K-1
@@ -86,22 +86,20 @@ class Form1120SK1(object):
         collectibles_gain (float): Box 8b, Collectibles (28%) gain (loss)
         unrecaptured_1250_gain (float): Box 8c, Unrecaptured section 1250 gain
         net_1231_gain (float): Box 9, Net section 1231 gain (loss)
-        other_income (List[DescriptionAndAmount]): Box 8, Other income
+        other_income (List[DescriptionAndAmount]): Box 10, Other income (loss)
         section_179_deduction (float): Box 11, Section 179 deduction
         other_deductions (List[CodeAndAmount]): Box 12, Other deductions
-        credits (List[CodeAndAmount]): Box 15, Credits
+        credits (List[CodeAndAmount]): Box 13, Credits
         schedule_k_3 (bool): Box 14, Schedule K-3 is attached
         amt_items (List[CodeAndAmount]): Box 15, Alternative minimum tax (AMT)
             items
         basis_items (List[CodeAndAmount]): Box 16, Items affecting shareholder
             basis
-        other_info (List[CodeAndAmount]): Box 14, Other information
+        other_info (List[CodeAndAmount]): Box 17, Other information
         multiple_at_risk_activities (bool): Box 18, More than one activity for
             at-risk purposes
         multiple_passive_activities (bool): Box 19, More than one activity for
             passive activity purposes
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -250,8 +248,7 @@ class Form1120SK1(object):
                  basis_items=APIHelper.SKIP,
                  other_info=APIHelper.SKIP,
                  multiple_at_risk_activities=APIHelper.SKIP,
-                 multiple_passive_activities=APIHelper.SKIP,
-                 additional_properties=None):
+                 multiple_passive_activities=APIHelper.SKIP):
         """Constructor for the Form1120SK1 class"""
 
         # Initialize members of the class
@@ -348,11 +345,6 @@ class Form1120SK1(object):
         if multiple_passive_activities is not APIHelper.SKIP:
             self.multiple_passive_activities = multiple_passive_activities 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -389,7 +381,7 @@ class Form1120SK1(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         final_k_1 = dictionary.get("finalK1") if "finalK1" in dictionary.keys() else APIHelper.SKIP
@@ -450,9 +442,6 @@ class Form1120SK1(object):
             other_info = APIHelper.SKIP
         multiple_at_risk_activities = dictionary.get("multipleAtRiskActivities") if "multipleAtRiskActivities" in dictionary.keys() else APIHelper.SKIP
         multiple_passive_activities = dictionary.get("multiplePassiveActivities") if "multiplePassiveActivities" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -499,8 +488,7 @@ class Form1120SK1(object):
                    basis_items,
                    other_info,
                    multiple_at_risk_activities,
-                   multiple_passive_activities,
-                   additional_properties)
+                   multiple_passive_activities)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -549,8 +537,7 @@ class Form1120SK1(object):
                 f'basis_items={(self.basis_items if hasattr(self, "basis_items") else None)!r}, '
                 f'other_info={(self.other_info if hasattr(self, "other_info") else None)!r}, '
                 f'multiple_at_risk_activities={(self.multiple_at_risk_activities if hasattr(self, "multiple_at_risk_activities") else None)!r}, '
-                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -599,5 +586,4 @@ class Form1120SK1(object):
                 f'basis_items={(self.basis_items if hasattr(self, "basis_items") else None)!s}, '
                 f'other_info={(self.other_info if hasattr(self, "other_info") else None)!s}, '
                 f'multiple_at_risk_activities={(self.multiple_at_risk_activities if hasattr(self, "multiple_at_risk_activities") else None)!s}, '
-                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'multiple_passive_activities={(self.multiple_passive_activities if hasattr(self, "multiple_passive_activities") else None)!s})')

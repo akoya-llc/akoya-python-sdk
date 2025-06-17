@@ -21,8 +21,6 @@ class TaxFormAttribute(object):
         value (str): Value of attribute
         box_number (str): Box number on a tax form, if any
         code (str): Tax form code for the given box number, if any
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -45,8 +43,7 @@ class TaxFormAttribute(object):
                  name=APIHelper.SKIP,
                  value=APIHelper.SKIP,
                  box_number=APIHelper.SKIP,
-                 code=APIHelper.SKIP,
-                 additional_properties=None):
+                 code=APIHelper.SKIP):
         """Constructor for the TaxFormAttribute class"""
 
         # Initialize members of the class
@@ -58,11 +55,6 @@ class TaxFormAttribute(object):
             self.box_number = box_number 
         if code is not APIHelper.SKIP:
             self.code = code 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -87,28 +79,22 @@ class TaxFormAttribute(object):
         value = dictionary.get("value") if dictionary.get("value") else APIHelper.SKIP
         box_number = dictionary.get("boxNumber") if dictionary.get("boxNumber") else APIHelper.SKIP
         code = dictionary.get("code") if dictionary.get("code") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(name,
                    value,
                    box_number,
-                   code,
-                   additional_properties)
+                   code)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'name={(self.name if hasattr(self, "name") else None)!r}, '
                 f'value={(self.value if hasattr(self, "value") else None)!r}, '
                 f'box_number={(self.box_number if hasattr(self, "box_number") else None)!r}, '
-                f'code={(self.code if hasattr(self, "code") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'code={(self.code if hasattr(self, "code") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'name={(self.name if hasattr(self, "name") else None)!s}, '
                 f'value={(self.value if hasattr(self, "value") else None)!s}, '
                 f'box_number={(self.box_number if hasattr(self, "box_number") else None)!s}, '
-                f'code={(self.code if hasattr(self, "code") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'code={(self.code if hasattr(self, "code") else None)!s})')

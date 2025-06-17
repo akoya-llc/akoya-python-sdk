@@ -26,8 +26,6 @@ class VestingEntity(object):
         un_vested_balance (float): Unvested balance
         vested_quantity (float): Vested qualtity
         un_vested_quantity (float): Unvested quantity
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -68,8 +66,7 @@ class VestingEntity(object):
                  vested_balance=APIHelper.SKIP,
                  un_vested_balance=APIHelper.SKIP,
                  vested_quantity=APIHelper.SKIP,
-                 un_vested_quantity=APIHelper.SKIP,
-                 additional_properties=None):
+                 un_vested_quantity=APIHelper.SKIP):
         """Constructor for the VestingEntity class"""
 
         # Initialize members of the class
@@ -93,11 +90,6 @@ class VestingEntity(object):
             self.vested_quantity = vested_quantity 
         if un_vested_quantity is not APIHelper.SKIP:
             self.un_vested_quantity = un_vested_quantity 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -128,9 +120,6 @@ class VestingEntity(object):
         un_vested_balance = dictionary.get("unVestedBalance") if dictionary.get("unVestedBalance") else APIHelper.SKIP
         vested_quantity = dictionary.get("vestedQuantity") if dictionary.get("vestedQuantity") else APIHelper.SKIP
         un_vested_quantity = dictionary.get("unVestedQuantity") if dictionary.get("unVestedQuantity") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(vesting_date,
                    symbol,
@@ -141,8 +130,7 @@ class VestingEntity(object):
                    vested_balance,
                    un_vested_balance,
                    vested_quantity,
-                   un_vested_quantity,
-                   additional_properties)
+                   un_vested_quantity)
 
     @classmethod
     def validate(cls, dictionary):
@@ -177,8 +165,7 @@ class VestingEntity(object):
                 f'vested_balance={(self.vested_balance if hasattr(self, "vested_balance") else None)!r}, '
                 f'un_vested_balance={(self.un_vested_balance if hasattr(self, "un_vested_balance") else None)!r}, '
                 f'vested_quantity={(self.vested_quantity if hasattr(self, "vested_quantity") else None)!r}, '
-                f'un_vested_quantity={(self.un_vested_quantity if hasattr(self, "un_vested_quantity") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'un_vested_quantity={(self.un_vested_quantity if hasattr(self, "un_vested_quantity") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -191,5 +178,4 @@ class VestingEntity(object):
                 f'vested_balance={(self.vested_balance if hasattr(self, "vested_balance") else None)!s}, '
                 f'un_vested_balance={(self.un_vested_balance if hasattr(self, "un_vested_balance") else None)!s}, '
                 f'vested_quantity={(self.vested_quantity if hasattr(self, "vested_quantity") else None)!s}, '
-                f'un_vested_quantity={(self.un_vested_quantity if hasattr(self, "un_vested_quantity") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'un_vested_quantity={(self.un_vested_quantity if hasattr(self, "un_vested_quantity") else None)!s})')

@@ -42,9 +42,9 @@ class Form1042SAgent(object):
     Attributes:
         tin (str): Issuer or recipient Tax Identification Number. Usually EIN
             for issuer and SSN for recipient
-        party_type (TaxPartyType): Type of issuer or recipient legal entity,
-            as "BUSINESS" or "INDIVIDUAL". Commonly BUSINESS for issuer and
-            INDIVIDUAL for recipient
+        party_type (TaxPartyTypeEnum): Type of issuer or recipient legal
+            entity, as "BUSINESS" or "INDIVIDUAL". Commonly BUSINESS for
+            issuer and INDIVIDUAL for recipient
         individual_name (IndividualName): Individual issuer or recipient name
         business_name (BusinessName): Business issuer or recipient name
         address (Address): Issuer or recipient address
@@ -64,8 +64,6 @@ class Form1042SAgent(object):
         foreign_tin (str): Foreign tax identification number, if any,   * Box
             12g, Withholding Agent,   * Box 13i, Recipient,   * Box 15g,
             Intermediary or flow-through entity
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -109,8 +107,7 @@ class Form1042SAgent(object):
                  ch_3_status_code=APIHelper.SKIP,
                  ch_4_status_code=APIHelper.SKIP,
                  giin=APIHelper.SKIP,
-                 foreign_tin=APIHelper.SKIP,
-                 additional_properties=None):
+                 foreign_tin=APIHelper.SKIP):
         """Constructor for the Form1042SAgent class"""
 
         # Initialize members of the class
@@ -136,11 +133,6 @@ class Form1042SAgent(object):
             self.giin = giin 
         if foreign_tin is not APIHelper.SKIP:
             self.foreign_tin = foreign_tin 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -172,9 +164,6 @@ class Form1042SAgent(object):
         ch_4_status_code = dictionary.get("ch4StatusCode") if dictionary.get("ch4StatusCode") else APIHelper.SKIP
         giin = dictionary.get("giin") if dictionary.get("giin") else APIHelper.SKIP
         foreign_tin = dictionary.get("foreignTin") if dictionary.get("foreignTin") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tin,
                    party_type,
@@ -186,8 +175,7 @@ class Form1042SAgent(object):
                    ch_3_status_code,
                    ch_4_status_code,
                    giin,
-                   foreign_tin,
-                   additional_properties)
+                   foreign_tin)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -201,8 +189,7 @@ class Form1042SAgent(object):
                 f'ch_3_status_code={(self.ch_3_status_code if hasattr(self, "ch_3_status_code") else None)!r}, '
                 f'ch_4_status_code={(self.ch_4_status_code if hasattr(self, "ch_4_status_code") else None)!r}, '
                 f'giin={(self.giin if hasattr(self, "giin") else None)!r}, '
-                f'foreign_tin={(self.foreign_tin if hasattr(self, "foreign_tin") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'foreign_tin={(self.foreign_tin if hasattr(self, "foreign_tin") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -216,5 +203,4 @@ class Form1042SAgent(object):
                 f'ch_3_status_code={(self.ch_3_status_code if hasattr(self, "ch_3_status_code") else None)!s}, '
                 f'ch_4_status_code={(self.ch_4_status_code if hasattr(self, "ch_4_status_code") else None)!s}, '
                 f'giin={(self.giin if hasattr(self, "giin") else None)!s}, '
-                f'foreign_tin={(self.foreign_tin if hasattr(self, "foreign_tin") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'foreign_tin={(self.foreign_tin if hasattr(self, "foreign_tin") else None)!s})')

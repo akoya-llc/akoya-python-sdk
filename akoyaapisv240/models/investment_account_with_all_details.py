@@ -43,14 +43,14 @@ class InvestmentAccountWithAllDetails(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -94,8 +94,6 @@ class InvestmentAccountWithAllDetails(object):
             on Restricted Stock Units, Restricted Stock Awards, Stock
             Appreciation Right, Stock Options, Performance Awards, and Total
             Share Return Units
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -235,8 +233,7 @@ class InvestmentAccountWithAllDetails(object):
                  vesting=APIHelper.SKIP,
                  investment_loans=APIHelper.SKIP,
                  pension_source=APIHelper.SKIP,
-                 equity_grants=APIHelper.SKIP,
-                 additional_properties=None):
+                 equity_grants=APIHelper.SKIP):
         """Constructor for the InvestmentAccountWithAllDetails class"""
 
         # Initialize members of the class
@@ -326,11 +323,6 @@ class InvestmentAccountWithAllDetails(object):
             self.pension_source = pension_source 
         if equity_grants is not APIHelper.SKIP:
             self.equity_grants = equity_grants 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -430,9 +422,6 @@ class InvestmentAccountWithAllDetails(object):
             equity_grants = [EquityGrant.from_dictionary(x) for x in dictionary.get('equityGrants')]
         else:
             equity_grants = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -476,8 +465,7 @@ class InvestmentAccountWithAllDetails(object):
                    vesting,
                    investment_loans,
                    pension_source,
-                   equity_grants,
-                   additional_properties)
+                   equity_grants)
 
     @classmethod
     def validate(cls, dictionary):
@@ -545,8 +533,7 @@ class InvestmentAccountWithAllDetails(object):
                 f'vesting={(self.vesting if hasattr(self, "vesting") else None)!r}, '
                 f'investment_loans={(self.investment_loans if hasattr(self, "investment_loans") else None)!r}, '
                 f'pension_source={(self.pension_source if hasattr(self, "pension_source") else None)!r}, '
-                f'equity_grants={(self.equity_grants if hasattr(self, "equity_grants") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'equity_grants={(self.equity_grants if hasattr(self, "equity_grants") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -592,5 +579,4 @@ class InvestmentAccountWithAllDetails(object):
                 f'vesting={(self.vesting if hasattr(self, "vesting") else None)!s}, '
                 f'investment_loans={(self.investment_loans if hasattr(self, "investment_loans") else None)!s}, '
                 f'pension_source={(self.pension_source if hasattr(self, "pension_source") else None)!s}, '
-                f'equity_grants={(self.equity_grants if hasattr(self, "equity_grants") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'equity_grants={(self.equity_grants if hasattr(self, "equity_grants") else None)!s})')

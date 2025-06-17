@@ -10,13 +10,13 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.name_address_and_phone import NameAddressAndPhone
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
 
-class Form1099Sb(object):
+class Form1099SB(object):
 
     """Implementation of the 'Form 1099-SB' model.
 
@@ -34,8 +34,8 @@ class Form1099Sb(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,7 +53,7 @@ class Form1099Sb(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         policy_number (str): Policy number
         contract_investment (float): Box 1, Investment in contract
@@ -62,8 +62,6 @@ class Form1099Sb(object):
             contact name, street address, city or town, state or province,
             country, ZIP or foreign postal code, and telephone no. (if
             different from ISSUER)
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -122,9 +120,8 @@ class Form1099Sb(object):
                  policy_number=APIHelper.SKIP,
                  contract_investment=APIHelper.SKIP,
                  surrender_amount=APIHelper.SKIP,
-                 contact_name_address=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the Form1099Sb class"""
+                 contact_name_address=APIHelper.SKIP):
+        """Constructor for the Form1099SB class"""
 
         # Initialize members of the class
         if tax_year is not APIHelper.SKIP:
@@ -159,11 +156,6 @@ class Form1099Sb(object):
             self.surrender_amount = surrender_amount 
         if contact_name_address is not APIHelper.SKIP:
             self.contact_name_address = contact_name_address 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -201,16 +193,13 @@ class Form1099Sb(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         policy_number = dictionary.get("policyNumber") if dictionary.get("policyNumber") else APIHelper.SKIP
         contract_investment = dictionary.get("contractInvestment") if dictionary.get("contractInvestment") else APIHelper.SKIP
         surrender_amount = dictionary.get("surrenderAmount") if dictionary.get("surrenderAmount") else APIHelper.SKIP
         contact_name_address = NameAddressAndPhone.from_dictionary(dictionary.get('contactNameAddress')) if 'contactNameAddress' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -227,8 +216,7 @@ class Form1099Sb(object):
                    policy_number,
                    contract_investment,
                    surrender_amount,
-                   contact_name_address,
-                   additional_properties)
+                   contact_name_address)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -247,8 +235,7 @@ class Form1099Sb(object):
                 f'policy_number={(self.policy_number if hasattr(self, "policy_number") else None)!r}, '
                 f'contract_investment={(self.contract_investment if hasattr(self, "contract_investment") else None)!r}, '
                 f'surrender_amount={(self.surrender_amount if hasattr(self, "surrender_amount") else None)!r}, '
-                f'contact_name_address={(self.contact_name_address if hasattr(self, "contact_name_address") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'contact_name_address={(self.contact_name_address if hasattr(self, "contact_name_address") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -267,5 +254,4 @@ class Form1099Sb(object):
                 f'policy_number={(self.policy_number if hasattr(self, "policy_number") else None)!s}, '
                 f'contract_investment={(self.contract_investment if hasattr(self, "contract_investment") else None)!s}, '
                 f'surrender_amount={(self.surrender_amount if hasattr(self, "surrender_amount") else None)!s}, '
-                f'contact_name_address={(self.contact_name_address if hasattr(self, "contact_name_address") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'contact_name_address={(self.contact_name_address if hasattr(self, "contact_name_address") else None)!s})')

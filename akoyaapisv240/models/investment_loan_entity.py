@@ -24,8 +24,8 @@ class InvestmentLoanEntity(object):
         date_as_of (datetime): Date and time of current loan balance
         loan_rate (float): Loan annual interest rate for the loan
         loan_payment_amount (float): Loan payment amount
-        loan_payment_frequency (LoanPaymentFrequency): The model property of
-            type LoanPaymentFrequency.
+        loan_payment_frequency (LoanPaymentFrequencyEnum): The model property
+            of type LoanPaymentFrequencyEnum.
         loan_payment_initial (float): Initial number of loan payments
         loan_payments_remaining (int): Remaining number of loan payments
         loan_maturity_date (datetime): Expected loan end date
@@ -33,8 +33,6 @@ class InvestmentLoanEntity(object):
         loan_total_projected_interest (float): Total projected interest to be
             paid on this loan
         loan_next_payment_date (datetime): The next payment date for the loan
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -90,8 +88,7 @@ class InvestmentLoanEntity(object):
                  loan_maturity_date=APIHelper.SKIP,
                  loan_interest_to_date=APIHelper.SKIP,
                  loan_total_projected_interest=APIHelper.SKIP,
-                 loan_next_payment_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 loan_next_payment_date=APIHelper.SKIP):
         """Constructor for the InvestmentLoanEntity class"""
 
         # Initialize members of the class
@@ -125,11 +122,6 @@ class InvestmentLoanEntity(object):
             self.loan_total_projected_interest = loan_total_projected_interest 
         if loan_next_payment_date is not APIHelper.SKIP:
             self.loan_next_payment_date = APIHelper.apply_datetime_converter(loan_next_payment_date, APIHelper.RFC3339DateTime) if loan_next_payment_date else None 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -165,9 +157,6 @@ class InvestmentLoanEntity(object):
         loan_interest_to_date = dictionary.get("loanInterestToDate") if dictionary.get("loanInterestToDate") else APIHelper.SKIP
         loan_total_projected_interest = dictionary.get("loanTotalProjectedInterest") if dictionary.get("loanTotalProjectedInterest") else APIHelper.SKIP
         loan_next_payment_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("loanNextPaymentDate")).datetime if dictionary.get("loanNextPaymentDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(loan_id,
                    loan_description,
@@ -183,8 +172,7 @@ class InvestmentLoanEntity(object):
                    loan_maturity_date,
                    loan_interest_to_date,
                    loan_total_projected_interest,
-                   loan_next_payment_date,
-                   additional_properties)
+                   loan_next_payment_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -224,8 +212,7 @@ class InvestmentLoanEntity(object):
                 f'loan_maturity_date={(self.loan_maturity_date if hasattr(self, "loan_maturity_date") else None)!r}, '
                 f'loan_interest_to_date={(self.loan_interest_to_date if hasattr(self, "loan_interest_to_date") else None)!r}, '
                 f'loan_total_projected_interest={(self.loan_total_projected_interest if hasattr(self, "loan_total_projected_interest") else None)!r}, '
-                f'loan_next_payment_date={(self.loan_next_payment_date if hasattr(self, "loan_next_payment_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'loan_next_payment_date={(self.loan_next_payment_date if hasattr(self, "loan_next_payment_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -243,5 +230,4 @@ class InvestmentLoanEntity(object):
                 f'loan_maturity_date={(self.loan_maturity_date if hasattr(self, "loan_maturity_date") else None)!s}, '
                 f'loan_interest_to_date={(self.loan_interest_to_date if hasattr(self, "loan_interest_to_date") else None)!s}, '
                 f'loan_total_projected_interest={(self.loan_total_projected_interest if hasattr(self, "loan_total_projected_interest") else None)!s}, '
-                f'loan_next_payment_date={(self.loan_next_payment_date if hasattr(self, "loan_next_payment_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'loan_next_payment_date={(self.loan_next_payment_date if hasattr(self, "loan_next_payment_date") else None)!s})')
