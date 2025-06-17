@@ -20,8 +20,6 @@ class Customer(object):
         customer_id (str): Long-term persistent identity of the end-user. This
             identity must be unique to the owning institution
         name (Name): The end-user's name
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -38,8 +36,7 @@ class Customer(object):
 
     def __init__(self,
                  customer_id=APIHelper.SKIP,
-                 name=APIHelper.SKIP,
-                 additional_properties=None):
+                 name=APIHelper.SKIP):
         """Constructor for the Customer class"""
 
         # Initialize members of the class
@@ -47,11 +44,6 @@ class Customer(object):
             self.customer_id = customer_id 
         if name is not APIHelper.SKIP:
             self.name = name 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -74,22 +66,16 @@ class Customer(object):
         # Extract variables from the dictionary
         customer_id = dictionary.get("customerId") if dictionary.get("customerId") else APIHelper.SKIP
         name = Name.from_dictionary(dictionary.get('name')) if 'name' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(customer_id,
-                   name,
-                   additional_properties)
+                   name)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'customer_id={(self.customer_id if hasattr(self, "customer_id") else None)!r}, '
-                f'name={(self.name if hasattr(self, "name") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'name={(self.name if hasattr(self, "name") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'customer_id={(self.customer_id if hasattr(self, "customer_id") else None)!s}, '
-                f'name={(self.name if hasattr(self, "name") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'name={(self.name if hasattr(self, "name") else None)!s})')

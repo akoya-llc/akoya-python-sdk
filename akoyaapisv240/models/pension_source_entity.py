@@ -20,11 +20,9 @@ class PensionSourceEntity(object):
         amount (float): Benefit Amount
         payment_option (str): Form of payment
         as_of_date (datetime): Date benefit was calculated
-        frequency (Frequency): The model property of type Frequency.
+        frequency (FrequencyEnum): The model property of type FrequencyEnum.
         start_date (datetime): Assumed retirement date ‐ As of date amount is
             payable
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -53,8 +51,7 @@ class PensionSourceEntity(object):
                  payment_option=APIHelper.SKIP,
                  as_of_date=APIHelper.SKIP,
                  frequency=APIHelper.SKIP,
-                 start_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 start_date=APIHelper.SKIP):
         """Constructor for the PensionSourceEntity class"""
 
         # Initialize members of the class
@@ -70,11 +67,6 @@ class PensionSourceEntity(object):
             self.frequency = frequency 
         if start_date is not APIHelper.SKIP:
             self.start_date = APIHelper.apply_datetime_converter(start_date, APIHelper.RFC3339DateTime) if start_date else None 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -101,17 +93,13 @@ class PensionSourceEntity(object):
         as_of_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("asOfDate")).datetime if dictionary.get("asOfDate") else APIHelper.SKIP
         frequency = dictionary.get("frequency") if dictionary.get("frequency") else APIHelper.SKIP
         start_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("startDate")).datetime if dictionary.get("startDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(display_name,
                    amount,
                    payment_option,
                    as_of_date,
                    frequency,
-                   start_date,
-                   additional_properties)
+                   start_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -142,8 +130,7 @@ class PensionSourceEntity(object):
                 f'payment_option={(self.payment_option if hasattr(self, "payment_option") else None)!r}, '
                 f'as_of_date={(self.as_of_date if hasattr(self, "as_of_date") else None)!r}, '
                 f'frequency={(self.frequency if hasattr(self, "frequency") else None)!r}, '
-                f'start_date={(self.start_date if hasattr(self, "start_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'start_date={(self.start_date if hasattr(self, "start_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -152,5 +139,4 @@ class PensionSourceEntity(object):
                 f'payment_option={(self.payment_option if hasattr(self, "payment_option") else None)!s}, '
                 f'as_of_date={(self.as_of_date if hasattr(self, "as_of_date") else None)!s}, '
                 f'frequency={(self.frequency if hasattr(self, "frequency") else None)!s}, '
-                f'start_date={(self.start_date if hasattr(self, "start_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'start_date={(self.start_date if hasattr(self, "start_date") else None)!s})')

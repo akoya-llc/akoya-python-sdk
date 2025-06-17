@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.health_insurance_covered_individual import HealthInsuranceCoveredIndividual
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
@@ -34,8 +34,8 @@ class Form1095B(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,7 +53,7 @@ class Form1095B(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         responsible_date_of_birth (date): Box 3, Date of birth (if SSN or
             other TIN is not available)
@@ -62,8 +62,6 @@ class Form1095B(object):
         employer (TaxParty): Boxes 10-15, Employer EIN, name and address
         covered_individuals (List[HealthInsuranceCoveredIndividual]): Boxes
             23+, Covered Individuals
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -122,8 +120,7 @@ class Form1095B(object):
                  responsible_date_of_birth=APIHelper.SKIP,
                  origin_of_health_coverage_code=APIHelper.SKIP,
                  employer=APIHelper.SKIP,
-                 covered_individuals=APIHelper.SKIP,
-                 additional_properties=None):
+                 covered_individuals=APIHelper.SKIP):
         """Constructor for the Form1095B class"""
 
         # Initialize members of the class
@@ -159,11 +156,6 @@ class Form1095B(object):
             self.employer = employer 
         if covered_individuals is not APIHelper.SKIP:
             self.covered_individuals = covered_individuals 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -201,7 +193,7 @@ class Form1095B(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         responsible_date_of_birth = dateutil.parser.parse(dictionary.get('responsibleDateOfBirth')).date() if dictionary.get('responsibleDateOfBirth') else APIHelper.SKIP
@@ -212,9 +204,6 @@ class Form1095B(object):
             covered_individuals = [HealthInsuranceCoveredIndividual.from_dictionary(x) for x in dictionary.get('coveredIndividuals')]
         else:
             covered_individuals = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -231,8 +220,7 @@ class Form1095B(object):
                    responsible_date_of_birth,
                    origin_of_health_coverage_code,
                    employer,
-                   covered_individuals,
-                   additional_properties)
+                   covered_individuals)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -251,8 +239,7 @@ class Form1095B(object):
                 f'responsible_date_of_birth={(self.responsible_date_of_birth if hasattr(self, "responsible_date_of_birth") else None)!r}, '
                 f'origin_of_health_coverage_code={(self.origin_of_health_coverage_code if hasattr(self, "origin_of_health_coverage_code") else None)!r}, '
                 f'employer={(self.employer if hasattr(self, "employer") else None)!r}, '
-                f'covered_individuals={(self.covered_individuals if hasattr(self, "covered_individuals") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'covered_individuals={(self.covered_individuals if hasattr(self, "covered_individuals") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -271,5 +258,4 @@ class Form1095B(object):
                 f'responsible_date_of_birth={(self.responsible_date_of_birth if hasattr(self, "responsible_date_of_birth") else None)!s}, '
                 f'origin_of_health_coverage_code={(self.origin_of_health_coverage_code if hasattr(self, "origin_of_health_coverage_code") else None)!s}, '
                 f'employer={(self.employer if hasattr(self, "employer") else None)!s}, '
-                f'covered_individuals={(self.covered_individuals if hasattr(self, "covered_individuals") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'covered_individuals={(self.covered_individuals if hasattr(self, "covered_individuals") else None)!s})')

@@ -11,13 +11,13 @@ import dateutil.parser
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.description_and_amount import DescriptionAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.state_and_local_tax_withholding import StateAndLocalTaxWithholding
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
 
-class Form1099Int(object):
+class Form1099INT(object):
 
     """Implementation of the 'Form 1099-INT' model.
 
@@ -35,8 +35,8 @@ class Form1099Int(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -54,7 +54,7 @@ class Form1099Int(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         foreign_account_tax_compliance (bool): FATCA filing requirement
         account_number (str): Account number
@@ -76,15 +76,13 @@ class Form1099Int(object):
         tax_exempt_bond_premium (float): Box 13, Bond premium on tax-exempt
             bond
         cusip_number (str): Box 14, Tax-exempt bond CUSIP no.
-        state_and_local (List[StateAndLocalTaxWithholding]): Boxes 14-16,
+        state_and_local (List[StateAndLocalTaxWithholding]): Boxes 15-17,
             State and Local tax withholding
         foreign_incomes (List[DescriptionAndAmount]): Supplemental foreign
             income amount information (description is country)
         state_tax_exempt_income (List[DescriptionAndAmount]): Supplemental
             tax-exempt income by state (description is state)
         second_tin_notice (bool): Second TIN Notice
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -194,9 +192,8 @@ class Form1099Int(object):
                  state_and_local=APIHelper.SKIP,
                  foreign_incomes=APIHelper.SKIP,
                  state_tax_exempt_income=APIHelper.SKIP,
-                 second_tin_notice=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the Form1099Int class"""
+                 second_tin_notice=APIHelper.SKIP):
+        """Constructor for the Form1099INT class"""
 
         # Initialize members of the class
         if tax_year is not APIHelper.SKIP:
@@ -266,11 +263,6 @@ class Form1099Int(object):
         if second_tin_notice is not APIHelper.SKIP:
             self.second_tin_notice = second_tin_notice 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -307,7 +299,7 @@ class Form1099Int(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         foreign_account_tax_compliance = dictionary.get("foreignAccountTaxCompliance") if "foreignAccountTaxCompliance" in dictionary.keys() else APIHelper.SKIP
@@ -343,9 +335,6 @@ class Form1099Int(object):
         else:
             state_tax_exempt_income = APIHelper.SKIP
         second_tin_notice = dictionary.get("secondTinNotice") if "secondTinNotice" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -379,8 +368,7 @@ class Form1099Int(object):
                    state_and_local,
                    foreign_incomes,
                    state_tax_exempt_income,
-                   second_tin_notice,
-                   additional_properties)
+                   second_tin_notice)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -416,8 +404,7 @@ class Form1099Int(object):
                 f'state_and_local={(self.state_and_local if hasattr(self, "state_and_local") else None)!r}, '
                 f'foreign_incomes={(self.foreign_incomes if hasattr(self, "foreign_incomes") else None)!r}, '
                 f'state_tax_exempt_income={(self.state_tax_exempt_income if hasattr(self, "state_tax_exempt_income") else None)!r}, '
-                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -453,5 +440,4 @@ class Form1099Int(object):
                 f'state_and_local={(self.state_and_local if hasattr(self, "state_and_local") else None)!s}, '
                 f'foreign_incomes={(self.foreign_incomes if hasattr(self, "foreign_incomes") else None)!s}, '
                 f'state_tax_exempt_income={(self.state_tax_exempt_income if hasattr(self, "state_tax_exempt_income") else None)!s}, '
-                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!s})')

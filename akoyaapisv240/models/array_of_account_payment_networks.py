@@ -19,8 +19,6 @@ class ArrayOfAccountPaymentNetworks(object):
     Attributes:
         payment_networks (List[PaymentNetworkSupportedByAccount]): Array of
             payment networks
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -34,18 +32,12 @@ class ArrayOfAccountPaymentNetworks(object):
     ]
 
     def __init__(self,
-                 payment_networks=APIHelper.SKIP,
-                 additional_properties=None):
+                 payment_networks=APIHelper.SKIP):
         """Constructor for the ArrayOfAccountPaymentNetworks class"""
 
         # Initialize members of the class
         if payment_networks is not APIHelper.SKIP:
             self.payment_networks = payment_networks 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -71,19 +63,13 @@ class ArrayOfAccountPaymentNetworks(object):
             payment_networks = [PaymentNetworkSupportedByAccount.from_dictionary(x) for x in dictionary.get('paymentNetworks')]
         else:
             payment_networks = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(payment_networks,
-                   additional_properties)
+        return cls(payment_networks)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'payment_networks={(self.payment_networks if hasattr(self, "payment_networks") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'payment_networks={(self.payment_networks if hasattr(self, "payment_networks") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'payment_networks={(self.payment_networks if hasattr(self, "payment_networks") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'payment_networks={(self.payment_networks if hasattr(self, "payment_networks") else None)!s})')

@@ -35,14 +35,14 @@ class LoanAccount(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -53,16 +53,14 @@ class LoanAccount(object):
         prior_interest_rate (float): Previous Interest Rate of Account
         transfer_in (bool): Account is eligible for incoming transfers
         transfer_out (bool): Account is eligible for outgoing transfers
-        compounding_period (CompoundingPeriod): The model property of type
-            CompoundingPeriod.
+        compounding_period (CompoundingPeriodEnum): The model property of type
+            CompoundingPeriodEnum.
         loan_term (int): Term of loan in months
         maturity_date (datetime): Maturity date
         originating_date (datetime): Loan origination date
-        payment_frequency (LoanAccountPaymentFrequency): The model property of
-            type LoanAccountPaymentFrequency.
+        payment_frequency (LoanAccountPaymentFrequencyEnum): The model
+            property of type LoanAccountPaymentFrequencyEnum.
         total_number_of_payments (int): Total number of payments
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -151,8 +149,7 @@ class LoanAccount(object):
                  maturity_date=APIHelper.SKIP,
                  originating_date=APIHelper.SKIP,
                  payment_frequency=APIHelper.SKIP,
-                 total_number_of_payments=APIHelper.SKIP,
-                 additional_properties=None):
+                 total_number_of_payments=APIHelper.SKIP):
         """Constructor for the LoanAccount class"""
 
         # Initialize members of the class
@@ -209,11 +206,6 @@ class LoanAccount(object):
         if total_number_of_payments is not APIHelper.SKIP:
             self.total_number_of_payments = total_number_of_payments 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -263,9 +255,6 @@ class LoanAccount(object):
         originating_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("originatingDate")).datetime if dictionary.get("originatingDate") else APIHelper.SKIP
         payment_frequency = dictionary.get("paymentFrequency") if dictionary.get("paymentFrequency") else APIHelper.SKIP
         total_number_of_payments = dictionary.get("totalNumberOfPayments") if dictionary.get("totalNumberOfPayments") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -292,8 +281,7 @@ class LoanAccount(object):
                    maturity_date,
                    originating_date,
                    payment_frequency,
-                   total_number_of_payments,
-                   additional_properties)
+                   total_number_of_payments)
 
     @classmethod
     def validate(cls, dictionary):
@@ -344,8 +332,7 @@ class LoanAccount(object):
                 f'maturity_date={(self.maturity_date if hasattr(self, "maturity_date") else None)!r}, '
                 f'originating_date={(self.originating_date if hasattr(self, "originating_date") else None)!r}, '
                 f'payment_frequency={(self.payment_frequency if hasattr(self, "payment_frequency") else None)!r}, '
-                f'total_number_of_payments={(self.total_number_of_payments if hasattr(self, "total_number_of_payments") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'total_number_of_payments={(self.total_number_of_payments if hasattr(self, "total_number_of_payments") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -374,5 +361,4 @@ class LoanAccount(object):
                 f'maturity_date={(self.maturity_date if hasattr(self, "maturity_date") else None)!s}, '
                 f'originating_date={(self.originating_date if hasattr(self, "originating_date") else None)!s}, '
                 f'payment_frequency={(self.payment_frequency if hasattr(self, "payment_frequency") else None)!s}, '
-                f'total_number_of_payments={(self.total_number_of_payments if hasattr(self, "total_number_of_payments") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'total_number_of_payments={(self.total_number_of_payments if hasattr(self, "total_number_of_payments") else None)!s})')

@@ -14,10 +14,9 @@ class AssetClassItem(object):
     """Implementation of the 'AssetClassItem' model.
 
     Attributes:
-        asset_class (AssetClass): The model property of type AssetClass.
+        asset_class (AssetClassEnum): The model property of type
+            AssetClassEnum.
         percent (float): Percentage of asset class that falls under this asset
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -34,8 +33,7 @@ class AssetClassItem(object):
 
     def __init__(self,
                  asset_class=APIHelper.SKIP,
-                 percent=APIHelper.SKIP,
-                 additional_properties=None):
+                 percent=APIHelper.SKIP):
         """Constructor for the AssetClassItem class"""
 
         # Initialize members of the class
@@ -43,11 +41,6 @@ class AssetClassItem(object):
             self.asset_class = asset_class 
         if percent is not APIHelper.SKIP:
             self.percent = percent 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -70,13 +63,9 @@ class AssetClassItem(object):
         # Extract variables from the dictionary
         asset_class = dictionary.get("assetClass") if dictionary.get("assetClass") else APIHelper.SKIP
         percent = dictionary.get("percent") if dictionary.get("percent") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(asset_class,
-                   percent,
-                   additional_properties)
+                   percent)
 
     @classmethod
     def validate(cls, dictionary):
@@ -103,11 +92,9 @@ class AssetClassItem(object):
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'asset_class={(self.asset_class if hasattr(self, "asset_class") else None)!r}, '
-                f'percent={(self.percent if hasattr(self, "percent") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'percent={(self.percent if hasattr(self, "percent") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'asset_class={(self.asset_class if hasattr(self, "asset_class") else None)!s}, '
-                f'percent={(self.percent if hasattr(self, "percent") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'percent={(self.percent if hasattr(self, "percent") else None)!s})')

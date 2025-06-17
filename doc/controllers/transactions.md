@@ -53,12 +53,12 @@ def get_transactions(self,
 | `end_time` | `datetime` | Query, Optional | ISO 8601 date format in UTC time zone. If blank, the default value (current date) is used. If a value is specified, startTime is required. |
 | `offset` | `str` | Query, Optional | The number of items to skip before the first in the response. The default is 0.<br><br>**Default**: `'0'` |
 | `limit` | `int` | Query, Optional | The maximum number of items to be returned in the response. The default is 50.<br><br>**Default**: `50` |
-| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
-| `mode` | [`Mode`](../../doc/models/mode.md) | Query, Optional | BETA. Default is raw. Use standard for FDX-aligned, standardized data values. |
+| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `mode` | [`ModeEnum`](../../doc/models/mode-enum.md) | Query, Optional | BETA. Default is raw. Use standard for FDX-aligned, standardized data values. |
 
 ## Response Type
 
-This method returns an instance of [`PagedIterable`](../../doc/paged-iterable.md), where each item is of type `Any` and each page is of type [`TransactionsEntity`](../../doc/models/transactions-entity.md).
+This method returns an instance of [`PagedIterable`](../../doc/paged-iterable.md), where each item is of type [`TransactionItem`](../../doc/models/transaction-item.md) and each page is of type [`TransactionsEntity`](../../doc/models/transactions-entity.md).
 
 ## Example Usage
 
@@ -77,7 +77,7 @@ offset = '0'
 
 limit = 50
 
-mode = Mode.RAW
+mode = ModeEnum.RAW
 
 result = transactions_controller.get_transactions(
     version,
@@ -138,11 +138,11 @@ result = transactions_controller.get_transactions(
 | 400 | Bad Request | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 401 | Customer not authorized. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | 701 - Tax Lots not found. The `holdingId` may be wrong. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `ApiException` |
+| 405 | Method Not Allowed | `APIException` |
 | 406 | Content Type not Supported | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 429 | 1207 - Too many requests | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 500 | Internal Server Error. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
+| 500 | Catch-all exception where request was not processed due to an internal outage/issue. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 501 | FdxVersion in header is not implemented. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 503 | System is down for maintenance. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 

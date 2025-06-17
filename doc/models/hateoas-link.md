@@ -1,22 +1,19 @@
 
-# Hateoas Link
+# HATEOAS Link
 
 REST application constraint (Hypermedia As The Engine Of Application State)
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
-`HateoasLink`
+`HATEOASLink`
 
 ## Fields
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `href` | `str` | Required | URL to invoke the action on the resource |
-| `action` | [`HttpMethod`](../../doc/models/http-method.md) | Optional | HTTP Method to use for the request |
-| `types` | [`List[ContentType]`](../../doc/models/content-type.md) | Optional | Content-types that can be used in the Accept header. |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
+| `action` | [`HttpMethodEnum`](../../doc/models/http-method-enum.md) | Optional | HTTP Method to use for the request |
+| `types` | [`List[ContentTypeEnum]`](../../doc/models/content-type-enum.md) | Optional | Content-types that can be used in the Accept header. |
 
 ## Example (as JSON)
 
@@ -26,11 +23,7 @@ REST application constraint (Hypermedia As The Engine Of Application State)
   "action": "DELETE",
   "types": [
     "image/gif"
-  ],
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  ]
 }
 ```
 

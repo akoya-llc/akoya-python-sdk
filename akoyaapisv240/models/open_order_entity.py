@@ -19,23 +19,22 @@ class OpenOrderEntity(object):
         order_id (str): Long term persistent identity of the order. Id for
             this order transaction.
         security_id (str): Unique identifier of the security.
-        security_id_type (SecurityIdType): Security identifier type
+        security_id_type (SecurityIdTypeEnum): Security identifier type
         symbol (str): Market symbol
         description (str): Description of order
         units (float): Number of units (shares, bonds, etc.)
-        order_type (OrderType): Type of order.
+        order_type (OrderTypeEnum): Type of order.
         order_date (datetime): Order date
         unit_price (float): Unit price
-        unit_type (UnitType): Type of unit.
-        order_duration (OrderDuration): This order is good for DAY,
+        unit_type (UnitTypeEnum): Type of unit.
+        order_duration (OrderDurationEnum): This order is good for DAY,
             GOODTILLCANCEL, IMMEDIATE
-        sub_account (SubAccount): The model property of type SubAccount.
+        sub_account (SubAccountEnum): The model property of type
+            SubAccountEnum.
         limit_price (float): Limit Price
         stop_price (float): Stop price
-        inv_401_k_source (Inv401KSource): For 401(k) accounts, source of money
-            for this order. Default if not present is OTHERNONVEST.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        inv_401_k_source (Inv401kSourceEnum): For 401(k) accounts, source of
+            money for this order. Default if not present is OTHERNONVEST.
 
     """
 
@@ -91,8 +90,7 @@ class OpenOrderEntity(object):
                  sub_account=APIHelper.SKIP,
                  limit_price=APIHelper.SKIP,
                  stop_price=APIHelper.SKIP,
-                 inv_401_k_source=APIHelper.SKIP,
-                 additional_properties=None):
+                 inv_401_k_source=APIHelper.SKIP):
         """Constructor for the OpenOrderEntity class"""
 
         # Initialize members of the class
@@ -126,11 +124,6 @@ class OpenOrderEntity(object):
             self.stop_price = stop_price 
         if inv_401_k_source is not APIHelper.SKIP:
             self.inv_401_k_source = inv_401_k_source 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -166,9 +159,6 @@ class OpenOrderEntity(object):
         limit_price = dictionary.get("limitPrice") if dictionary.get("limitPrice") else APIHelper.SKIP
         stop_price = dictionary.get("stopPrice") if dictionary.get("stopPrice") else APIHelper.SKIP
         inv_401_k_source = dictionary.get("inv401kSource") if dictionary.get("inv401kSource") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(order_id,
                    security_id,
@@ -184,8 +174,7 @@ class OpenOrderEntity(object):
                    sub_account,
                    limit_price,
                    stop_price,
-                   inv_401_k_source,
-                   additional_properties)
+                   inv_401_k_source)
 
     @classmethod
     def validate(cls, dictionary):
@@ -225,8 +214,7 @@ class OpenOrderEntity(object):
                 f'sub_account={(self.sub_account if hasattr(self, "sub_account") else None)!r}, '
                 f'limit_price={(self.limit_price if hasattr(self, "limit_price") else None)!r}, '
                 f'stop_price={(self.stop_price if hasattr(self, "stop_price") else None)!r}, '
-                f'inv_401_k_source={(self.inv_401_k_source if hasattr(self, "inv_401_k_source") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'inv_401_k_source={(self.inv_401_k_source if hasattr(self, "inv_401_k_source") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -244,5 +232,4 @@ class OpenOrderEntity(object):
                 f'sub_account={(self.sub_account if hasattr(self, "sub_account") else None)!s}, '
                 f'limit_price={(self.limit_price if hasattr(self, "limit_price") else None)!s}, '
                 f'stop_price={(self.stop_price if hasattr(self, "stop_price") else None)!s}, '
-                f'inv_401_k_source={(self.inv_401_k_source if hasattr(self, "inv_401_k_source") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'inv_401_k_source={(self.inv_401_k_source if hasattr(self, "inv_401_k_source") else None)!s})')

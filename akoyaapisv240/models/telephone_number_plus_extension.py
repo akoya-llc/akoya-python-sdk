@@ -17,15 +17,13 @@ class TelephoneNumberPlusExtension(object):
     telephone extension number
 
     Attributes:
-        mtype (TelephoneNumberType): Type of phone number: HOME, BUSINESS,
+        mtype (TelephoneNumberTypeEnum): Type of phone number: HOME, BUSINESS,
             CELL, FAX
-        country (str): Country calling codes defined by ITU-T recommendations
-            E.123 and E.164
+        country (ISO3166CountryCodeEnum): Country calling codes defined by
+            ITU-T recommendations E.123 and E.164
         number (str): Telephone subscriber number defined by ITU-T
             recommendation E.164
         extension (str): An arbitrary length telephone number extension
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -48,8 +46,7 @@ class TelephoneNumberPlusExtension(object):
                  mtype=APIHelper.SKIP,
                  country=APIHelper.SKIP,
                  number=APIHelper.SKIP,
-                 extension=APIHelper.SKIP,
-                 additional_properties=None):
+                 extension=APIHelper.SKIP):
         """Constructor for the TelephoneNumberPlusExtension class"""
 
         # Initialize members of the class
@@ -61,11 +58,6 @@ class TelephoneNumberPlusExtension(object):
             self.number = number 
         if extension is not APIHelper.SKIP:
             self.extension = extension 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -90,28 +82,22 @@ class TelephoneNumberPlusExtension(object):
         country = dictionary.get("country") if dictionary.get("country") else APIHelper.SKIP
         number = dictionary.get("number") if dictionary.get("number") else APIHelper.SKIP
         extension = dictionary.get("extension") if dictionary.get("extension") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(mtype,
                    country,
                    number,
-                   extension,
-                   additional_properties)
+                   extension)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!r}, '
                 f'country={(self.country if hasattr(self, "country") else None)!r}, '
                 f'number={(self.number if hasattr(self, "number") else None)!r}, '
-                f'extension={(self.extension if hasattr(self, "extension") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'extension={(self.extension if hasattr(self, "extension") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!s}, '
                 f'country={(self.country if hasattr(self, "country") else None)!s}, '
                 f'number={(self.number if hasattr(self, "number") else None)!s}, '
-                f'extension={(self.extension if hasattr(self, "extension") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'extension={(self.extension if hasattr(self, "extension") else None)!s})')

@@ -17,8 +17,6 @@ class DepositBalance(object):
     Attributes:
         deposit_account (DepositBalances): Data elements included with
             balances specific to deposit accounts
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -32,18 +30,12 @@ class DepositBalance(object):
     ]
 
     def __init__(self,
-                 deposit_account=APIHelper.SKIP,
-                 additional_properties=None):
+                 deposit_account=APIHelper.SKIP):
         """Constructor for the DepositBalance class"""
 
         # Initialize members of the class
         if deposit_account is not APIHelper.SKIP:
             self.deposit_account = deposit_account 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -65,12 +57,8 @@ class DepositBalance(object):
 
         # Extract variables from the dictionary
         deposit_account = DepositBalances.from_dictionary(dictionary.get('depositAccount')) if 'depositAccount' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(deposit_account,
-                   additional_properties)
+        return cls(deposit_account)
 
     @classmethod
     def validate(cls, dictionary):
@@ -96,10 +84,8 @@ class DepositBalance(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'deposit_account={(self.deposit_account if hasattr(self, "deposit_account") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'deposit_account={(self.deposit_account if hasattr(self, "deposit_account") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'deposit_account={(self.deposit_account if hasattr(self, "deposit_account") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'deposit_account={(self.deposit_account if hasattr(self, "deposit_account") else None)!s})')

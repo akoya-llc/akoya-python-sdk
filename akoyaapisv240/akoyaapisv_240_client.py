@@ -12,7 +12,7 @@ from apimatic_core.decorators.lazy_property import LazyProperty
 from akoyaapisv240.configuration import Configuration
 from akoyaapisv240.controllers.base_controller import BaseController
 from akoyaapisv240.configuration import Environment
-from akoyaapisv240.http.auth.oauth_2 import Oauth2
+from akoyaapisv240.http.auth.o_auth_2 import OAuth2
 from akoyaapisv240.controllers.account_information_controller\
     import AccountInformationController
 from akoyaapisv240.controllers.balances_controller import BalancesController
@@ -25,8 +25,8 @@ from akoyaapisv240.controllers.statements_controller\
 from akoyaapisv240.controllers.tax_beta_controller import TaxBetaController
 from akoyaapisv240.controllers.transactions_controller\
     import TransactionsController
-from akoyaapisv240.controllers.oauth_authorization_controller\
-    import OauthAuthorizationController
+from akoyaapisv240.controllers.o_auth_authorization_controller\
+    import OAuthAuthorizationController
 
 
 class Akoyaapisv240Client(object):
@@ -63,8 +63,8 @@ class Akoyaapisv240Client(object):
         return TransactionsController(self.global_configuration)
 
     @LazyProperty
-    def oauth_authorization(self):
-        return OauthAuthorizationController(self.global_configuration)
+    def o_auth_authorization(self):
+        return OAuthAuthorizationController(self.global_configuration)
 
     @property
     def acg_auth(self):
@@ -74,16 +74,19 @@ class Akoyaapisv240Client(object):
                  override_http_client_configuration=False, http_call_back=None,
                  timeout=60, max_retries=0, backoff_factor=2,
                  retry_statuses=None, retry_methods=None,
-                 logging_configuration=None, environment=Environment.SANDBOX,
-                 authorization_code_auth_credentials=None, config=None):
+                 environment=Environment.SANDBOX, o_auth_client_id=None,
+                 o_auth_client_secret=None, o_auth_redirect_uri=None,
+                 o_auth_token=None, authorization_code_auth_credentials=None,
+                 config=None):
         self.config = config or Configuration(
             http_client_instance=http_client_instance,
             override_http_client_configuration=override_http_client_configuration,
             http_call_back=http_call_back, timeout=timeout,
             max_retries=max_retries, backoff_factor=backoff_factor,
             retry_statuses=retry_statuses, retry_methods=retry_methods,
-            logging_configuration=logging_configuration,
-            environment=environment,
+            environment=environment, o_auth_client_id=o_auth_client_id,
+            o_auth_client_secret=o_auth_client_secret,
+            o_auth_redirect_uri=o_auth_redirect_uri, o_auth_token=o_auth_token,
             authorization_code_auth_credentials=authorization_code_auth_credentials)
 
         self.global_configuration = GlobalConfiguration(self.config)\
@@ -92,7 +95,7 @@ class Akoyaapisv240Client(object):
             .user_agent(BaseController.user_agent(), BaseController.user_agent_parameters())
 
         self.auth_managers = {key: None for key in ['acgAuth']}
-        self.auth_managers['acgAuth'] = Oauth2(
+        self.auth_managers['acgAuth'] = OAuth2(
             self.config.authorization_code_auth_credentials,
             self.global_configuration)
         self.global_configuration = self.global_configuration.auth_managers(self.auth_managers)

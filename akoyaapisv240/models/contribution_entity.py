@@ -18,7 +18,7 @@ class ContributionEntity(object):
 
     Attributes:
         security_id (str): Unique identifier of security
-        security_id_type (SecurityIdType): Security identifier type
+        security_id_type (SecurityIdTypeEnum): Security identifier type
         employer_match_percentage (float): Employer contribution match
             percentage
         employer_match_amount (float): Employer contribution match amount
@@ -38,8 +38,6 @@ class ContributionEntity(object):
         rollover_contribution_percentage (float): Rollover contribution
             percentage
         rollover_contribution_amount (float): Rollover contribution Amount
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -92,8 +90,7 @@ class ContributionEntity(object):
                  employee_year_to_date=APIHelper.SKIP,
                  employer_year_to_date=APIHelper.SKIP,
                  rollover_contribution_percentage=APIHelper.SKIP,
-                 rollover_contribution_amount=APIHelper.SKIP,
-                 additional_properties=None):
+                 rollover_contribution_amount=APIHelper.SKIP):
         """Constructor for the ContributionEntity class"""
 
         # Initialize members of the class
@@ -125,11 +122,6 @@ class ContributionEntity(object):
             self.rollover_contribution_percentage = rollover_contribution_percentage 
         if rollover_contribution_amount is not APIHelper.SKIP:
             self.rollover_contribution_amount = rollover_contribution_amount 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -164,9 +156,6 @@ class ContributionEntity(object):
         employer_year_to_date = dictionary.get("employerYearToDate") if dictionary.get("employerYearToDate") else APIHelper.SKIP
         rollover_contribution_percentage = dictionary.get("rolloverContributionPercentage") if dictionary.get("rolloverContributionPercentage") else APIHelper.SKIP
         rollover_contribution_amount = dictionary.get("rolloverContributionAmount") if dictionary.get("rolloverContributionAmount") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(security_id,
                    security_id_type,
@@ -181,8 +170,7 @@ class ContributionEntity(object):
                    employee_year_to_date,
                    employer_year_to_date,
                    rollover_contribution_percentage,
-                   rollover_contribution_amount,
-                   additional_properties)
+                   rollover_contribution_amount)
 
     @classmethod
     def validate(cls, dictionary):
@@ -221,8 +209,7 @@ class ContributionEntity(object):
                 f'employee_year_to_date={(self.employee_year_to_date if hasattr(self, "employee_year_to_date") else None)!r}, '
                 f'employer_year_to_date={(self.employer_year_to_date if hasattr(self, "employer_year_to_date") else None)!r}, '
                 f'rollover_contribution_percentage={(self.rollover_contribution_percentage if hasattr(self, "rollover_contribution_percentage") else None)!r}, '
-                f'rollover_contribution_amount={(self.rollover_contribution_amount if hasattr(self, "rollover_contribution_amount") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'rollover_contribution_amount={(self.rollover_contribution_amount if hasattr(self, "rollover_contribution_amount") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -239,5 +226,4 @@ class ContributionEntity(object):
                 f'employee_year_to_date={(self.employee_year_to_date if hasattr(self, "employee_year_to_date") else None)!s}, '
                 f'employer_year_to_date={(self.employer_year_to_date if hasattr(self, "employer_year_to_date") else None)!s}, '
                 f'rollover_contribution_percentage={(self.rollover_contribution_percentage if hasattr(self, "rollover_contribution_percentage") else None)!s}, '
-                f'rollover_contribution_amount={(self.rollover_contribution_amount if hasattr(self, "rollover_contribution_amount") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'rollover_contribution_amount={(self.rollover_contribution_amount if hasattr(self, "rollover_contribution_amount") else None)!s})')

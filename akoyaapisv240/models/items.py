@@ -18,11 +18,9 @@ class Items(object):
             including any fees or commission expenses incurred.
         current_value (float): Lot market value
         original_purchase_date (datetime): Lot acquired date.
-        position_type (PositionType): LONG, SHORT.
+        position_type (PositionTypeEnum): LONG, SHORT.
         purchased_price (float): Original purchase price.
         quantity (float): Lot quantity.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -51,8 +49,7 @@ class Items(object):
                  original_purchase_date=APIHelper.SKIP,
                  position_type=APIHelper.SKIP,
                  purchased_price=APIHelper.SKIP,
-                 quantity=APIHelper.SKIP,
-                 additional_properties=None):
+                 quantity=APIHelper.SKIP):
         """Constructor for the Items class"""
 
         # Initialize members of the class
@@ -68,11 +65,6 @@ class Items(object):
             self.purchased_price = purchased_price 
         if quantity is not APIHelper.SKIP:
             self.quantity = quantity 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -99,17 +91,13 @@ class Items(object):
         position_type = dictionary.get("positionType") if dictionary.get("positionType") else APIHelper.SKIP
         purchased_price = dictionary.get("purchasedPrice") if dictionary.get("purchasedPrice") else APIHelper.SKIP
         quantity = dictionary.get("quantity") if dictionary.get("quantity") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(cost_basis,
                    current_value,
                    original_purchase_date,
                    position_type,
                    purchased_price,
-                   quantity,
-                   additional_properties)
+                   quantity)
 
     @classmethod
     def validate(cls, dictionary):
@@ -140,8 +128,7 @@ class Items(object):
                 f'original_purchase_date={(self.original_purchase_date if hasattr(self, "original_purchase_date") else None)!r}, '
                 f'position_type={(self.position_type if hasattr(self, "position_type") else None)!r}, '
                 f'purchased_price={(self.purchased_price if hasattr(self, "purchased_price") else None)!r}, '
-                f'quantity={(self.quantity if hasattr(self, "quantity") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'quantity={(self.quantity if hasattr(self, "quantity") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -150,5 +137,4 @@ class Items(object):
                 f'original_purchase_date={(self.original_purchase_date if hasattr(self, "original_purchase_date") else None)!s}, '
                 f'position_type={(self.position_type if hasattr(self, "position_type") else None)!s}, '
                 f'purchased_price={(self.purchased_price if hasattr(self, "purchased_price") else None)!s}, '
-                f'quantity={(self.quantity if hasattr(self, "quantity") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'quantity={(self.quantity if hasattr(self, "quantity") else None)!s})')

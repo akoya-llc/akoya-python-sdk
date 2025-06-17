@@ -16,8 +16,6 @@ class InvestmentTransactionInfo(object):
 
     Attributes:
         investment_transaction (InvestmentTransaction): Investment Transactions
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -31,18 +29,12 @@ class InvestmentTransactionInfo(object):
     ]
 
     def __init__(self,
-                 investment_transaction=APIHelper.SKIP,
-                 additional_properties=None):
+                 investment_transaction=APIHelper.SKIP):
         """Constructor for the InvestmentTransactionInfo class"""
 
         # Initialize members of the class
         if investment_transaction is not APIHelper.SKIP:
             self.investment_transaction = investment_transaction 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -64,12 +56,8 @@ class InvestmentTransactionInfo(object):
 
         # Extract variables from the dictionary
         investment_transaction = InvestmentTransaction.from_dictionary(dictionary.get('investmentTransaction')) if 'investmentTransaction' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(investment_transaction,
-                   additional_properties)
+        return cls(investment_transaction)
 
     @classmethod
     def validate(cls, dictionary):
@@ -95,10 +83,8 @@ class InvestmentTransactionInfo(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'investment_transaction={(self.investment_transaction if hasattr(self, "investment_transaction") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'investment_transaction={(self.investment_transaction if hasattr(self, "investment_transaction") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'investment_transaction={(self.investment_transaction if hasattr(self, "investment_transaction") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'investment_transaction={(self.investment_transaction if hasattr(self, "investment_transaction") else None)!s})')

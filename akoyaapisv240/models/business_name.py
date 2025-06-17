@@ -18,8 +18,6 @@ class BusinessName(object):
     Attributes:
         name_1 (str): Name line 1
         name_2 (str): Name line 2
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -36,8 +34,7 @@ class BusinessName(object):
 
     def __init__(self,
                  name_1=APIHelper.SKIP,
-                 name_2=APIHelper.SKIP,
-                 additional_properties=None):
+                 name_2=APIHelper.SKIP):
         """Constructor for the BusinessName class"""
 
         # Initialize members of the class
@@ -45,11 +42,6 @@ class BusinessName(object):
             self.name_1 = name_1 
         if name_2 is not APIHelper.SKIP:
             self.name_2 = name_2 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -72,22 +64,16 @@ class BusinessName(object):
         # Extract variables from the dictionary
         name_1 = dictionary.get("name1") if dictionary.get("name1") else APIHelper.SKIP
         name_2 = dictionary.get("name2") if dictionary.get("name2") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(name_1,
-                   name_2,
-                   additional_properties)
+                   name_2)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'name_1={(self.name_1 if hasattr(self, "name_1") else None)!r}, '
-                f'name_2={(self.name_2 if hasattr(self, "name_2") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'name_2={(self.name_2 if hasattr(self, "name_2") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'name_1={(self.name_1 if hasattr(self, "name_1") else None)!s}, '
-                f'name_2={(self.name_2 if hasattr(self, "name_2") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'name_2={(self.name_2 if hasattr(self, "name_2") else None)!s})')

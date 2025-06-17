@@ -28,8 +28,6 @@ class PaymentNetworkSupportedByAccount(object):
             information
         transfer_out (bool): Can transfer funds from the account using this
             information
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -58,8 +56,7 @@ class PaymentNetworkSupportedByAccount(object):
                  identifier_type=APIHelper.SKIP,
                  mtype=APIHelper.SKIP,
                  transfer_in=APIHelper.SKIP,
-                 transfer_out=APIHelper.SKIP,
-                 additional_properties=None):
+                 transfer_out=APIHelper.SKIP):
         """Constructor for the PaymentNetworkSupportedByAccount class"""
 
         # Initialize members of the class
@@ -75,11 +72,6 @@ class PaymentNetworkSupportedByAccount(object):
             self.transfer_in = transfer_in 
         if transfer_out is not APIHelper.SKIP:
             self.transfer_out = transfer_out 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -106,17 +98,13 @@ class PaymentNetworkSupportedByAccount(object):
         mtype = dictionary.get("type") if dictionary.get("type") else APIHelper.SKIP
         transfer_in = dictionary.get("transferIn") if "transferIn" in dictionary.keys() else APIHelper.SKIP
         transfer_out = dictionary.get("transferOut") if "transferOut" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(bank_id,
                    identifier,
                    identifier_type,
                    mtype,
                    transfer_in,
-                   transfer_out,
-                   additional_properties)
+                   transfer_out)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -125,8 +113,7 @@ class PaymentNetworkSupportedByAccount(object):
                 f'identifier_type={(self.identifier_type if hasattr(self, "identifier_type") else None)!r}, '
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!r}, '
                 f'transfer_in={(self.transfer_in if hasattr(self, "transfer_in") else None)!r}, '
-                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -135,5 +122,4 @@ class PaymentNetworkSupportedByAccount(object):
                 f'identifier_type={(self.identifier_type if hasattr(self, "identifier_type") else None)!s}, '
                 f'mtype={(self.mtype if hasattr(self, "mtype") else None)!s}, '
                 f'transfer_in={(self.transfer_in if hasattr(self, "transfer_in") else None)!s}, '
-                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'transfer_out={(self.transfer_out if hasattr(self, "transfer_out") else None)!s})')

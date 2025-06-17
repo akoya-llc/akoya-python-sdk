@@ -10,12 +10,12 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
 
-class Form1099Sa(object):
+class Form1099SA(object):
 
     """Implementation of the 'Form 1099-SA' model.
 
@@ -33,8 +33,8 @@ class Form1099Sa(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1099Sa(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         gross_distribution (float): Box 1, Gross distribution
@@ -62,8 +62,6 @@ class Form1099Sa(object):
         hsa (bool): Box 5a, HSA
         archer_account (bool): Box 5b, Archer MSA
         medical_savings_account (bool): Box 5c, Medicare Advantage (MA) MSA
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -134,9 +132,8 @@ class Form1099Sa(object):
                  fair_market_value=APIHelper.SKIP,
                  hsa=APIHelper.SKIP,
                  archer_account=APIHelper.SKIP,
-                 medical_savings_account=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the Form1099Sa class"""
+                 medical_savings_account=APIHelper.SKIP):
+        """Constructor for the Form1099SA class"""
 
         # Initialize members of the class
         if tax_year is not APIHelper.SKIP:
@@ -180,11 +177,6 @@ class Form1099Sa(object):
         if medical_savings_account is not APIHelper.SKIP:
             self.medical_savings_account = medical_savings_account 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -221,7 +213,7 @@ class Form1099Sa(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -232,9 +224,6 @@ class Form1099Sa(object):
         hsa = dictionary.get("hsa") if "hsa" in dictionary.keys() else APIHelper.SKIP
         archer_account = dictionary.get("archerAccount") if "archerAccount" in dictionary.keys() else APIHelper.SKIP
         medical_savings_account = dictionary.get("medicalSavingsAccount") if "medicalSavingsAccount" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -255,8 +244,7 @@ class Form1099Sa(object):
                    fair_market_value,
                    hsa,
                    archer_account,
-                   medical_savings_account,
-                   additional_properties)
+                   medical_savings_account)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -279,8 +267,7 @@ class Form1099Sa(object):
                 f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!r}, '
                 f'hsa={(self.hsa if hasattr(self, "hsa") else None)!r}, '
                 f'archer_account={(self.archer_account if hasattr(self, "archer_account") else None)!r}, '
-                f'medical_savings_account={(self.medical_savings_account if hasattr(self, "medical_savings_account") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'medical_savings_account={(self.medical_savings_account if hasattr(self, "medical_savings_account") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -303,5 +290,4 @@ class Form1099Sa(object):
                 f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!s}, '
                 f'hsa={(self.hsa if hasattr(self, "hsa") else None)!s}, '
                 f'archer_account={(self.archer_account if hasattr(self, "archer_account") else None)!s}, '
-                f'medical_savings_account={(self.medical_savings_account if hasattr(self, "medical_savings_account") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'medical_savings_account={(self.medical_savings_account if hasattr(self, "medical_savings_account") else None)!s})')

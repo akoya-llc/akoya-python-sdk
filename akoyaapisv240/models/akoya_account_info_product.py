@@ -21,8 +21,6 @@ class AkoyaAccountInfoProduct(object):
             | None): An array of accounts with entity types dependent on the
             account type (deposit, investment, loan, line of credit, annuity
             or insurance)
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -36,18 +34,12 @@ class AkoyaAccountInfoProduct(object):
     ]
 
     def __init__(self,
-                 accounts=APIHelper.SKIP,
-                 additional_properties=None):
+                 accounts=APIHelper.SKIP):
         """Constructor for the AkoyaAccountInfoProduct class"""
 
         # Initialize members of the class
         if accounts is not APIHelper.SKIP:
             self.accounts = accounts 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -70,19 +62,13 @@ class AkoyaAccountInfoProduct(object):
 
         # Extract variables from the dictionary
         accounts = APIHelper.deserialize_union_type(UnionTypeLookUp.get('AkoyaAccountInfoProductAccounts'), dictionary.get('accounts'), False) if dictionary.get('accounts') is not None else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(accounts,
-                   additional_properties)
+        return cls(accounts)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'accounts={(self.accounts if hasattr(self, "accounts") else None)!s})')

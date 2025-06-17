@@ -21,8 +21,6 @@ class CurrencyEntity(object):
         currency_rate (float): Currency rate between original and converted
             currency.
         original_currency_code (str): Iso 4217 currency code.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -42,8 +40,7 @@ class CurrencyEntity(object):
     def __init__(self,
                  currency_code=APIHelper.SKIP,
                  currency_rate=APIHelper.SKIP,
-                 original_currency_code=APIHelper.SKIP,
-                 additional_properties=None):
+                 original_currency_code=APIHelper.SKIP):
         """Constructor for the CurrencyEntity class"""
 
         # Initialize members of the class
@@ -53,11 +50,6 @@ class CurrencyEntity(object):
             self.currency_rate = currency_rate 
         if original_currency_code is not APIHelper.SKIP:
             self.original_currency_code = original_currency_code 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -81,14 +73,10 @@ class CurrencyEntity(object):
         currency_code = dictionary.get("currencyCode") if dictionary.get("currencyCode") else APIHelper.SKIP
         currency_rate = dictionary.get("currencyRate") if dictionary.get("currencyRate") else APIHelper.SKIP
         original_currency_code = dictionary.get("originalCurrencyCode") if dictionary.get("originalCurrencyCode") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(currency_code,
                    currency_rate,
-                   original_currency_code,
-                   additional_properties)
+                   original_currency_code)
 
     @classmethod
     def validate(cls, dictionary):
@@ -116,12 +104,10 @@ class CurrencyEntity(object):
         return (f'{self.__class__.__name__}('
                 f'currency_code={(self.currency_code if hasattr(self, "currency_code") else None)!r}, '
                 f'currency_rate={(self.currency_rate if hasattr(self, "currency_rate") else None)!r}, '
-                f'original_currency_code={(self.original_currency_code if hasattr(self, "original_currency_code") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'original_currency_code={(self.original_currency_code if hasattr(self, "original_currency_code") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'currency_code={(self.currency_code if hasattr(self, "currency_code") else None)!s}, '
                 f'currency_rate={(self.currency_rate if hasattr(self, "currency_rate") else None)!s}, '
-                f'original_currency_code={(self.original_currency_code if hasattr(self, "original_currency_code") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'original_currency_code={(self.original_currency_code if hasattr(self, "original_currency_code") else None)!s})')

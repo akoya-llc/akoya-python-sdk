@@ -20,8 +20,6 @@ class TaxRefundDirectDeposit(object):
         rtn (str): Routing transit number
         account_number (str): Account number
         account_nick_name (str): Account nickname
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -44,8 +42,7 @@ class TaxRefundDirectDeposit(object):
                  institution_name=APIHelper.SKIP,
                  rtn=APIHelper.SKIP,
                  account_number=APIHelper.SKIP,
-                 account_nick_name=APIHelper.SKIP,
-                 additional_properties=None):
+                 account_nick_name=APIHelper.SKIP):
         """Constructor for the TaxRefundDirectDeposit class"""
 
         # Initialize members of the class
@@ -57,11 +54,6 @@ class TaxRefundDirectDeposit(object):
             self.account_number = account_number 
         if account_nick_name is not APIHelper.SKIP:
             self.account_nick_name = account_nick_name 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -86,28 +78,22 @@ class TaxRefundDirectDeposit(object):
         rtn = dictionary.get("rtn") if dictionary.get("rtn") else APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
         account_nick_name = dictionary.get("accountNickName") if dictionary.get("accountNickName") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(institution_name,
                    rtn,
                    account_number,
-                   account_nick_name,
-                   additional_properties)
+                   account_nick_name)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'institution_name={(self.institution_name if hasattr(self, "institution_name") else None)!r}, '
                 f'rtn={(self.rtn if hasattr(self, "rtn") else None)!r}, '
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!r}, '
-                f'account_nick_name={(self.account_nick_name if hasattr(self, "account_nick_name") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'account_nick_name={(self.account_nick_name if hasattr(self, "account_nick_name") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'institution_name={(self.institution_name if hasattr(self, "institution_name") else None)!s}, '
                 f'rtn={(self.rtn if hasattr(self, "rtn") else None)!s}, '
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!s}, '
-                f'account_nick_name={(self.account_nick_name if hasattr(self, "account_nick_name") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'account_nick_name={(self.account_nick_name if hasattr(self, "account_nick_name") else None)!s})')

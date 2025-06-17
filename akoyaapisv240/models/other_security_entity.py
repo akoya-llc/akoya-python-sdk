@@ -17,8 +17,6 @@ class OtherSecurityEntity(object):
 
     Attributes:
         type_description (str): Description of Other Security
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -32,18 +30,12 @@ class OtherSecurityEntity(object):
     ]
 
     def __init__(self,
-                 type_description=APIHelper.SKIP,
-                 additional_properties=None):
+                 type_description=APIHelper.SKIP):
         """Constructor for the OtherSecurityEntity class"""
 
         # Initialize members of the class
         if type_description is not APIHelper.SKIP:
             self.type_description = type_description 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -65,12 +57,8 @@ class OtherSecurityEntity(object):
 
         # Extract variables from the dictionary
         type_description = dictionary.get("typeDescription") if dictionary.get("typeDescription") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(type_description,
-                   additional_properties)
+        return cls(type_description)
 
     @classmethod
     def validate(cls, dictionary):
@@ -96,10 +84,8 @@ class OtherSecurityEntity(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'type_description={(self.type_description if hasattr(self, "type_description") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'type_description={(self.type_description if hasattr(self, "type_description") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'type_description={(self.type_description if hasattr(self, "type_description") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'type_description={(self.type_description if hasattr(self, "type_description") else None)!s})')

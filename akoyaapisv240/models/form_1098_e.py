@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form1098E(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,15 +52,13 @@ class Form1098E(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         student_loan_interest (float): Box 1, Student loan interest received
             by lender
         box_1_excludes_fees (bool): Box 2, If checked, box 1 does not include
             loan origination fee made before September 1, 2004
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -116,8 +114,7 @@ class Form1098E(object):
                  links=APIHelper.SKIP,
                  account_number=APIHelper.SKIP,
                  student_loan_interest=APIHelper.SKIP,
-                 box_1_excludes_fees=APIHelper.SKIP,
-                 additional_properties=None):
+                 box_1_excludes_fees=APIHelper.SKIP):
         """Constructor for the Form1098E class"""
 
         # Initialize members of the class
@@ -151,11 +148,6 @@ class Form1098E(object):
             self.student_loan_interest = student_loan_interest 
         if box_1_excludes_fees is not APIHelper.SKIP:
             self.box_1_excludes_fees = box_1_excludes_fees 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -193,15 +185,12 @@ class Form1098E(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
         student_loan_interest = dictionary.get("studentLoanInterest") if dictionary.get("studentLoanInterest") else APIHelper.SKIP
         box_1_excludes_fees = dictionary.get("box1ExcludesFees") if "box1ExcludesFees" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -217,8 +206,7 @@ class Form1098E(object):
                    links,
                    account_number,
                    student_loan_interest,
-                   box_1_excludes_fees,
-                   additional_properties)
+                   box_1_excludes_fees)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -236,8 +224,7 @@ class Form1098E(object):
                 f'links={(self.links if hasattr(self, "links") else None)!r}, '
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!r}, '
                 f'student_loan_interest={(self.student_loan_interest if hasattr(self, "student_loan_interest") else None)!r}, '
-                f'box_1_excludes_fees={(self.box_1_excludes_fees if hasattr(self, "box_1_excludes_fees") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'box_1_excludes_fees={(self.box_1_excludes_fees if hasattr(self, "box_1_excludes_fees") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -255,5 +242,4 @@ class Form1098E(object):
                 f'links={(self.links if hasattr(self, "links") else None)!s}, '
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!s}, '
                 f'student_loan_interest={(self.student_loan_interest if hasattr(self, "student_loan_interest") else None)!s}, '
-                f'box_1_excludes_fees={(self.box_1_excludes_fees if hasattr(self, "box_1_excludes_fees") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'box_1_excludes_fees={(self.box_1_excludes_fees if hasattr(self, "box_1_excludes_fees") else None)!s})')

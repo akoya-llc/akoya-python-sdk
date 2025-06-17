@@ -21,9 +21,7 @@ class HealthInsuranceCoverage(object):
             premium
         advance_premium_tax_credit_payment (float): Monthly advance payment of
             premium tax credit
-        month (CoverageMonth): Month of coverage
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        month (CoverageMonthEnum): Month of coverage
 
     """
 
@@ -46,8 +44,7 @@ class HealthInsuranceCoverage(object):
                  enrollment_premium=APIHelper.SKIP,
                  slcsp_premium=APIHelper.SKIP,
                  advance_premium_tax_credit_payment=APIHelper.SKIP,
-                 month=APIHelper.SKIP,
-                 additional_properties=None):
+                 month=APIHelper.SKIP):
         """Constructor for the HealthInsuranceCoverage class"""
 
         # Initialize members of the class
@@ -59,11 +56,6 @@ class HealthInsuranceCoverage(object):
             self.advance_premium_tax_credit_payment = advance_premium_tax_credit_payment 
         if month is not APIHelper.SKIP:
             self.month = month 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -88,28 +80,22 @@ class HealthInsuranceCoverage(object):
         slcsp_premium = dictionary.get("slcspPremium") if dictionary.get("slcspPremium") else APIHelper.SKIP
         advance_premium_tax_credit_payment = dictionary.get("advancePremiumTaxCreditPayment") if dictionary.get("advancePremiumTaxCreditPayment") else APIHelper.SKIP
         month = dictionary.get("month") if dictionary.get("month") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(enrollment_premium,
                    slcsp_premium,
                    advance_premium_tax_credit_payment,
-                   month,
-                   additional_properties)
+                   month)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'enrollment_premium={(self.enrollment_premium if hasattr(self, "enrollment_premium") else None)!r}, '
                 f'slcsp_premium={(self.slcsp_premium if hasattr(self, "slcsp_premium") else None)!r}, '
                 f'advance_premium_tax_credit_payment={(self.advance_premium_tax_credit_payment if hasattr(self, "advance_premium_tax_credit_payment") else None)!r}, '
-                f'month={(self.month if hasattr(self, "month") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'month={(self.month if hasattr(self, "month") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'enrollment_premium={(self.enrollment_premium if hasattr(self, "enrollment_premium") else None)!s}, '
                 f'slcsp_premium={(self.slcsp_premium if hasattr(self, "slcsp_premium") else None)!s}, '
                 f'advance_premium_tax_credit_payment={(self.advance_premium_tax_credit_payment if hasattr(self, "advance_premium_tax_credit_payment") else None)!s}, '
-                f'month={(self.month if hasattr(self, "month") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'month={(self.month if hasattr(self, "month") else None)!s})')

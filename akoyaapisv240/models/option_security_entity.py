@@ -16,13 +16,12 @@ class OptionSecurityEntity(object):
     Information about the option security specific to the type of security
 
     Attributes:
-        secured (Secured): How the option is secured
-        option_type (OptionType): The model property of type OptionType.
+        secured (SecuredEnum): How the option is secured
+        option_type (OptionTypeEnum): The model property of type
+            OptionTypeEnum.
         strike_price (float): Strike price / Unit price
         expire_date (datetime): Expiration date of option
         shares_per_contract (float): Shares per contract
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -48,8 +47,7 @@ class OptionSecurityEntity(object):
                  option_type=APIHelper.SKIP,
                  strike_price=APIHelper.SKIP,
                  expire_date=APIHelper.SKIP,
-                 shares_per_contract=APIHelper.SKIP,
-                 additional_properties=None):
+                 shares_per_contract=APIHelper.SKIP):
         """Constructor for the OptionSecurityEntity class"""
 
         # Initialize members of the class
@@ -63,11 +61,6 @@ class OptionSecurityEntity(object):
             self.expire_date = APIHelper.apply_datetime_converter(expire_date, APIHelper.RFC3339DateTime) if expire_date else None 
         if shares_per_contract is not APIHelper.SKIP:
             self.shares_per_contract = shares_per_contract 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -93,16 +86,12 @@ class OptionSecurityEntity(object):
         strike_price = dictionary.get("strikePrice") if dictionary.get("strikePrice") else APIHelper.SKIP
         expire_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("expireDate")).datetime if dictionary.get("expireDate") else APIHelper.SKIP
         shares_per_contract = dictionary.get("sharesPerContract") if dictionary.get("sharesPerContract") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(secured,
                    option_type,
                    strike_price,
                    expire_date,
-                   shares_per_contract,
-                   additional_properties)
+                   shares_per_contract)
 
     @classmethod
     def validate(cls, dictionary):
@@ -132,8 +121,7 @@ class OptionSecurityEntity(object):
                 f'option_type={(self.option_type if hasattr(self, "option_type") else None)!r}, '
                 f'strike_price={(self.strike_price if hasattr(self, "strike_price") else None)!r}, '
                 f'expire_date={(self.expire_date if hasattr(self, "expire_date") else None)!r}, '
-                f'shares_per_contract={(self.shares_per_contract if hasattr(self, "shares_per_contract") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'shares_per_contract={(self.shares_per_contract if hasattr(self, "shares_per_contract") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -141,5 +129,4 @@ class OptionSecurityEntity(object):
                 f'option_type={(self.option_type if hasattr(self, "option_type") else None)!s}, '
                 f'strike_price={(self.strike_price if hasattr(self, "strike_price") else None)!s}, '
                 f'expire_date={(self.expire_date if hasattr(self, "expire_date") else None)!s}, '
-                f'shares_per_contract={(self.shares_per_contract if hasattr(self, "shares_per_contract") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'shares_per_contract={(self.shares_per_contract if hasattr(self, "shares_per_contract") else None)!s})')

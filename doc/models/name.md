@@ -3,8 +3,6 @@
 
 The end-user's name
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `Name`
@@ -23,7 +21,6 @@ The end-user's name
 | `telephones` | [`List[Telephone]`](../../doc/models/telephone.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
 | `email` | `List[str]` | Optional | An array of the end-user's electronic mail addresses |
 | `accounts` | [`List[AccountRelationship]`](../../doc/models/account-relationship.md) | Optional | List of accounts related to this end-user<br><br>**Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -33,11 +30,7 @@ The end-user's name
   "middle": "middle6",
   "last": "last0",
   "prefix": "prefix8",
-  "suffix": "suffix0",
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  "suffix": "suffix0"
 }
 ```
 

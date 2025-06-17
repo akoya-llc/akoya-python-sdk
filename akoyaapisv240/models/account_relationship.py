@@ -15,10 +15,8 @@ class AccountRelationship(object):
 
     Attributes:
         account_id (str): Account ID of the related account
-        relationship (RelationshipType): Types of relationships between
+        relationship (RelationshipTypeEnum): Types of relationships between
             accounts and holders. Suggested values
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -35,8 +33,7 @@ class AccountRelationship(object):
 
     def __init__(self,
                  account_id=APIHelper.SKIP,
-                 relationship=APIHelper.SKIP,
-                 additional_properties=None):
+                 relationship=APIHelper.SKIP):
         """Constructor for the AccountRelationship class"""
 
         # Initialize members of the class
@@ -44,11 +41,6 @@ class AccountRelationship(object):
             self.account_id = account_id 
         if relationship is not APIHelper.SKIP:
             self.relationship = relationship 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -71,22 +63,16 @@ class AccountRelationship(object):
         # Extract variables from the dictionary
         account_id = dictionary.get("accountId") if dictionary.get("accountId") else APIHelper.SKIP
         relationship = dictionary.get("relationship") if dictionary.get("relationship") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
-                   relationship,
-                   additional_properties)
+                   relationship)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'account_id={(self.account_id if hasattr(self, "account_id") else None)!r}, '
-                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'account_id={(self.account_id if hasattr(self, "account_id") else None)!s}, '
-                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'relationship={(self.relationship if hasattr(self, "relationship") else None)!s})')

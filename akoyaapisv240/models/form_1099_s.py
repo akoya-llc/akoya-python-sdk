@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form1099S(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1099S(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account or escrow number
         date_of_closing (date): Box 1, Date of closing
@@ -65,8 +65,6 @@ class Form1099S(object):
             person (nonresident alien, foreign partnership, foreign estate, or
             foreign trust)
         real_estate_tax (float): Box 6, Buyer's part of real estate tax
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -134,8 +132,7 @@ class Form1099S(object):
                  address_or_legal_description=APIHelper.SKIP,
                  received_other_consideration=APIHelper.SKIP,
                  foreign_person=APIHelper.SKIP,
-                 real_estate_tax=APIHelper.SKIP,
-                 additional_properties=None):
+                 real_estate_tax=APIHelper.SKIP):
         """Constructor for the Form1099S class"""
 
         # Initialize members of the class
@@ -178,11 +175,6 @@ class Form1099S(object):
         if real_estate_tax is not APIHelper.SKIP:
             self.real_estate_tax = real_estate_tax 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -219,7 +211,7 @@ class Form1099S(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -229,9 +221,6 @@ class Form1099S(object):
         received_other_consideration = dictionary.get("receivedOtherConsideration") if "receivedOtherConsideration" in dictionary.keys() else APIHelper.SKIP
         foreign_person = dictionary.get("foreignPerson") if "foreignPerson" in dictionary.keys() else APIHelper.SKIP
         real_estate_tax = dictionary.get("realEstateTax") if dictionary.get("realEstateTax") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -251,8 +240,7 @@ class Form1099S(object):
                    address_or_legal_description,
                    received_other_consideration,
                    foreign_person,
-                   real_estate_tax,
-                   additional_properties)
+                   real_estate_tax)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -274,8 +262,7 @@ class Form1099S(object):
                 f'address_or_legal_description={(self.address_or_legal_description if hasattr(self, "address_or_legal_description") else None)!r}, '
                 f'received_other_consideration={(self.received_other_consideration if hasattr(self, "received_other_consideration") else None)!r}, '
                 f'foreign_person={(self.foreign_person if hasattr(self, "foreign_person") else None)!r}, '
-                f'real_estate_tax={(self.real_estate_tax if hasattr(self, "real_estate_tax") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'real_estate_tax={(self.real_estate_tax if hasattr(self, "real_estate_tax") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -297,5 +284,4 @@ class Form1099S(object):
                 f'address_or_legal_description={(self.address_or_legal_description if hasattr(self, "address_or_legal_description") else None)!s}, '
                 f'received_other_consideration={(self.received_other_consideration if hasattr(self, "received_other_consideration") else None)!s}, '
                 f'foreign_person={(self.foreign_person if hasattr(self, "foreign_person") else None)!s}, '
-                f'real_estate_tax={(self.real_estate_tax if hasattr(self, "real_estate_tax") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'real_estate_tax={(self.real_estate_tax if hasattr(self, "real_estate_tax") else None)!s})')

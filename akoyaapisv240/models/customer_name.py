@@ -21,8 +21,6 @@ class CustomerName(object):
         prefix (str): Name prefix, e.g. Mr.
         suffix (str): Generational or academic suffix
         company (str): Company name
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -51,8 +49,7 @@ class CustomerName(object):
                  last=APIHelper.SKIP,
                  prefix=APIHelper.SKIP,
                  suffix=APIHelper.SKIP,
-                 company=APIHelper.SKIP,
-                 additional_properties=None):
+                 company=APIHelper.SKIP):
         """Constructor for the CustomerName class"""
 
         # Initialize members of the class
@@ -68,11 +65,6 @@ class CustomerName(object):
             self.suffix = suffix 
         if company is not APIHelper.SKIP:
             self.company = company 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -99,17 +91,13 @@ class CustomerName(object):
         prefix = dictionary.get("prefix") if dictionary.get("prefix") else APIHelper.SKIP
         suffix = dictionary.get("suffix") if dictionary.get("suffix") else APIHelper.SKIP
         company = dictionary.get("company") if dictionary.get("company") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(first,
                    middle,
                    last,
                    prefix,
                    suffix,
-                   company,
-                   additional_properties)
+                   company)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -118,8 +106,7 @@ class CustomerName(object):
                 f'last={(self.last if hasattr(self, "last") else None)!r}, '
                 f'prefix={(self.prefix if hasattr(self, "prefix") else None)!r}, '
                 f'suffix={(self.suffix if hasattr(self, "suffix") else None)!r}, '
-                f'company={(self.company if hasattr(self, "company") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'company={(self.company if hasattr(self, "company") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -128,5 +115,4 @@ class CustomerName(object):
                 f'last={(self.last if hasattr(self, "last") else None)!s}, '
                 f'prefix={(self.prefix if hasattr(self, "prefix") else None)!s}, '
                 f'suffix={(self.suffix if hasattr(self, "suffix") else None)!s}, '
-                f'company={(self.company if hasattr(self, "company") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'company={(self.company if hasattr(self, "company") else None)!s})')

@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form1098C(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1098C(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         date_of_contribution (date): Box 1, Date of contribution
         odometer_mileage (int): Box 2a, Odometer mileage
@@ -87,8 +87,6 @@ class Form1098C(object):
         max_deduction_applies (bool): Box 7, Under the law, the donor may not
             claim a deduction of more than $500 for this vehicle if this box
             is checked
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -186,8 +184,7 @@ class Form1098C(object):
                  value_of_exchange=APIHelper.SKIP,
                  intangible_religious=APIHelper.SKIP,
                  description_of_goods=APIHelper.SKIP,
-                 max_deduction_applies=APIHelper.SKIP,
-                 additional_properties=None):
+                 max_deduction_applies=APIHelper.SKIP):
         """Constructor for the Form1098C class"""
 
         # Initialize members of the class
@@ -250,11 +247,6 @@ class Form1098C(object):
         if max_deduction_applies is not APIHelper.SKIP:
             self.max_deduction_applies = max_deduction_applies 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -291,7 +283,7 @@ class Form1098C(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         date_of_contribution = dateutil.parser.parse(dictionary.get('dateOfContribution')).date() if dictionary.get('dateOfContribution') else APIHelper.SKIP
@@ -311,9 +303,6 @@ class Form1098C(object):
         intangible_religious = dictionary.get("intangibleReligious") if "intangibleReligious" in dictionary.keys() else APIHelper.SKIP
         description_of_goods = dictionary.get("descriptionOfGoods") if dictionary.get("descriptionOfGoods") else APIHelper.SKIP
         max_deduction_applies = dictionary.get("maxDeductionApplies") if "maxDeductionApplies" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -343,8 +332,7 @@ class Form1098C(object):
                    value_of_exchange,
                    intangible_religious,
                    description_of_goods,
-                   max_deduction_applies,
-                   additional_properties)
+                   max_deduction_applies)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -376,8 +364,7 @@ class Form1098C(object):
                 f'value_of_exchange={(self.value_of_exchange if hasattr(self, "value_of_exchange") else None)!r}, '
                 f'intangible_religious={(self.intangible_religious if hasattr(self, "intangible_religious") else None)!r}, '
                 f'description_of_goods={(self.description_of_goods if hasattr(self, "description_of_goods") else None)!r}, '
-                f'max_deduction_applies={(self.max_deduction_applies if hasattr(self, "max_deduction_applies") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'max_deduction_applies={(self.max_deduction_applies if hasattr(self, "max_deduction_applies") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -409,5 +396,4 @@ class Form1098C(object):
                 f'value_of_exchange={(self.value_of_exchange if hasattr(self, "value_of_exchange") else None)!s}, '
                 f'intangible_religious={(self.intangible_religious if hasattr(self, "intangible_religious") else None)!s}, '
                 f'description_of_goods={(self.description_of_goods if hasattr(self, "description_of_goods") else None)!s}, '
-                f'max_deduction_applies={(self.max_deduction_applies if hasattr(self, "max_deduction_applies") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'max_deduction_applies={(self.max_deduction_applies if hasattr(self, "max_deduction_applies") else None)!s})')

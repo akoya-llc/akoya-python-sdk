@@ -23,8 +23,6 @@ class PaymentDetails(object):
         interest_amount (float): The amount of payment applied to interest
         pmi_amount (float): The amount of payment applied to PMI
         principal_amount (float): The amount of payment applied to principal
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -53,8 +51,7 @@ class PaymentDetails(object):
                  insurance_amount=APIHelper.SKIP,
                  interest_amount=APIHelper.SKIP,
                  pmi_amount=APIHelper.SKIP,
-                 principal_amount=APIHelper.SKIP,
-                 additional_properties=None):
+                 principal_amount=APIHelper.SKIP):
         """Constructor for the PaymentDetails class"""
 
         # Initialize members of the class
@@ -70,11 +67,6 @@ class PaymentDetails(object):
             self.pmi_amount = pmi_amount 
         if principal_amount is not APIHelper.SKIP:
             self.principal_amount = principal_amount 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -101,17 +93,13 @@ class PaymentDetails(object):
         interest_amount = dictionary.get("interestAmount") if dictionary.get("interestAmount") else APIHelper.SKIP
         pmi_amount = dictionary.get("pmiAmount") if dictionary.get("pmiAmount") else APIHelper.SKIP
         principal_amount = dictionary.get("principalAmount") if dictionary.get("principalAmount") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(escrow_amount,
                    fees_amount,
                    insurance_amount,
                    interest_amount,
                    pmi_amount,
-                   principal_amount,
-                   additional_properties)
+                   principal_amount)
 
     @classmethod
     def validate(cls, dictionary):
@@ -142,8 +130,7 @@ class PaymentDetails(object):
                 f'insurance_amount={(self.insurance_amount if hasattr(self, "insurance_amount") else None)!r}, '
                 f'interest_amount={(self.interest_amount if hasattr(self, "interest_amount") else None)!r}, '
                 f'pmi_amount={(self.pmi_amount if hasattr(self, "pmi_amount") else None)!r}, '
-                f'principal_amount={(self.principal_amount if hasattr(self, "principal_amount") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'principal_amount={(self.principal_amount if hasattr(self, "principal_amount") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -152,5 +139,4 @@ class PaymentDetails(object):
                 f'insurance_amount={(self.insurance_amount if hasattr(self, "insurance_amount") else None)!s}, '
                 f'interest_amount={(self.interest_amount if hasattr(self, "interest_amount") else None)!s}, '
                 f'pmi_amount={(self.pmi_amount if hasattr(self, "pmi_amount") else None)!s}, '
-                f'principal_amount={(self.principal_amount if hasattr(self, "principal_amount") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'principal_amount={(self.principal_amount if hasattr(self, "principal_amount") else None)!s})')

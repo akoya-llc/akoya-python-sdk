@@ -50,12 +50,12 @@ def get_accounts(self,
 |  --- | --- | --- | --- |
 | `version` | `str` | Template, Required | Akoya major version number. Do not use minor version numbers. For instance, use v2 and not v2.2 |
 | `provider_id` | `str` | Template, Required | Id of provider |
-| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
-| `mode` | [`Mode`](../../doc/models/mode.md) | Query, Optional | BETA. Default is raw. Use standard for FDX-aligned, standardized data values. |
+| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `mode` | [`ModeEnum`](../../doc/models/mode-enum.md) | Query, Optional | BETA. Default is raw. Use standard for FDX-aligned, standardized data values. |
 
 ## Response Type
 
-This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`InvestmentsDetails`](../../doc/models/investments-details.md).
+[`InvestmentsDetails`](../../doc/models/investments-details.md)
 
 ## Example Usage
 
@@ -64,7 +64,7 @@ version = 'v2'
 
 provider_id = 'mikomo'
 
-mode = Mode.RAW
+mode = ModeEnum.RAW
 
 result = investments_controller.get_accounts(
     version,
@@ -327,11 +327,11 @@ result = investments_controller.get_accounts(
 | 400 | Invalid Input | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 401 | Customer not authorized. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | 701 - Tax Lots not found. The `holdingId` may be wrong. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `ApiException` |
+| 405 | Method Not Allowed | `APIException` |
 | 406 | Content Type not Supported | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 429 | 1207 - Too many requests | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 500 | Internal Server Error. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
+| 500 | Catch-all exception where request was not processed due to an internal outage/issue. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 501 | FdxVersion in header is not implemented. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 503 | System is down for maintenance. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 
@@ -363,13 +363,13 @@ def get_taxlots(self,
 | `provider_id` | `str` | Template, Required | Id of provider |
 | `account_id` | `str` | Template, Required | Account Identifier |
 | `holding_id` | `str` | Template, Required | Consumer's holdingId under investments |
-| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
 | `offset` | `str` | Query, Optional | The number of items to skip before the first in the response. The default is 0 |
 | `limit` | `str` | Query, Optional | The maximum number of items to be returned in the response. The default is 50 |
 
 ## Response Type
 
-This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`TaxlotsResponse`](../../doc/models/taxlots-response.md).
+[`TaxlotsResponse`](../../doc/models/taxlots-response.md)
 
 ## Example Usage
 
@@ -390,29 +390,6 @@ result = investments_controller.get_taxlots(
 )
 ```
 
-## Example Response *(as JSON)*
-
-```json
-{
-  "accountId": "string",
-  "holding": {
-    "holdingId": "string",
-    "securityId": "string",
-    "securityIdType": "ISIN",
-    "taxLots": [
-      {
-        "originalPurchaseDate": "2024-10-14T18:16:22Z",
-        "quantity": 0,
-        "purchasedPrice": 0,
-        "costBasis": 0,
-        "currentValue": 0,
-        "positionType": "LONG"
-      }
-    ]
-  }
-}
-```
-
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
@@ -420,6 +397,6 @@ result = investments_controller.get_taxlots(
 | 401 | Customer not authorized. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 403 | Incorrect providerId or no subscription to provider. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | 701 - Tax Lots not found. The `holdingId` may be wrong. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `ApiException` |
+| 405 | Method Not Allowed | `APIException` |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 

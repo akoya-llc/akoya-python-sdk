@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form1098T(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1098T(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         student_tin_certification (bool): By checking the box in STUDENT'S
             TIN, filer is making a true and accurate certification under
@@ -72,8 +72,6 @@ class Form1098T(object):
         graduate (bool): Box 9, Check if graduate student
         insurance_refund (float): Box 10, Insurance contract reimbursement /
             refund
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -150,8 +148,7 @@ class Form1098T(object):
                  adjust_scholarship=APIHelper.SKIP,
                  include_jan_mar=APIHelper.SKIP,
                  graduate=APIHelper.SKIP,
-                 insurance_refund=APIHelper.SKIP,
-                 additional_properties=None):
+                 insurance_refund=APIHelper.SKIP):
         """Constructor for the Form1098T class"""
 
         # Initialize members of the class
@@ -200,11 +197,6 @@ class Form1098T(object):
         if insurance_refund is not APIHelper.SKIP:
             self.insurance_refund = insurance_refund 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -241,7 +233,7 @@ class Form1098T(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         student_tin_certification = dictionary.get("studentTinCertification") if "studentTinCertification" in dictionary.keys() else APIHelper.SKIP
@@ -254,9 +246,6 @@ class Form1098T(object):
         include_jan_mar = dictionary.get("includeJanMar") if "includeJanMar" in dictionary.keys() else APIHelper.SKIP
         graduate = dictionary.get("graduate") if "graduate" in dictionary.keys() else APIHelper.SKIP
         insurance_refund = dictionary.get("insuranceRefund") if dictionary.get("insuranceRefund") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -279,8 +268,7 @@ class Form1098T(object):
                    adjust_scholarship,
                    include_jan_mar,
                    graduate,
-                   insurance_refund,
-                   additional_properties)
+                   insurance_refund)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -305,8 +293,7 @@ class Form1098T(object):
                 f'adjust_scholarship={(self.adjust_scholarship if hasattr(self, "adjust_scholarship") else None)!r}, '
                 f'include_jan_mar={(self.include_jan_mar if hasattr(self, "include_jan_mar") else None)!r}, '
                 f'graduate={(self.graduate if hasattr(self, "graduate") else None)!r}, '
-                f'insurance_refund={(self.insurance_refund if hasattr(self, "insurance_refund") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'insurance_refund={(self.insurance_refund if hasattr(self, "insurance_refund") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -331,5 +318,4 @@ class Form1098T(object):
                 f'adjust_scholarship={(self.adjust_scholarship if hasattr(self, "adjust_scholarship") else None)!s}, '
                 f'include_jan_mar={(self.include_jan_mar if hasattr(self, "include_jan_mar") else None)!s}, '
                 f'graduate={(self.graduate if hasattr(self, "graduate") else None)!s}, '
-                f'insurance_refund={(self.insurance_refund if hasattr(self, "insurance_refund") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'insurance_refund={(self.insurance_refund if hasattr(self, "insurance_refund") else None)!s})')

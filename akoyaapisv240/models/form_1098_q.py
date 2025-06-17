@@ -11,7 +11,7 @@ import dateutil.parser
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.date_and_amount import DateAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -34,8 +34,8 @@ class Form1098Q(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,7 +53,7 @@ class Form1098Q(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         plan_number (str): Plan number
@@ -67,8 +67,6 @@ class Form1098Q(object):
             longevity annuity contract (FMV of QLAC)
         premiums (List[DateAndAmount]): Box 5, Total monthly premiums paid for
             the contract and date of the last payment in the month
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -145,8 +143,7 @@ class Form1098Q(object):
                  can_be_accelerated=APIHelper.SKIP,
                  total_premiums=APIHelper.SKIP,
                  fair_market_value=APIHelper.SKIP,
-                 premiums=APIHelper.SKIP,
-                 additional_properties=None):
+                 premiums=APIHelper.SKIP):
         """Constructor for the Form1098Q class"""
 
         # Initialize members of the class
@@ -195,11 +192,6 @@ class Form1098Q(object):
         if premiums is not APIHelper.SKIP:
             self.premiums = premiums 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -236,7 +228,7 @@ class Form1098Q(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -253,9 +245,6 @@ class Form1098Q(object):
             premiums = [DateAndAmount.from_dictionary(x) for x in dictionary.get('premiums')]
         else:
             premiums = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -278,8 +267,7 @@ class Form1098Q(object):
                    can_be_accelerated,
                    total_premiums,
                    fair_market_value,
-                   premiums,
-                   additional_properties)
+                   premiums)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -304,8 +292,7 @@ class Form1098Q(object):
                 f'can_be_accelerated={(self.can_be_accelerated if hasattr(self, "can_be_accelerated") else None)!r}, '
                 f'total_premiums={(self.total_premiums if hasattr(self, "total_premiums") else None)!r}, '
                 f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!r}, '
-                f'premiums={(self.premiums if hasattr(self, "premiums") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'premiums={(self.premiums if hasattr(self, "premiums") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -330,5 +317,4 @@ class Form1098Q(object):
                 f'can_be_accelerated={(self.can_be_accelerated if hasattr(self, "can_be_accelerated") else None)!s}, '
                 f'total_premiums={(self.total_premiums if hasattr(self, "total_premiums") else None)!s}, '
                 f'fair_market_value={(self.fair_market_value if hasattr(self, "fair_market_value") else None)!s}, '
-                f'premiums={(self.premiums if hasattr(self, "premiums") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'premiums={(self.premiums if hasattr(self, "premiums") else None)!s})')

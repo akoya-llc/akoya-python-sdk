@@ -3,8 +3,6 @@
 
 Loan Account
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `LoanAccount`
@@ -21,11 +19,11 @@ Loan Account
 | `fi_attributes` | [`List[FiAttributeEntity]`](../../doc/models/fi-attribute-entity.md) | Optional | **Constraints**: *Minimum Items*: `1`, *Unique Items Required* |
 | `nickname` | `str` | Optional | Name given by the user. Used in UIs to assist in account selection |
 | `product_name` | `str` | Optional | Marketed product name for this account.  Used in UIs to assist in account selection |
-| `status` | [`AccountInfoStatus`](../../doc/models/account-info-status.md) | Optional | The status of an account. |
+| `status` | [`AccountInfoStatusEnum`](../../doc/models/account-info-status-enum.md) | Optional | The status of an account. |
 | `line_of_business` | `str` | Optional | The line of business, such as consumer, consumer joint, small business, corporate, etc. |
-| `balance_type` | [`BalanceType`](../../doc/models/balance-type.md) | Optional | ASSET (positive transaction amount increases balance), LIABILITY (positive transaction amount decreases balance) |
+| `balance_type` | [`BalanceTypeEnum`](../../doc/models/balance-type-enum.md) | Optional | ASSET (positive transaction amount increases balance), LIABILITY (positive transaction amount decreases balance) |
 | `interest_rate` | `float` | Optional | Interest Rate of Account |
-| `interest_rate_type` | [`InterestRateType`](../../doc/models/interest-rate-type.md) | Optional | The type of interest rate. FIXED or VARIABLE. |
+| `interest_rate_type` | [`InterestRateTypeEnum`](../../doc/models/interest-rate-type-enum.md) | Optional | The type of interest rate. FIXED or VARIABLE. |
 | `interest_rate_as_of` | `datetime` | Optional | Date of account’s interest rate |
 | `last_activity_date` | `datetime` | Optional | Date that last transaction occurred on account |
 | `micr_number` | `str` | Optional | MICR Number |
@@ -33,13 +31,12 @@ Loan Account
 | `prior_interest_rate` | `float` | Optional | Previous Interest Rate of Account |
 | `transfer_in` | `bool` | Optional | Account is eligible for incoming transfers |
 | `transfer_out` | `bool` | Optional | Account is eligible for outgoing transfers |
-| `compounding_period` | [`CompoundingPeriod`](../../doc/models/compounding-period.md) | Optional | - |
+| `compounding_period` | [`CompoundingPeriodEnum`](../../doc/models/compounding-period-enum.md) | Optional | - |
 | `loan_term` | `int` | Optional | Term of loan in months |
 | `maturity_date` | `datetime` | Optional | Maturity date |
 | `originating_date` | `datetime` | Optional | Loan origination date |
-| `payment_frequency` | [`LoanAccountPaymentFrequency`](../../doc/models/loan-account-payment-frequency.md) | Optional | - |
+| `payment_frequency` | [`LoanAccountPaymentFrequencyEnum`](../../doc/models/loan-account-payment-frequency-enum.md) | Optional | - |
 | `total_number_of_payments` | `int` | Optional | Total number of payments |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -51,17 +48,9 @@ Loan Account
   "currency": {
     "currencyCode": "currencyCode0",
     "currencyRate": 27.48,
-    "originalCurrencyCode": "originalCurrencyCode4",
-    "exampleAdditionalProperty": {
-      "key1": "val1",
-      "key2": "val2"
-    }
+    "originalCurrencyCode": "originalCurrencyCode4"
   },
-  "description": "description6",
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  "description": "description6"
 }
 ```
 

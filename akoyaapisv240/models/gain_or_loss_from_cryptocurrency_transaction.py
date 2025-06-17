@@ -29,9 +29,7 @@ class GainOrLossFromCryptocurrencyTransaction(object):
         date_of_sale (date): Date sold or disposed (1099-B box 1c)
         sales_price (float): Proceeds (not price per share, 1099-B box 1d)
         cost_basis (float): Cost or other basis (1099-B box 1e)
-        long_or_short (SaleTermType): LONG or SHORT (1099-B box 2)
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        long_or_short (SaleTermTypeEnum): LONG or SHORT (1099-B box 2)
 
     """
 
@@ -72,8 +70,7 @@ class GainOrLossFromCryptocurrencyTransaction(object):
                  date_of_sale=APIHelper.SKIP,
                  sales_price=APIHelper.SKIP,
                  cost_basis=APIHelper.SKIP,
-                 long_or_short=APIHelper.SKIP,
-                 additional_properties=None):
+                 long_or_short=APIHelper.SKIP):
         """Constructor for the GainOrLossFromCryptocurrencyTransaction class"""
 
         # Initialize members of the class
@@ -97,11 +94,6 @@ class GainOrLossFromCryptocurrencyTransaction(object):
             self.cost_basis = cost_basis 
         if long_or_short is not APIHelper.SKIP:
             self.long_or_short = long_or_short 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -132,9 +124,6 @@ class GainOrLossFromCryptocurrencyTransaction(object):
         sales_price = dictionary.get("salesPrice") if dictionary.get("salesPrice") else APIHelper.SKIP
         cost_basis = dictionary.get("costBasis") if dictionary.get("costBasis") else APIHelper.SKIP
         long_or_short = dictionary.get("longOrShort") if dictionary.get("longOrShort") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(cryptocurrency_name,
                    symbol,
@@ -145,8 +134,7 @@ class GainOrLossFromCryptocurrencyTransaction(object):
                    date_of_sale,
                    sales_price,
                    cost_basis,
-                   long_or_short,
-                   additional_properties)
+                   long_or_short)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -159,8 +147,7 @@ class GainOrLossFromCryptocurrencyTransaction(object):
                 f'date_of_sale={(self.date_of_sale if hasattr(self, "date_of_sale") else None)!r}, '
                 f'sales_price={(self.sales_price if hasattr(self, "sales_price") else None)!r}, '
                 f'cost_basis={(self.cost_basis if hasattr(self, "cost_basis") else None)!r}, '
-                f'long_or_short={(self.long_or_short if hasattr(self, "long_or_short") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'long_or_short={(self.long_or_short if hasattr(self, "long_or_short") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -173,5 +160,4 @@ class GainOrLossFromCryptocurrencyTransaction(object):
                 f'date_of_sale={(self.date_of_sale if hasattr(self, "date_of_sale") else None)!s}, '
                 f'sales_price={(self.sales_price if hasattr(self, "sales_price") else None)!s}, '
                 f'cost_basis={(self.cost_basis if hasattr(self, "cost_basis") else None)!s}, '
-                f'long_or_short={(self.long_or_short if hasattr(self, "long_or_short") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'long_or_short={(self.long_or_short if hasattr(self, "long_or_short") else None)!s})')

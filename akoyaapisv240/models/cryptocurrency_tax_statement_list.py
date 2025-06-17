@@ -11,7 +11,7 @@ import dateutil.parser
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
 from akoyaapisv240.models.gain_or_loss_from_cryptocurrency_transaction import GainOrLossFromCryptocurrencyTransaction
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -20,7 +20,7 @@ class CryptocurrencyTaxStatementList(object):
 
     """Implementation of the 'Cryptocurrency Tax Statement list' model.
 
-    Cryptocurrency Tax Statement list
+    Array of cryptocurrency gains and losses
 
     Attributes:
         tax_year (int): Year for which taxes are being paid
@@ -34,8 +34,8 @@ class CryptocurrencyTaxStatementList(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -53,12 +53,10 @@ class CryptocurrencyTaxStatementList(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         gains_and_losses (List[GainOrLossFromCryptocurrencyTransaction]): The
             list of cryptocurrency gains and losses
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -108,8 +106,7 @@ class CryptocurrencyTaxStatementList(object):
                  attributes=APIHelper.SKIP,
                  error=APIHelper.SKIP,
                  links=APIHelper.SKIP,
-                 gains_and_losses=APIHelper.SKIP,
-                 additional_properties=None):
+                 gains_and_losses=APIHelper.SKIP):
         """Constructor for the CryptocurrencyTaxStatementList class"""
 
         # Initialize members of the class
@@ -139,11 +136,6 @@ class CryptocurrencyTaxStatementList(object):
             self.links = links 
         if gains_and_losses is not APIHelper.SKIP:
             self.gains_and_losses = gains_and_losses 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -181,7 +173,7 @@ class CryptocurrencyTaxStatementList(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         gains_and_losses = None
@@ -189,9 +181,6 @@ class CryptocurrencyTaxStatementList(object):
             gains_and_losses = [GainOrLossFromCryptocurrencyTransaction.from_dictionary(x) for x in dictionary.get('gainsAndLosses')]
         else:
             gains_and_losses = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -205,8 +194,7 @@ class CryptocurrencyTaxStatementList(object):
                    attributes,
                    error,
                    links,
-                   gains_and_losses,
-                   additional_properties)
+                   gains_and_losses)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -222,8 +210,7 @@ class CryptocurrencyTaxStatementList(object):
                 f'attributes={(self.attributes if hasattr(self, "attributes") else None)!r}, '
                 f'error={(self.error if hasattr(self, "error") else None)!r}, '
                 f'links={(self.links if hasattr(self, "links") else None)!r}, '
-                f'gains_and_losses={(self.gains_and_losses if hasattr(self, "gains_and_losses") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'gains_and_losses={(self.gains_and_losses if hasattr(self, "gains_and_losses") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -239,5 +226,4 @@ class CryptocurrencyTaxStatementList(object):
                 f'attributes={(self.attributes if hasattr(self, "attributes") else None)!s}, '
                 f'error={(self.error if hasattr(self, "error") else None)!s}, '
                 f'links={(self.links if hasattr(self, "links") else None)!s}, '
-                f'gains_and_losses={(self.gains_and_losses if hasattr(self, "gains_and_losses") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'gains_and_losses={(self.gains_and_losses if hasattr(self, "gains_and_losses") else None)!s})')

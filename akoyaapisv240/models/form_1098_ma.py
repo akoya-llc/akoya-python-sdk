@@ -10,12 +10,12 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
 
-class Form1098Ma(object):
+class Form1098MA(object):
 
     """Implementation of the 'Form 1098-MA' model.
 
@@ -33,8 +33,8 @@ class Form1098Ma(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1098Ma(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         total_mortgage_payments (float): Box 1, Total State HFA (Housing
@@ -60,8 +60,6 @@ class Form1098Ma(object):
         mortgage_assistance_payments (float): Box 2, State HFA (Housing
             Finance Agency) mortgage assistance payments
         homeowner_mortgage_payments (float): Box 3, Homeowner mortgage payments
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -120,9 +118,8 @@ class Form1098Ma(object):
                  account_number=APIHelper.SKIP,
                  total_mortgage_payments=APIHelper.SKIP,
                  mortgage_assistance_payments=APIHelper.SKIP,
-                 homeowner_mortgage_payments=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the Form1098Ma class"""
+                 homeowner_mortgage_payments=APIHelper.SKIP):
+        """Constructor for the Form1098MA class"""
 
         # Initialize members of the class
         if tax_year is not APIHelper.SKIP:
@@ -157,11 +154,6 @@ class Form1098Ma(object):
             self.mortgage_assistance_payments = mortgage_assistance_payments 
         if homeowner_mortgage_payments is not APIHelper.SKIP:
             self.homeowner_mortgage_payments = homeowner_mortgage_payments 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -199,16 +191,13 @@ class Form1098Ma(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
         total_mortgage_payments = dictionary.get("totalMortgagePayments") if dictionary.get("totalMortgagePayments") else APIHelper.SKIP
         mortgage_assistance_payments = dictionary.get("mortgageAssistancePayments") if dictionary.get("mortgageAssistancePayments") else APIHelper.SKIP
         homeowner_mortgage_payments = dictionary.get("homeownerMortgagePayments") if dictionary.get("homeownerMortgagePayments") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -225,8 +214,7 @@ class Form1098Ma(object):
                    account_number,
                    total_mortgage_payments,
                    mortgage_assistance_payments,
-                   homeowner_mortgage_payments,
-                   additional_properties)
+                   homeowner_mortgage_payments)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -245,8 +233,7 @@ class Form1098Ma(object):
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!r}, '
                 f'total_mortgage_payments={(self.total_mortgage_payments if hasattr(self, "total_mortgage_payments") else None)!r}, '
                 f'mortgage_assistance_payments={(self.mortgage_assistance_payments if hasattr(self, "mortgage_assistance_payments") else None)!r}, '
-                f'homeowner_mortgage_payments={(self.homeowner_mortgage_payments if hasattr(self, "homeowner_mortgage_payments") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'homeowner_mortgage_payments={(self.homeowner_mortgage_payments if hasattr(self, "homeowner_mortgage_payments") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -265,5 +252,4 @@ class Form1098Ma(object):
                 f'account_number={(self.account_number if hasattr(self, "account_number") else None)!s}, '
                 f'total_mortgage_payments={(self.total_mortgage_payments if hasattr(self, "total_mortgage_payments") else None)!s}, '
                 f'mortgage_assistance_payments={(self.mortgage_assistance_payments if hasattr(self, "mortgage_assistance_payments") else None)!s}, '
-                f'homeowner_mortgage_payments={(self.homeowner_mortgage_payments if hasattr(self, "homeowner_mortgage_payments") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'homeowner_mortgage_payments={(self.homeowner_mortgage_payments if hasattr(self, "homeowner_mortgage_payments") else None)!s})')

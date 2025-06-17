@@ -16,8 +16,6 @@ class InsuranceTransactionInfo(object):
 
     Attributes:
         insurance_transaction (InsuranceTransaction): Insurance transactions
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -31,18 +29,12 @@ class InsuranceTransactionInfo(object):
     ]
 
     def __init__(self,
-                 insurance_transaction=APIHelper.SKIP,
-                 additional_properties=None):
+                 insurance_transaction=APIHelper.SKIP):
         """Constructor for the InsuranceTransactionInfo class"""
 
         # Initialize members of the class
         if insurance_transaction is not APIHelper.SKIP:
             self.insurance_transaction = insurance_transaction 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -64,12 +56,8 @@ class InsuranceTransactionInfo(object):
 
         # Extract variables from the dictionary
         insurance_transaction = InsuranceTransaction.from_dictionary(dictionary.get('insuranceTransaction')) if 'insuranceTransaction' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(insurance_transaction,
-                   additional_properties)
+        return cls(insurance_transaction)
 
     @classmethod
     def validate(cls, dictionary):
@@ -95,10 +83,8 @@ class InsuranceTransactionInfo(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'insurance_transaction={(self.insurance_transaction if hasattr(self, "insurance_transaction") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'insurance_transaction={(self.insurance_transaction if hasattr(self, "insurance_transaction") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'insurance_transaction={(self.insurance_transaction if hasattr(self, "insurance_transaction") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'insurance_transaction={(self.insurance_transaction if hasattr(self, "insurance_transaction") else None)!s})')

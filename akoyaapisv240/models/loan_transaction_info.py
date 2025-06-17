@@ -16,8 +16,6 @@ class LoanTransactionInfo(object):
 
     Attributes:
         loan_transaction (LoanTransaction): Loan Transaction
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -31,18 +29,12 @@ class LoanTransactionInfo(object):
     ]
 
     def __init__(self,
-                 loan_transaction=APIHelper.SKIP,
-                 additional_properties=None):
+                 loan_transaction=APIHelper.SKIP):
         """Constructor for the LoanTransactionInfo class"""
 
         # Initialize members of the class
         if loan_transaction is not APIHelper.SKIP:
             self.loan_transaction = loan_transaction 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -64,12 +56,8 @@ class LoanTransactionInfo(object):
 
         # Extract variables from the dictionary
         loan_transaction = LoanTransaction.from_dictionary(dictionary.get('loanTransaction')) if 'loanTransaction' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(loan_transaction,
-                   additional_properties)
+        return cls(loan_transaction)
 
     @classmethod
     def validate(cls, dictionary):
@@ -95,10 +83,8 @@ class LoanTransactionInfo(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'loan_transaction={(self.loan_transaction if hasattr(self, "loan_transaction") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'loan_transaction={(self.loan_transaction if hasattr(self, "loan_transaction") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'loan_transaction={(self.loan_transaction if hasattr(self, "loan_transaction") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'loan_transaction={(self.loan_transaction if hasattr(self, "loan_transaction") else None)!s})')

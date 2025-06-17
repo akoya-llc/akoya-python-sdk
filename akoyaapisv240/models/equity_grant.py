@@ -27,8 +27,6 @@ class EquityGrant(object):
         expiration_date (datetime): Date grant expires
         vestings (List[Vesting]): An array of equityGrant vestings. Provides
             the past, present, and future vesting schedule and percentages.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -69,8 +67,7 @@ class EquityGrant(object):
                  quantity_granted=APIHelper.SKIP,
                  quantity_outstanding=APIHelper.SKIP,
                  expiration_date=APIHelper.SKIP,
-                 vestings=APIHelper.SKIP,
-                 additional_properties=None):
+                 vestings=APIHelper.SKIP):
         """Constructor for the EquityGrant class"""
 
         # Initialize members of the class
@@ -94,11 +91,6 @@ class EquityGrant(object):
             self.expiration_date = APIHelper.apply_datetime_converter(expiration_date, APIHelper.RFC3339DateTime) if expiration_date else None 
         if vestings is not APIHelper.SKIP:
             self.vestings = vestings 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -133,9 +125,6 @@ class EquityGrant(object):
             vestings = [Vesting.from_dictionary(x) for x in dictionary.get('vestings')]
         else:
             vestings = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(grant_id,
                    grant_date,
@@ -146,8 +135,7 @@ class EquityGrant(object):
                    quantity_granted,
                    quantity_outstanding,
                    expiration_date,
-                   vestings,
-                   additional_properties)
+                   vestings)
 
     @classmethod
     def validate(cls, dictionary):
@@ -182,8 +170,7 @@ class EquityGrant(object):
                 f'quantity_granted={(self.quantity_granted if hasattr(self, "quantity_granted") else None)!r}, '
                 f'quantity_outstanding={(self.quantity_outstanding if hasattr(self, "quantity_outstanding") else None)!r}, '
                 f'expiration_date={(self.expiration_date if hasattr(self, "expiration_date") else None)!r}, '
-                f'vestings={(self.vestings if hasattr(self, "vestings") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'vestings={(self.vestings if hasattr(self, "vestings") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -196,5 +183,4 @@ class EquityGrant(object):
                 f'quantity_granted={(self.quantity_granted if hasattr(self, "quantity_granted") else None)!s}, '
                 f'quantity_outstanding={(self.quantity_outstanding if hasattr(self, "quantity_outstanding") else None)!s}, '
                 f'expiration_date={(self.expiration_date if hasattr(self, "expiration_date") else None)!s}, '
-                f'vestings={(self.vestings if hasattr(self, "vestings") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'vestings={(self.vestings if hasattr(self, "vestings") else None)!s})')

@@ -30,18 +30,16 @@ class TaxStatement(object):
         recipient (TaxParty): Recipient's name, address, phone, and TIN.
             Recipient data need only be transmittted on TaxStatement, 'JSON'
             data type responses if it is the same on all included tax forms
-        tax_data_type (TypeDataType): Whether this `application/json` tax form
-            response contains data in `forms` property (as 'JSON' format) or
-            `pdf` property (as 'BASE64_PDF' format)
+        tax_data_type (TypeDataTypeEnum): Whether this `application/json` tax
+            form response contains data in `forms` property (as 'JSON' format)
+            or `pdf` property (as 'BASE64_PDF' format)
         forms (List[TaxData]): The list of data contents for all included tax
             forms, response should include one of `forms` or `pdf`
         pdf (binary): PDF version of the tax statement containing all form
             pages, binary encoded as Base64, response should include one of
             `pdf` or `forms`
-        attributes (List[FiAttributeEntity]): The model property of type
-            List[FiAttributeEntity].
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        attributes (List[FiAttributeEntity]): Additional tax statement
+            attributes that the provider wishes to include
 
     """
 
@@ -76,8 +74,7 @@ class TaxStatement(object):
                  tax_data_type=APIHelper.SKIP,
                  forms=APIHelper.SKIP,
                  pdf=APIHelper.SKIP,
-                 attributes=APIHelper.SKIP,
-                 additional_properties=None):
+                 attributes=APIHelper.SKIP):
         """Constructor for the TaxStatement class"""
 
         # Initialize members of the class
@@ -97,11 +94,6 @@ class TaxStatement(object):
             self.pdf = pdf 
         if attributes is not APIHelper.SKIP:
             self.attributes = attributes 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -138,9 +130,6 @@ class TaxStatement(object):
             attributes = [FiAttributeEntity.from_dictionary(x) for x in dictionary.get('attributes')]
         else:
             attributes = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    tax_statement_id,
@@ -149,8 +138,7 @@ class TaxStatement(object):
                    tax_data_type,
                    forms,
                    pdf,
-                   attributes,
-                   additional_properties)
+                   attributes)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -161,8 +149,7 @@ class TaxStatement(object):
                 f'tax_data_type={(self.tax_data_type if hasattr(self, "tax_data_type") else None)!r}, '
                 f'forms={(self.forms if hasattr(self, "forms") else None)!r}, '
                 f'pdf={(self.pdf if hasattr(self, "pdf") else None)!r}, '
-                f'attributes={(self.attributes if hasattr(self, "attributes") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'attributes={(self.attributes if hasattr(self, "attributes") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -173,5 +160,4 @@ class TaxStatement(object):
                 f'tax_data_type={(self.tax_data_type if hasattr(self, "tax_data_type") else None)!s}, '
                 f'forms={(self.forms if hasattr(self, "forms") else None)!s}, '
                 f'pdf={(self.pdf if hasattr(self, "pdf") else None)!s}, '
-                f'attributes={(self.attributes if hasattr(self, "attributes") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'attributes={(self.attributes if hasattr(self, "attributes") else None)!s})')

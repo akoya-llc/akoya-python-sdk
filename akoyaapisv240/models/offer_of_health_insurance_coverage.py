@@ -21,9 +21,7 @@ class OfferOfHealthInsuranceCoverage(object):
         section_4980_h_code (str): Section 4980H Safe Harbor and Other Relief
             (enter code)
         postal_code (str): Box 17, ZIP Code
-        month (CoverageMonth): Month of coverage
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
+        month (CoverageMonthEnum): Month
 
     """
 
@@ -49,8 +47,7 @@ class OfferOfHealthInsuranceCoverage(object):
                  required_contribution=APIHelper.SKIP,
                  section_4980_h_code=APIHelper.SKIP,
                  postal_code=APIHelper.SKIP,
-                 month=APIHelper.SKIP,
-                 additional_properties=None):
+                 month=APIHelper.SKIP):
         """Constructor for the OfferOfHealthInsuranceCoverage class"""
 
         # Initialize members of the class
@@ -64,11 +61,6 @@ class OfferOfHealthInsuranceCoverage(object):
             self.postal_code = postal_code 
         if month is not APIHelper.SKIP:
             self.month = month 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -94,16 +86,12 @@ class OfferOfHealthInsuranceCoverage(object):
         section_4980_h_code = dictionary.get("section4980HCode") if dictionary.get("section4980HCode") else APIHelper.SKIP
         postal_code = dictionary.get("postalCode") if dictionary.get("postalCode") else APIHelper.SKIP
         month = dictionary.get("month") if dictionary.get("month") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(coverage_code,
                    required_contribution,
                    section_4980_h_code,
                    postal_code,
-                   month,
-                   additional_properties)
+                   month)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -111,8 +99,7 @@ class OfferOfHealthInsuranceCoverage(object):
                 f'required_contribution={(self.required_contribution if hasattr(self, "required_contribution") else None)!r}, '
                 f'section_4980_h_code={(self.section_4980_h_code if hasattr(self, "section_4980_h_code") else None)!r}, '
                 f'postal_code={(self.postal_code if hasattr(self, "postal_code") else None)!r}, '
-                f'month={(self.month if hasattr(self, "month") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'month={(self.month if hasattr(self, "month") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -120,5 +107,4 @@ class OfferOfHealthInsuranceCoverage(object):
                 f'required_contribution={(self.required_contribution if hasattr(self, "required_contribution") else None)!s}, '
                 f'section_4980_h_code={(self.section_4980_h_code if hasattr(self, "section_4980_h_code") else None)!s}, '
                 f'postal_code={(self.postal_code if hasattr(self, "postal_code") else None)!s}, '
-                f'month={(self.month if hasattr(self, "month") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'month={(self.month if hasattr(self, "month") else None)!s})')

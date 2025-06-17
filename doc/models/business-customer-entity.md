@@ -3,8 +3,6 @@
 
 Customers that are commercial in nature are affiliated with a business entity
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `BusinessCustomerEntity`
@@ -18,7 +16,6 @@ Customers that are commercial in nature are affiliated with a business entity
 | `registered_id` | `str` | Optional | The registered tax identification number (TIN) or other identifier of business customer |
 | `industry_code` | [`IndustryCode`](../../doc/models/industry-code.md) | Optional | Industry code and type |
 | `domicile` | [`Domicile`](../../doc/models/domicile.md) | Optional | The country and region of the business customer's location |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -31,33 +28,17 @@ Customers that are commercial in nature are affiliated with a business entity
       "middle": "middle6",
       "last": "last0",
       "prefix": "prefix8",
-      "suffix": "suffix0",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "suffix": "suffix0"
     }
   ],
   "registeredId": "registeredId6",
   "industryCode": {
     "type": "type8",
-    "code": "code0",
-    "exampleAdditionalProperty": {
-      "key1": "val1",
-      "key2": "val2"
-    }
+    "code": "code0"
   },
   "domicile": {
     "region": "region2",
-    "country": "country0",
-    "exampleAdditionalProperty": {
-      "key1": "val1",
-      "key2": "val2"
-    }
-  },
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
+    "country": "country0"
   }
 }
 ```

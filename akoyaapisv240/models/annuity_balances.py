@@ -35,14 +35,14 @@ class AnnuityBalances(object):
             account selection
         product_name (str): Marketed product name for this account.  Used in
             UIs to assist in account selection
-        status (AccountInfoStatus): The status of an account.
+        status (AccountInfoStatusEnum): The status of an account.
         line_of_business (str): The line of business, such as consumer,
             consumer joint, small business, corporate, etc.
-        balance_type (BalanceType): ASSET (positive transaction amount
+        balance_type (BalanceTypeEnum): ASSET (positive transaction amount
             increases balance), LIABILITY (positive transaction amount
             decreases balance)
         interest_rate (float): Interest Rate of Account
-        interest_rate_type (InterestRateType): The type of interest rate.
+        interest_rate_type (InterestRateTypeEnum): The type of interest rate.
             FIXED or VARIABLE.
         interest_rate_as_of (datetime): Date of account’s interest rate
         last_activity_date (datetime): Date that last transaction occurred on
@@ -53,27 +53,25 @@ class AnnuityBalances(object):
         prior_interest_rate (float): Previous Interest Rate of Account
         transfer_in (bool): Account is eligible for incoming transfers
         transfer_out (bool): Account is eligible for outgoing transfers
-        annuity_product_type (AnnunityProductType): The model property of type
-            AnnunityProductType.
-        annuity_value_basis (AnnunityValueBasis): The model property of type
-            AnnunityValueBasis.
-        payment_frequency (AnnuityAccountPaymentFrequency): The model property
-            of type AnnuityAccountPaymentFrequency.
+        annuity_product_type (AnnunityProductTypeEnum): The model property of
+            type AnnunityProductTypeEnum.
+        annuity_value_basis (AnnunityValueBasisEnum): The model property of
+            type AnnunityValueBasisEnum.
+        payment_frequency (AnnuityAccountPaymentFrequencyEnum): The model
+            property of type AnnuityAccountPaymentFrequencyEnum.
         annual_increase (float): Percent or dollar amount of annual payment
             increase
-        annual_increase_type (AnnualIncreaseType): The model property of type
-            AnnualIncreaseType.
+        annual_increase_type (AnnualIncreaseTypeEnum): The model property of
+            type AnnualIncreaseTypeEnum.
         net_present_value (float): Surrender or cash balance value
         payment_amount (float): Amount of the recurring payment
         payment_end_date (datetime): Date last payment will be made
         payment_start_date (datetime): Date of first payment; could be a
             future date
-        period_certain_guarantee (PeriodCertainGuarantee): The model property
-            of type PeriodCertainGuarantee.
+        period_certain_guarantee (PeriodCertainGuaranteeEnum): The model
+            property of type PeriodCertainGuaranteeEnum.
         total_payment_count (float): Total number of payments that will be
             produced by the annuity
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -177,8 +175,7 @@ class AnnuityBalances(object):
                  payment_end_date=APIHelper.SKIP,
                  payment_start_date=APIHelper.SKIP,
                  period_certain_guarantee=APIHelper.SKIP,
-                 total_payment_count=APIHelper.SKIP,
-                 additional_properties=None):
+                 total_payment_count=APIHelper.SKIP):
         """Constructor for the AnnuityBalances class"""
 
         # Initialize members of the class
@@ -245,11 +242,6 @@ class AnnuityBalances(object):
         if total_payment_count is not APIHelper.SKIP:
             self.total_payment_count = total_payment_count 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -304,9 +296,6 @@ class AnnuityBalances(object):
         payment_start_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("paymentStartDate")).datetime if dictionary.get("paymentStartDate") else APIHelper.SKIP
         period_certain_guarantee = dictionary.get("periodCertainGuarantee") if dictionary.get("periodCertainGuarantee") else APIHelper.SKIP
         total_payment_count = dictionary.get("totalPaymentCount") if dictionary.get("totalPaymentCount") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
                    account_type,
@@ -338,8 +327,7 @@ class AnnuityBalances(object):
                    payment_end_date,
                    payment_start_date,
                    period_certain_guarantee,
-                   total_payment_count,
-                   additional_properties)
+                   total_payment_count)
 
     @classmethod
     def validate(cls, dictionary):
@@ -395,8 +383,7 @@ class AnnuityBalances(object):
                 f'payment_end_date={(self.payment_end_date if hasattr(self, "payment_end_date") else None)!r}, '
                 f'payment_start_date={(self.payment_start_date if hasattr(self, "payment_start_date") else None)!r}, '
                 f'period_certain_guarantee={(self.period_certain_guarantee if hasattr(self, "period_certain_guarantee") else None)!r}, '
-                f'total_payment_count={(self.total_payment_count if hasattr(self, "total_payment_count") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'total_payment_count={(self.total_payment_count if hasattr(self, "total_payment_count") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -430,5 +417,4 @@ class AnnuityBalances(object):
                 f'payment_end_date={(self.payment_end_date if hasattr(self, "payment_end_date") else None)!s}, '
                 f'payment_start_date={(self.payment_start_date if hasattr(self, "payment_start_date") else None)!s}, '
                 f'period_certain_guarantee={(self.period_certain_guarantee if hasattr(self, "period_certain_guarantee") else None)!s}, '
-                f'total_payment_count={(self.total_payment_count if hasattr(self, "total_payment_count") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'total_payment_count={(self.total_payment_count if hasattr(self, "total_payment_count") else None)!s})')

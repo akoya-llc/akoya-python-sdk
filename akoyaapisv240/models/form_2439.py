@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form2439(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form2439(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         fiscal_year_begin (date): Fiscal year begin date
         fiscal_year_end (date): Fiscal year end date
@@ -63,8 +63,6 @@ class Form2439(object):
         collectibles_gain (float): Box 1d, Collectibles (28%) gain
         tax_paid (float): Box 2, Tax paid by the RIC or REIT on the box 1a
             gains
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -132,8 +130,7 @@ class Form2439(object):
                  unrecaptured_1250_gain=APIHelper.SKIP,
                  section_1202_gain=APIHelper.SKIP,
                  collectibles_gain=APIHelper.SKIP,
-                 tax_paid=APIHelper.SKIP,
-                 additional_properties=None):
+                 tax_paid=APIHelper.SKIP):
         """Constructor for the Form2439 class"""
 
         # Initialize members of the class
@@ -176,11 +173,6 @@ class Form2439(object):
         if tax_paid is not APIHelper.SKIP:
             self.tax_paid = tax_paid 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -217,7 +209,7 @@ class Form2439(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         fiscal_year_begin = dateutil.parser.parse(dictionary.get('fiscalYearBegin')).date() if dictionary.get('fiscalYearBegin') else APIHelper.SKIP
@@ -227,9 +219,6 @@ class Form2439(object):
         section_1202_gain = dictionary.get("section1202Gain") if dictionary.get("section1202Gain") else APIHelper.SKIP
         collectibles_gain = dictionary.get("collectiblesGain") if dictionary.get("collectiblesGain") else APIHelper.SKIP
         tax_paid = dictionary.get("taxPaid") if dictionary.get("taxPaid") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -249,8 +238,7 @@ class Form2439(object):
                    unrecaptured_1250_gain,
                    section_1202_gain,
                    collectibles_gain,
-                   tax_paid,
-                   additional_properties)
+                   tax_paid)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -272,8 +260,7 @@ class Form2439(object):
                 f'unrecaptured_1250_gain={(self.unrecaptured_1250_gain if hasattr(self, "unrecaptured_1250_gain") else None)!r}, '
                 f'section_1202_gain={(self.section_1202_gain if hasattr(self, "section_1202_gain") else None)!r}, '
                 f'collectibles_gain={(self.collectibles_gain if hasattr(self, "collectibles_gain") else None)!r}, '
-                f'tax_paid={(self.tax_paid if hasattr(self, "tax_paid") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'tax_paid={(self.tax_paid if hasattr(self, "tax_paid") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -295,5 +282,4 @@ class Form2439(object):
                 f'unrecaptured_1250_gain={(self.unrecaptured_1250_gain if hasattr(self, "unrecaptured_1250_gain") else None)!s}, '
                 f'section_1202_gain={(self.section_1202_gain if hasattr(self, "section_1202_gain") else None)!s}, '
                 f'collectibles_gain={(self.collectibles_gain if hasattr(self, "collectibles_gain") else None)!s}, '
-                f'tax_paid={(self.tax_paid if hasattr(self, "tax_paid") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'tax_paid={(self.tax_paid if hasattr(self, "tax_paid") else None)!s})')

@@ -17,8 +17,6 @@ class AnnuityBalance(object):
     Attributes:
         annuity_account (AnnuityBalances): Data elements included with
             balances specific to annuity accounts
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -32,18 +30,12 @@ class AnnuityBalance(object):
     ]
 
     def __init__(self,
-                 annuity_account=APIHelper.SKIP,
-                 additional_properties=None):
+                 annuity_account=APIHelper.SKIP):
         """Constructor for the AnnuityBalance class"""
 
         # Initialize members of the class
         if annuity_account is not APIHelper.SKIP:
             self.annuity_account = annuity_account 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -65,12 +57,8 @@ class AnnuityBalance(object):
 
         # Extract variables from the dictionary
         annuity_account = AnnuityBalances.from_dictionary(dictionary.get('annuityAccount')) if 'annuityAccount' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
-        return cls(annuity_account,
-                   additional_properties)
+        return cls(annuity_account)
 
     @classmethod
     def validate(cls, dictionary):
@@ -96,10 +84,8 @@ class AnnuityBalance(object):
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
-                f'annuity_account={(self.annuity_account if hasattr(self, "annuity_account") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'annuity_account={(self.annuity_account if hasattr(self, "annuity_account") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
-                f'annuity_account={(self.annuity_account if hasattr(self, "annuity_account") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'annuity_account={(self.annuity_account if hasattr(self, "annuity_account") else None)!s})')

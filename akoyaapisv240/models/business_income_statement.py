@@ -12,7 +12,7 @@ from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.date_and_amount import DateAndAmount
 from akoyaapisv240.models.description_and_amount import DescriptionAndAmount
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -35,8 +35,8 @@ class BusinessIncomeStatement(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -54,7 +54,7 @@ class BusinessIncomeStatement(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         business_name (str): Box C, Business name
         sales (float): Box 1, Gross receipts or sales
@@ -82,7 +82,7 @@ class BusinessIncomeStatement(object):
         meals (float): Box 24b, Deductible meals
         utilities (float): Box 25, Utilities
         wages (float): Box 26, Wages
-        other_expenses (List[DescriptionAndAmount]): Box 32, Other expenses
+        other_expenses (List[DescriptionAndAmount]): Box 27, Other expenses
         beginning_inventory (float): Box 35, Inventory at beginning of year
         purchases (float): Box 36, Purchases
         cost_of_labor (float): Box 37, Cost of labor
@@ -91,8 +91,6 @@ class BusinessIncomeStatement(object):
         ending_inventory (float): Box 41, Inventory at end of year
         capital_expenditures (List[DateAndAmount]): Capital expenditures, for
             use in calculating Depreciation
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -241,8 +239,7 @@ class BusinessIncomeStatement(object):
                  materials=APIHelper.SKIP,
                  other_costs=APIHelper.SKIP,
                  ending_inventory=APIHelper.SKIP,
-                 capital_expenditures=APIHelper.SKIP,
-                 additional_properties=None):
+                 capital_expenditures=APIHelper.SKIP):
         """Constructor for the BusinessIncomeStatement class"""
 
         # Initialize members of the class
@@ -339,11 +336,6 @@ class BusinessIncomeStatement(object):
         if capital_expenditures is not APIHelper.SKIP:
             self.capital_expenditures = capital_expenditures 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -380,7 +372,7 @@ class BusinessIncomeStatement(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         business_name = dictionary.get("businessName") if dictionary.get("businessName") else APIHelper.SKIP
@@ -433,9 +425,6 @@ class BusinessIncomeStatement(object):
             capital_expenditures = [DateAndAmount.from_dictionary(x) for x in dictionary.get('capitalExpenditures')]
         else:
             capital_expenditures = APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -482,8 +471,7 @@ class BusinessIncomeStatement(object):
                    materials,
                    other_costs,
                    ending_inventory,
-                   capital_expenditures,
-                   additional_properties)
+                   capital_expenditures)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -532,8 +520,7 @@ class BusinessIncomeStatement(object):
                 f'materials={(self.materials if hasattr(self, "materials") else None)!r}, '
                 f'other_costs={(self.other_costs if hasattr(self, "other_costs") else None)!r}, '
                 f'ending_inventory={(self.ending_inventory if hasattr(self, "ending_inventory") else None)!r}, '
-                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -582,5 +569,4 @@ class BusinessIncomeStatement(object):
                 f'materials={(self.materials if hasattr(self, "materials") else None)!s}, '
                 f'other_costs={(self.other_costs if hasattr(self, "other_costs") else None)!s}, '
                 f'ending_inventory={(self.ending_inventory if hasattr(self, "ending_inventory") else None)!s}, '
-                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'capital_expenditures={(self.capital_expenditures if hasattr(self, "capital_expenditures") else None)!s})')

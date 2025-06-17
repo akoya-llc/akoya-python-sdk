@@ -23,8 +23,6 @@ class HealthInsuranceMarketplaceCoveredIndividual(object):
         date_of_birth (date): Covered individual date of birth
         policy_start_date (date): Coverage start date
         policy_termination_date (date): Coverage termination date
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -50,8 +48,7 @@ class HealthInsuranceMarketplaceCoveredIndividual(object):
                  tin=APIHelper.SKIP,
                  date_of_birth=APIHelper.SKIP,
                  policy_start_date=APIHelper.SKIP,
-                 policy_termination_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 policy_termination_date=APIHelper.SKIP):
         """Constructor for the HealthInsuranceMarketplaceCoveredIndividual class"""
 
         # Initialize members of the class
@@ -65,11 +62,6 @@ class HealthInsuranceMarketplaceCoveredIndividual(object):
             self.policy_start_date = policy_start_date 
         if policy_termination_date is not APIHelper.SKIP:
             self.policy_termination_date = policy_termination_date 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -95,16 +87,12 @@ class HealthInsuranceMarketplaceCoveredIndividual(object):
         date_of_birth = dateutil.parser.parse(dictionary.get('dateOfBirth')).date() if dictionary.get('dateOfBirth') else APIHelper.SKIP
         policy_start_date = dateutil.parser.parse(dictionary.get('policyStartDate')).date() if dictionary.get('policyStartDate') else APIHelper.SKIP
         policy_termination_date = dateutil.parser.parse(dictionary.get('policyTerminationDate')).date() if dictionary.get('policyTerminationDate') else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(name,
                    tin,
                    date_of_birth,
                    policy_start_date,
-                   policy_termination_date,
-                   additional_properties)
+                   policy_termination_date)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -112,8 +100,7 @@ class HealthInsuranceMarketplaceCoveredIndividual(object):
                 f'tin={(self.tin if hasattr(self, "tin") else None)!r}, '
                 f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!r}, '
                 f'policy_start_date={(self.policy_start_date if hasattr(self, "policy_start_date") else None)!r}, '
-                f'policy_termination_date={(self.policy_termination_date if hasattr(self, "policy_termination_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'policy_termination_date={(self.policy_termination_date if hasattr(self, "policy_termination_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -121,5 +108,4 @@ class HealthInsuranceMarketplaceCoveredIndividual(object):
                 f'tin={(self.tin if hasattr(self, "tin") else None)!s}, '
                 f'date_of_birth={(self.date_of_birth if hasattr(self, "date_of_birth") else None)!s}, '
                 f'policy_start_date={(self.policy_start_date if hasattr(self, "policy_start_date") else None)!s}, '
-                f'policy_termination_date={(self.policy_termination_date if hasattr(self, "policy_termination_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'policy_termination_date={(self.policy_termination_date if hasattr(self, "policy_termination_date") else None)!s})')

@@ -3,8 +3,6 @@
 
 Optionally paginated array of transactions
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `TransactionsEntity`
@@ -15,7 +13,6 @@ Optionally paginated array of transactions
 |  --- | --- | --- | --- |
 | `links` | [`Links`](../../doc/models/links.md) | Optional | - |
 | `transactions` | List[[DepositTransactionInfo](../../doc/models/deposit-transaction-info.md) \| [LoanTransactionInfo](../../doc/models/loan-transaction-info.md) \| [LocTransactionInfo](../../doc/models/loc-transaction-info.md) \| [InvestmentTransactionInfo](../../doc/models/investment-transaction-info.md) \| [InsuranceTransactionInfo](../../doc/models/insurance-transaction-info.md)] \| None | Optional | This is List of a container for any-of cases. |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -23,22 +20,10 @@ Optionally paginated array of transactions
 {
   "links": {
     "next": {
-      "href": "href4",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
+      "href": "href4"
     },
     "prev": {
-      "href": "href8",
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
-      }
-    },
-    "exampleAdditionalProperty": {
-      "key1": "val1",
-      "key2": "val2"
+      "href": "href8"
     }
   },
   "transactions": [
@@ -48,22 +33,10 @@ Optionally paginated array of transactions
         "amount": 1.72,
         "category": "category8",
         "debitCreditMemo": "DEBIT",
-        "description": "description0",
-        "exampleAdditionalProperty": {
-          "key1": "val1",
-          "key2": "val2"
-        }
-      },
-      "exampleAdditionalProperty": {
-        "key1": "val1",
-        "key2": "val2"
+        "description": "description0"
       }
     }
-  ],
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  ]
 }
 ```
 

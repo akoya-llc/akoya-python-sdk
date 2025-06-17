@@ -10,12 +10,12 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
 
-class Form1099Cap(object):
+class Form1099CAP(object):
 
     """Implementation of the 'Form 1099-CAP' model.
 
@@ -33,8 +33,8 @@ class Form1099Cap(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,15 +52,13 @@ class Form1099Cap(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         date_of_sale (date): Box 1, Date of sale or exchange
         aggregate_amount (float): Box 2, Aggregate amount received
         number_of_shares (float): Box 3, Number of shares exchanged
         stock_classes (str): Box 4, Classes of stock exchanged
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -122,9 +120,8 @@ class Form1099Cap(object):
                  date_of_sale=APIHelper.SKIP,
                  aggregate_amount=APIHelper.SKIP,
                  number_of_shares=APIHelper.SKIP,
-                 stock_classes=APIHelper.SKIP,
-                 additional_properties=None):
-        """Constructor for the Form1099Cap class"""
+                 stock_classes=APIHelper.SKIP):
+        """Constructor for the Form1099CAP class"""
 
         # Initialize members of the class
         if tax_year is not APIHelper.SKIP:
@@ -162,11 +159,6 @@ class Form1099Cap(object):
         if stock_classes is not APIHelper.SKIP:
             self.stock_classes = stock_classes 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -203,7 +195,7 @@ class Form1099Cap(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -211,9 +203,6 @@ class Form1099Cap(object):
         aggregate_amount = dictionary.get("aggregateAmount") if dictionary.get("aggregateAmount") else APIHelper.SKIP
         number_of_shares = dictionary.get("numberOfShares") if dictionary.get("numberOfShares") else APIHelper.SKIP
         stock_classes = dictionary.get("stockClasses") if dictionary.get("stockClasses") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -231,8 +220,7 @@ class Form1099Cap(object):
                    date_of_sale,
                    aggregate_amount,
                    number_of_shares,
-                   stock_classes,
-                   additional_properties)
+                   stock_classes)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -252,8 +240,7 @@ class Form1099Cap(object):
                 f'date_of_sale={(self.date_of_sale if hasattr(self, "date_of_sale") else None)!r}, '
                 f'aggregate_amount={(self.aggregate_amount if hasattr(self, "aggregate_amount") else None)!r}, '
                 f'number_of_shares={(self.number_of_shares if hasattr(self, "number_of_shares") else None)!r}, '
-                f'stock_classes={(self.stock_classes if hasattr(self, "stock_classes") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'stock_classes={(self.stock_classes if hasattr(self, "stock_classes") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -273,5 +260,4 @@ class Form1099Cap(object):
                 f'date_of_sale={(self.date_of_sale if hasattr(self, "date_of_sale") else None)!s}, '
                 f'aggregate_amount={(self.aggregate_amount if hasattr(self, "aggregate_amount") else None)!s}, '
                 f'number_of_shares={(self.number_of_shares if hasattr(self, "number_of_shares") else None)!s}, '
-                f'stock_classes={(self.stock_classes if hasattr(self, "stock_classes") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'stock_classes={(self.stock_classes if hasattr(self, "stock_classes") else None)!s})')

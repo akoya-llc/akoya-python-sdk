@@ -9,12 +9,10 @@ Documentation for accessing and setting credentials for acgAuth.
 
 | Name | Type | Description | Getter |
 |  --- | --- | --- | --- |
-| OAuthClientId | `str` | OAuth 2 Client ID | `oauth_client_id` |
-| OAuthClientSecret | `str` | OAuth 2 Client Secret | `oauth_client_secret` |
-| OAuthRedirectUri | `str` | OAuth 2 Redirection endpoint or Callback Uri | `oauth_redirect_uri` |
-| OAuthToken | `OauthToken` | Object for storing information about the OAuth token | `oauth_token` |
-| OAuthOnTokenUpdate | `Callable[[OAuthToken], None]` | Registers a callback for token update event. | `oauth_on_token_update` |
-| OAuthClockSkew | `int` | Clock skew time in seconds applied while checking the OAuth Token expiry. | `oauth_clock_skew` |
+| OAuthClientId | `str` | OAuth 2 Client ID | `o_auth_client_id` |
+| OAuthClientSecret | `str` | OAuth 2 Client Secret | `o_auth_client_secret` |
+| OAuthRedirectUri | `str` | OAuth 2 Redirection endpoint or Callback Uri | `o_auth_redirect_uri` |
+| OAuthToken | `OAuthToken` | Object for storing information about the OAuth token | `o_auth_token` |
 
 
 
@@ -29,13 +27,9 @@ You must initialize the client with *OAuth 2.0 Authorization Code Grant* credent
 ```python
 client = Akoyaapisv240Client(
     authorization_code_auth_credentials=AuthorizationCodeAuthCredentials(
-        oauth_client_id='OAuthClientId',
-        oauth_client_secret='OAuthClientSecret',
-        oauth_redirect_uri='OAuthRedirectUri',
-        oauth_on_token_update=(lambda oauth_token:
-                                # Add the callback handler to perform operations like save to DB or file etc.
-                                # It will be triggered whenever the token gets updated
-                                save_token_to_database(oauth_token))
+        o_auth_client_id='OAuthClientId',
+        o_auth_client_secret='OAuthClientSecret',
+        o_auth_redirect_uri='OAuthRedirectUri'
     )
 )
 ```
@@ -49,7 +43,7 @@ Your application must obtain user authorization before it can execute an endpoin
 To obtain user's consent, you must redirect the user to the authorization page.The `get_authorization_url()` method creates the URL to the authorization page.
 
 ```python
-auth_url = client.acg_auth.get_authorization_url("connector", "state")
+auth_url = client.acg_auth.get_authorization_url()
 ```
 
 ### 3\. Handle the OAuth server response
@@ -75,41 +69,54 @@ After the server receives the code, it can exchange this for an *access token*. 
 ```python
 try:
     token = client.acg_auth.fetch_token('code')
-    authorization_code_auth_credentials = client.config.authorization_code_auth_credentials.clone_with(oauth_token=token)
+    authorization_code_auth_credentials = client.config.authorization_code_auth_credentials.clone_with(o_auth_token=token)
     config = client.config.clone_with(authorization_code_auth_credentials=authorization_code_auth_credentials)
     client = Akoyaapisv240Client(config=config)
-except OauthProviderException as ex:
+except OAuthProviderException as ex:
     # handle exception
     pass
-except ApiException as ex:
+except APIException as ex:
     # handle exception
     pass
 ```
 
-### Adding OAuth Token Update Callback
+### Refreshing the token
 
-Whenever the OAuth Token gets updated, the provided callback implementation will be executed. For instance, you may use it to store your access token whenever it gets updated.
+An access token may expire after sometime. To extend its lifetime, you must refresh the token.
+
+```python
+if client.acg_auth.is_token_expired():
+    try:
+        token = client.acg_auth.refresh_token()
+        authorization_code_auth_credentials = client.config.authorization_code_auth_credentials.clone_with(o_auth_token=token)
+        config = client.config.clone_with(authorization_code_auth_credentials=authorization_code_auth_credentials)
+        client = Akoyaapisv240Client(config=config)
+    except OAuthProviderException as ex:
+       # handle exception
+       pass
+```
+
+If a token expires, an exception will be thrown before the next endpoint call requiring authentication.
+
+### Storing an access token for reuse
+
+It is recommended that you store the access token for reuse.
+
+```python
+# store token
+save_token_to_database(client.config.authorization_code_auth_credentials.o_auth_token)
+```
+
+### Creating a client from a stored token
+
+To authorize a client using a stored access token, just set the access token in Configuration along with the other configuration parameters before creating the client:
 
 ```python
 client = Akoyaapisv240Client(
     authorization_code_auth_credentials=AuthorizationCodeAuthCredentials(
-        oauth_client_id='OAuthClientId',
-        oauth_client_secret='OAuthClientSecret',
-        oauth_redirect_uri='OAuthRedirectUri',
-        oauth_on_token_update=(lambda oauth_token:
-                                # Add the callback handler to perform operations like save to DB or file etc.
-                                # It will be triggered whenever the token gets updated
-                                save_token_to_database(oauth_token))
+        o_auth_token=load_token_from_database()
     )
 )
-```
-
-### Revoking the token
-
-The access token can be revoked anytime using the following code.
-
-```python
-client.acg_auth.revokeToken()
 ```
 
 ### Complete example
@@ -118,14 +125,14 @@ client.acg_auth.revokeToken()
 
 ```python
 from akoyaapisv240.akoyaapisv_240_client import Akoyaapisv240Client
-from akoyaapisv240.http.auth.oauth_2 import AuthorizationCodeAuthCredentials
-from akoyaapisv240.exceptions.oauth_provider_exception import OauthProviderException
+from akoyaapisv240.http.auth.o_auth_2 import AuthorizationCodeAuthCredentials
+from akoyaapisv240.exceptions.o_auth_provider_exception import OAuthProviderException
 
 client = Akoyaapisv240Client(
     authorization_code_auth_credentials=AuthorizationCodeAuthCredentials(
-        oauth_client_id='OAuthClientId',
-        oauth_client_secret='OAuthClientSecret',
-        oauth_redirect_uri='OAuthRedirectUri'
+        o_auth_client_id='OAuthClientId',
+        o_auth_client_secret='OAuthClientSecret',
+        o_auth_redirect_uri='OAuthRedirectUri'
     )
 )
 # function for storing token to database
@@ -142,7 +149,7 @@ def load_token_from_database():
 previous_token = load_token_from_database()
 if previous_token:
     # restore previous access token
-    authorization_code_auth_credentials = client.config.authorization_code_auth_credentials.clone_with(oauth_token=previous_token)
+    authorization_code_auth_credentials = client.config.authorization_code_auth_credentials.clone_with(o_auth_token=previous_token)
     config = client.config.clone_with(authorization_code_auth_credentials=authorization_code_auth_credentials)
     client = Akoyaapisv240Client(config=config)
 else:

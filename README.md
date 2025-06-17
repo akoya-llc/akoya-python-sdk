@@ -103,7 +103,7 @@ pytest
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
@@ -118,28 +118,18 @@ The following parameters are configurable for the API Client:
 | backoff_factor | `float` | A backoff factor to apply between attempts after the second try. <br> **Default: 2** |
 | retry_statuses | `Array of int` | The http statuses on which retry is to be done. <br> **Default: [408, 413, 429, 500, 502, 503, 504, 521, 522, 524]** |
 | retry_methods | `Array of string` | The http methods on which retry is to be done. <br> **Default: ['GET', 'PUT']** |
-| logging_configuration | [`LoggingConfiguration`](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/logging-configuration.md) | The SDK logging configuration for API calls |
-| authorization_code_auth_credentials | [`AuthorizationCodeAuthCredentials`](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/auth/oauth-2-authorization-code-grant.md) | The credential object for OAuth 2 Authorization Code Grant |
+| authorization_code_auth_credentials | [`AuthorizationCodeAuthCredentials`](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/auth/oauth-2-authorization-code-grant.md) | The credential object for OAuth 2 Authorization Code Grant |
 
 The API client can be initialized as follows:
 
 ```python
 client = Akoyaapisv240Client(
     authorization_code_auth_credentials=AuthorizationCodeAuthCredentials(
-        oauth_client_id='OAuthClientId',
-        oauth_client_secret='OAuthClientSecret',
-        oauth_redirect_uri='OAuthRedirectUri'
+        o_auth_client_id='OAuthClientId',
+        o_auth_client_secret='OAuthClientSecret',
+        o_auth_redirect_uri='OAuthRedirectUri'
     ),
-    environment=Environment.SANDBOX,
-    logging_configuration=LoggingConfiguration(
-        log_level=logging.INFO,
-        request_logging_config=RequestLoggingConfiguration(
-            log_body=True
-        ),
-        response_logging_config=ResponseLoggingConfiguration(
-            log_headers=True
-        )
-    )
+    environment=Environment.SANDBOX
 )
 ```
 
@@ -158,43 +148,35 @@ The SDK can be configured to use a different environment for making API calls. A
 
 This API uses the following authentication schemes.
 
-* [`acgAuth (OAuth 2 Authorization Code Grant)`](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/auth/oauth-2-authorization-code-grant.md)
+* [`acgAuth (OAuth 2 Authorization Code Grant)`](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/auth/oauth-2-authorization-code-grant.md)
 
 ## List of APIs
 
-* [Accountinformation](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/accountinformation.md)
-* [Tax Beta](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/tax-beta.md)
-* [Balances](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/balances.md)
-* [Customers](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/customers.md)
-* [Investments](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/investments.md)
-* [Payments](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/payments.md)
-* [Statements](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/statements.md)
-* [Transactions](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/controllers/transactions.md)
+* [Accountinformation](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/accountinformation.md)
+* [Tax Beta](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/tax-beta.md)
+* [Balances](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/balances.md)
+* [Customers](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/customers.md)
+* [Investments](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/investments.md)
+* [Payments](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/payments.md)
+* [Statements](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/statements.md)
+* [Transactions](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/controllers/transactions.md)
 
 ## SDK Infrastructure
 
-### Configuration
-
-* [AbstractLogger](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/abstract-logger.md)
-* [LoggingConfiguration](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/logging-configuration.md)
-* [RequestLoggingConfiguration](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/request-logging-configuration.md)
-* [ResponseLoggingConfiguration](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/response-logging-configuration.md)
-
 ### HTTP
 
-* [HttpResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/http-response.md)
-* [HttpRequest](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/http-request.md)
+* [HttpResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/http-response.md)
+* [HttpRequest](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/http-request.md)
 
 ### Utilities
 
-* [ApiResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/api-response.md)
-* [PagedIterable](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/paged-iterable.md)
-* [LinkPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/link-paged-response.md)
-* [CursorPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/cursor-paged-response.md)
-* [OffsetPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/offset-paged-response.md)
-* [NumberPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/number-paged-response.md)
-* [ApiHelper](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/api-helper.md)
-* [HttpDateTime](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/http-date-time.md)
-* [RFC3339DateTime](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/rfc3339-date-time.md)
-* [UnixDateTime](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.0/doc/unix-date-time.md)
+* [PagedIterable](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/paged-iterable.md)
+* [LinkPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/link-paged-response.md)
+* [CursorPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/cursor-paged-response.md)
+* [OffsetPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/offset-paged-response.md)
+* [NumberPagedResponse](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/number-paged-response.md)
+* [ApiHelper](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/api-helper.md)
+* [HttpDateTime](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/http-date-time.md)
+* [RFC3339DateTime](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/rfc3339-date-time.md)
+* [UnixDateTime](https://www.github.com/akoya-llc/akoya-python-sdk/tree/0.1.1/doc/unix-date-time.md)
 

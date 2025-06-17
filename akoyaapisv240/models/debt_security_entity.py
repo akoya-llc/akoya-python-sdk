@@ -17,19 +17,18 @@ class DebtSecurityEntity(object):
 
     Attributes:
         par_value (float): Par value amount
-        debt_type (DebtType): Debt type
-        debt_class (DebtClass): Classification of debt
+        debt_type (DebtTypeEnum): Debt type
+        debt_class (DebtClassEnum): Classification of debt
         coupon_rate (float): Bond coupon rate for next closest call date
         coupon_date (datetime): Maturity date for next coupon
-        coupon_mature_frequency (CouponMatureFrequency): When coupons mature
+        coupon_mature_frequency (CouponMatureFrequencyEnum): When coupons
+            mature
         call_price (float): Bond call price
         yield_to_call (float): Yield to next call
         call_date (datetime): Next call date
-        call_type (CallType): Type of next call
+        call_type (CallTypeEnum): Type of next call
         yield_to_maturity (float): Yield to maturity
         bond_maturity_date (datetime): Bond Maturity date
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -76,8 +75,7 @@ class DebtSecurityEntity(object):
                  call_date=APIHelper.SKIP,
                  call_type=APIHelper.SKIP,
                  yield_to_maturity=APIHelper.SKIP,
-                 bond_maturity_date=APIHelper.SKIP,
-                 additional_properties=None):
+                 bond_maturity_date=APIHelper.SKIP):
         """Constructor for the DebtSecurityEntity class"""
 
         # Initialize members of the class
@@ -105,11 +103,6 @@ class DebtSecurityEntity(object):
             self.yield_to_maturity = yield_to_maturity 
         if bond_maturity_date is not APIHelper.SKIP:
             self.bond_maturity_date = APIHelper.apply_datetime_converter(bond_maturity_date, APIHelper.RFC3339DateTime) if bond_maturity_date else None 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -142,9 +135,6 @@ class DebtSecurityEntity(object):
         call_type = dictionary.get("callType") if dictionary.get("callType") else APIHelper.SKIP
         yield_to_maturity = dictionary.get("yieldToMaturity") if dictionary.get("yieldToMaturity") else APIHelper.SKIP
         bond_maturity_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("bondMaturityDate")).datetime if dictionary.get("bondMaturityDate") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(par_value,
                    debt_type,
@@ -157,8 +147,7 @@ class DebtSecurityEntity(object):
                    call_date,
                    call_type,
                    yield_to_maturity,
-                   bond_maturity_date,
-                   additional_properties)
+                   bond_maturity_date)
 
     @classmethod
     def validate(cls, dictionary):
@@ -195,8 +184,7 @@ class DebtSecurityEntity(object):
                 f'call_date={(self.call_date if hasattr(self, "call_date") else None)!r}, '
                 f'call_type={(self.call_type if hasattr(self, "call_type") else None)!r}, '
                 f'yield_to_maturity={(self.yield_to_maturity if hasattr(self, "yield_to_maturity") else None)!r}, '
-                f'bond_maturity_date={(self.bond_maturity_date if hasattr(self, "bond_maturity_date") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'bond_maturity_date={(self.bond_maturity_date if hasattr(self, "bond_maturity_date") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -211,5 +199,4 @@ class DebtSecurityEntity(object):
                 f'call_date={(self.call_date if hasattr(self, "call_date") else None)!s}, '
                 f'call_type={(self.call_type if hasattr(self, "call_type") else None)!s}, '
                 f'yield_to_maturity={(self.yield_to_maturity if hasattr(self, "yield_to_maturity") else None)!s}, '
-                f'bond_maturity_date={(self.bond_maturity_date if hasattr(self, "bond_maturity_date") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'bond_maturity_date={(self.bond_maturity_date if hasattr(self, "bond_maturity_date") else None)!s})')

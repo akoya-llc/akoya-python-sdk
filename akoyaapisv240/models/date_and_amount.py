@@ -24,8 +24,6 @@ class DateAndAmount(object):
             MonthAbbreviation
         amount (float): Amount of payment or receipt. When used in 1098-Q,
             monthly total
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -45,8 +43,7 @@ class DateAndAmount(object):
     def __init__(self,
                  date=APIHelper.SKIP,
                  description=APIHelper.SKIP,
-                 amount=APIHelper.SKIP,
-                 additional_properties=None):
+                 amount=APIHelper.SKIP):
         """Constructor for the DateAndAmount class"""
 
         # Initialize members of the class
@@ -56,11 +53,6 @@ class DateAndAmount(object):
             self.description = description 
         if amount is not APIHelper.SKIP:
             self.amount = amount 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -84,25 +76,19 @@ class DateAndAmount(object):
         date = dateutil.parser.parse(dictionary.get('date')).date() if dictionary.get('date') else APIHelper.SKIP
         description = dictionary.get("description") if dictionary.get("description") else APIHelper.SKIP
         amount = dictionary.get("amount") if dictionary.get("amount") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(date,
                    description,
-                   amount,
-                   additional_properties)
+                   amount)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'date={(self.date if hasattr(self, "date") else None)!r}, '
                 f'description={(self.description if hasattr(self, "description") else None)!r}, '
-                f'amount={(self.amount if hasattr(self, "amount") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'amount={(self.amount if hasattr(self, "amount") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'date={(self.date if hasattr(self, "date") else None)!s}, '
                 f'description={(self.description if hasattr(self, "description") else None)!s}, '
-                f'amount={(self.amount if hasattr(self, "amount") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'amount={(self.amount if hasattr(self, "amount") else None)!s})')

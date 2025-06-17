@@ -10,7 +10,7 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
+from akoyaapisv240.models.hateoas_link import HATEOASLink
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
 
@@ -33,8 +33,8 @@ class Form1099ConsolidatedStatement(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -52,7 +52,7 @@ class Form1099ConsolidatedStatement(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         margin_interest_paid (float): Interest paid on margin account
         payment_in_lieu_paid (float): Payment in lieu of dividends paid
@@ -68,8 +68,6 @@ class Form1099ConsolidatedStatement(object):
         specified_pab_interest_paid (float): Accrued Interest Paid offset to
             form 1099-INT box 9, tax exempt interest income from Private
             Activity Bonds
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -140,8 +138,7 @@ class Form1099ConsolidatedStatement(object):
                  corporate_bond_interest_paid=APIHelper.SKIP,
                  us_bond_interest_paid=APIHelper.SKIP,
                  tax_exempt_interest_paid=APIHelper.SKIP,
-                 specified_pab_interest_paid=APIHelper.SKIP,
-                 additional_properties=None):
+                 specified_pab_interest_paid=APIHelper.SKIP):
         """Constructor for the Form1099ConsolidatedStatement class"""
 
         # Initialize members of the class
@@ -186,11 +183,6 @@ class Form1099ConsolidatedStatement(object):
         if specified_pab_interest_paid is not APIHelper.SKIP:
             self.specified_pab_interest_paid = specified_pab_interest_paid 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -227,7 +219,7 @@ class Form1099ConsolidatedStatement(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         margin_interest_paid = dictionary.get("marginInterestPaid") if dictionary.get("marginInterestPaid") else APIHelper.SKIP
@@ -238,9 +230,6 @@ class Form1099ConsolidatedStatement(object):
         us_bond_interest_paid = dictionary.get("usBondInterestPaid") if dictionary.get("usBondInterestPaid") else APIHelper.SKIP
         tax_exempt_interest_paid = dictionary.get("taxExemptInterestPaid") if dictionary.get("taxExemptInterestPaid") else APIHelper.SKIP
         specified_pab_interest_paid = dictionary.get("specifiedPabInterestPaid") if dictionary.get("specifiedPabInterestPaid") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -261,8 +250,7 @@ class Form1099ConsolidatedStatement(object):
                    corporate_bond_interest_paid,
                    us_bond_interest_paid,
                    tax_exempt_interest_paid,
-                   specified_pab_interest_paid,
-                   additional_properties)
+                   specified_pab_interest_paid)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -285,8 +273,7 @@ class Form1099ConsolidatedStatement(object):
                 f'corporate_bond_interest_paid={(self.corporate_bond_interest_paid if hasattr(self, "corporate_bond_interest_paid") else None)!r}, '
                 f'us_bond_interest_paid={(self.us_bond_interest_paid if hasattr(self, "us_bond_interest_paid") else None)!r}, '
                 f'tax_exempt_interest_paid={(self.tax_exempt_interest_paid if hasattr(self, "tax_exempt_interest_paid") else None)!r}, '
-                f'specified_pab_interest_paid={(self.specified_pab_interest_paid if hasattr(self, "specified_pab_interest_paid") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'specified_pab_interest_paid={(self.specified_pab_interest_paid if hasattr(self, "specified_pab_interest_paid") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -309,5 +296,4 @@ class Form1099ConsolidatedStatement(object):
                 f'corporate_bond_interest_paid={(self.corporate_bond_interest_paid if hasattr(self, "corporate_bond_interest_paid") else None)!s}, '
                 f'us_bond_interest_paid={(self.us_bond_interest_paid if hasattr(self, "us_bond_interest_paid") else None)!s}, '
                 f'tax_exempt_interest_paid={(self.tax_exempt_interest_paid if hasattr(self, "tax_exempt_interest_paid") else None)!s}, '
-                f'specified_pab_interest_paid={(self.specified_pab_interest_paid if hasattr(self, "specified_pab_interest_paid") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'specified_pab_interest_paid={(self.specified_pab_interest_paid if hasattr(self, "specified_pab_interest_paid") else None)!s})')

@@ -10,8 +10,8 @@ import dateutil.parser
 
 from akoyaapisv240.api_helper import APIHelper
 from akoyaapisv240.models.error import Error
-from akoyaapisv240.models.hateoas_link import HateoasLink
-from akoyaapisv240.models.security_detail_irs_form_1099_b import SecurityDetailIrsForm1099B
+from akoyaapisv240.models.hateoas_link import HATEOASLink
+from akoyaapisv240.models.security_detail_irs_form_1099_b import SecurityDetailIRSForm1099B
 from akoyaapisv240.models.state_and_local_tax_withholding import StateAndLocalTaxWithholding
 from akoyaapisv240.models.tax_form_attribute import TaxFormAttribute
 from akoyaapisv240.models.tax_party import TaxParty
@@ -35,8 +35,8 @@ class Form1099B(object):
         tax_form_date (date): Date of production or delivery of the tax form
         additional_information (str): Additional explanation text or content
             about this tax form
-        tax_form_type (TypeFormType): Enumerated name of the tax form entity
-            e.g. "TaxW2"
+        tax_form_type (TypeFormTypeEnum): Enumerated name of the tax form
+            entity e.g. "TaxW2"
         issuer (TaxParty): Issuer's name, address, phone, and TIN. Issuer data
             need only be transmitted on enclosing TaxStatement, if it is the
             same on all its included tax forms.
@@ -54,7 +54,7 @@ class Form1099B(object):
             Recipient Email Address.
         error (Error): Present if an error was encountered while retrieving
             this form
-        links (List[HateoasLink]): Links to retrieve this form as data or
+        links (List[HATEOASLink]): Links to retrieve this form as data or
             image, or to invoke other APIs
         account_number (str): Account number
         state_and_local (List[StateAndLocalTaxWithholding]): Boxes 14-16,
@@ -69,11 +69,9 @@ class Form1099B(object):
         aggregate_profit_on_contracts (float): Box 11, Aggregate profit or
             (loss) on contracts
         bartering (float): Box 13, Bartering
-        security_details (List[SecurityDetailIrsForm1099B]): Boxes 1-3, 5-7,
+        security_details (List[SecurityDetailIRSForm1099B]): Boxes 1-3, 5-7,
             12, Security details
         second_tin_notice (bool): Second TIN Notice
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -150,8 +148,7 @@ class Form1099B(object):
                  aggregate_profit_on_contracts=APIHelper.SKIP,
                  bartering=APIHelper.SKIP,
                  security_details=APIHelper.SKIP,
-                 second_tin_notice=APIHelper.SKIP,
-                 additional_properties=None):
+                 second_tin_notice=APIHelper.SKIP):
         """Constructor for the Form1099B class"""
 
         # Initialize members of the class
@@ -200,11 +197,6 @@ class Form1099B(object):
         if second_tin_notice is not APIHelper.SKIP:
             self.second_tin_notice = second_tin_notice 
 
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
-
     @classmethod
     def from_dictionary(cls,
                         dictionary):
@@ -241,7 +233,7 @@ class Form1099B(object):
         error = Error.from_dictionary(dictionary.get('error')) if 'error' in dictionary.keys() else APIHelper.SKIP
         links = None
         if dictionary.get('links') is not None:
-            links = [HateoasLink.from_dictionary(x) for x in dictionary.get('links')]
+            links = [HATEOASLink.from_dictionary(x) for x in dictionary.get('links')]
         else:
             links = APIHelper.SKIP
         account_number = dictionary.get("accountNumber") if dictionary.get("accountNumber") else APIHelper.SKIP
@@ -258,13 +250,10 @@ class Form1099B(object):
         bartering = dictionary.get("bartering") if dictionary.get("bartering") else APIHelper.SKIP
         security_details = None
         if dictionary.get('securityDetails') is not None:
-            security_details = [SecurityDetailIrsForm1099B.from_dictionary(x) for x in dictionary.get('securityDetails')]
+            security_details = [SecurityDetailIRSForm1099B.from_dictionary(x) for x in dictionary.get('securityDetails')]
         else:
             security_details = APIHelper.SKIP
         second_tin_notice = dictionary.get("secondTinNotice") if "secondTinNotice" in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(tax_year,
                    corrected,
@@ -287,8 +276,7 @@ class Form1099B(object):
                    aggregate_profit_on_contracts,
                    bartering,
                    security_details,
-                   second_tin_notice,
-                   additional_properties)
+                   second_tin_notice)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
@@ -313,8 +301,7 @@ class Form1099B(object):
                 f'aggregate_profit_on_contracts={(self.aggregate_profit_on_contracts if hasattr(self, "aggregate_profit_on_contracts") else None)!r}, '
                 f'bartering={(self.bartering if hasattr(self, "bartering") else None)!r}, '
                 f'security_details={(self.security_details if hasattr(self, "security_details") else None)!r}, '
-                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -339,5 +326,4 @@ class Form1099B(object):
                 f'aggregate_profit_on_contracts={(self.aggregate_profit_on_contracts if hasattr(self, "aggregate_profit_on_contracts") else None)!s}, '
                 f'bartering={(self.bartering if hasattr(self, "bartering") else None)!s}, '
                 f'security_details={(self.security_details if hasattr(self, "security_details") else None)!s}, '
-                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'second_tin_notice={(self.second_tin_notice if hasattr(self, "second_tin_notice") else None)!s})')

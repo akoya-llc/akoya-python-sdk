@@ -17,8 +17,6 @@ class TaxlotsResponse(object):
     Attributes:
         account_id (str): Corresponds to AccountId in Account
         holding (Holding): The model property of type Holding.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -35,8 +33,7 @@ class TaxlotsResponse(object):
 
     def __init__(self,
                  account_id=APIHelper.SKIP,
-                 holding=APIHelper.SKIP,
-                 additional_properties=None):
+                 holding=APIHelper.SKIP):
         """Constructor for the TaxlotsResponse class"""
 
         # Initialize members of the class
@@ -44,11 +41,6 @@ class TaxlotsResponse(object):
             self.account_id = account_id 
         if holding is not APIHelper.SKIP:
             self.holding = holding 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -71,22 +63,16 @@ class TaxlotsResponse(object):
         # Extract variables from the dictionary
         account_id = dictionary.get("accountId") if dictionary.get("accountId") else APIHelper.SKIP
         holding = Holding.from_dictionary(dictionary.get('holding')) if 'holding' in dictionary.keys() else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(account_id,
-                   holding,
-                   additional_properties)
+                   holding)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'account_id={(self.account_id if hasattr(self, "account_id") else None)!r}, '
-                f'holding={(self.holding if hasattr(self, "holding") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'holding={(self.holding if hasattr(self, "holding") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'account_id={(self.account_id if hasattr(self, "account_id") else None)!s}, '
-                f'holding={(self.holding if hasattr(self, "holding") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'holding={(self.holding if hasattr(self, "holding") else None)!s})')

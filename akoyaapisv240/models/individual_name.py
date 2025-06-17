@@ -20,8 +20,6 @@ class IndividualName(object):
         middle (str): Middle initial
         last (str): Last name
         suffix (str): Generational or academic suffix
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -44,8 +42,7 @@ class IndividualName(object):
                  first=APIHelper.SKIP,
                  middle=APIHelper.SKIP,
                  last=APIHelper.SKIP,
-                 suffix=APIHelper.SKIP,
-                 additional_properties=None):
+                 suffix=APIHelper.SKIP):
         """Constructor for the IndividualName class"""
 
         # Initialize members of the class
@@ -57,11 +54,6 @@ class IndividualName(object):
             self.last = last 
         if suffix is not APIHelper.SKIP:
             self.suffix = suffix 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -86,28 +78,22 @@ class IndividualName(object):
         middle = dictionary.get("middle") if dictionary.get("middle") else APIHelper.SKIP
         last = dictionary.get("last") if dictionary.get("last") else APIHelper.SKIP
         suffix = dictionary.get("suffix") if dictionary.get("suffix") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(first,
                    middle,
                    last,
-                   suffix,
-                   additional_properties)
+                   suffix)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'first={(self.first if hasattr(self, "first") else None)!r}, '
                 f'middle={(self.middle if hasattr(self, "middle") else None)!r}, '
                 f'last={(self.last if hasattr(self, "last") else None)!r}, '
-                f'suffix={(self.suffix if hasattr(self, "suffix") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'suffix={(self.suffix if hasattr(self, "suffix") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'first={(self.first if hasattr(self, "first") else None)!s}, '
                 f'middle={(self.middle if hasattr(self, "middle") else None)!s}, '
                 f'last={(self.last if hasattr(self, "last") else None)!s}, '
-                f'suffix={(self.suffix if hasattr(self, "suffix") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'suffix={(self.suffix if hasattr(self, "suffix") else None)!s})')

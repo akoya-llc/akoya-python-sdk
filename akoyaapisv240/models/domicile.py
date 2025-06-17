@@ -18,8 +18,6 @@ class Domicile(object):
     Attributes:
         region (str): The model property of type str.
         country (str): The model property of type str.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -36,8 +34,7 @@ class Domicile(object):
 
     def __init__(self,
                  region=APIHelper.SKIP,
-                 country=APIHelper.SKIP,
-                 additional_properties=None):
+                 country=APIHelper.SKIP):
         """Constructor for the Domicile class"""
 
         # Initialize members of the class
@@ -45,11 +42,6 @@ class Domicile(object):
             self.region = region 
         if country is not APIHelper.SKIP:
             self.country = country 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -72,22 +64,16 @@ class Domicile(object):
         # Extract variables from the dictionary
         region = dictionary.get("region") if dictionary.get("region") else APIHelper.SKIP
         country = dictionary.get("country") if dictionary.get("country") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(region,
-                   country,
-                   additional_properties)
+                   country)
 
     def __repr__(self):
         return (f'{self.__class__.__name__}('
                 f'region={(self.region if hasattr(self, "region") else None)!r}, '
-                f'country={(self.country if hasattr(self, "country") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'country={(self.country if hasattr(self, "country") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
                 f'region={(self.region if hasattr(self, "region") else None)!s}, '
-                f'country={(self.country if hasattr(self, "country") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'country={(self.country if hasattr(self, "country") else None)!s})')

@@ -21,8 +21,6 @@ class Vesting(object):
         vesting_date (datetime): The model property of type datetime.
         vest_expire_date (datetime): The model property of type datetime.
         vested_status (str): The model property of type str.
-        additional_properties (Dict[str, Any]): The additional properties for
-            the model.
 
     """
 
@@ -48,8 +46,7 @@ class Vesting(object):
                  vested_value=APIHelper.SKIP,
                  vesting_date=APIHelper.SKIP,
                  vest_expire_date=APIHelper.SKIP,
-                 vested_status=APIHelper.SKIP,
-                 additional_properties=None):
+                 vested_status=APIHelper.SKIP):
         """Constructor for the Vesting class"""
 
         # Initialize members of the class
@@ -63,11 +60,6 @@ class Vesting(object):
             self.vest_expire_date = APIHelper.apply_datetime_converter(vest_expire_date, APIHelper.RFC3339DateTime) if vest_expire_date else None 
         if vested_status is not APIHelper.SKIP:
             self.vested_status = vested_status 
-
-        # Add additional model properties to the instance
-        if additional_properties is None:
-            additional_properties = {}
-        self.additional_properties = additional_properties
 
     @classmethod
     def from_dictionary(cls,
@@ -93,16 +85,12 @@ class Vesting(object):
         vesting_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("vestingDate")).datetime if dictionary.get("vestingDate") else APIHelper.SKIP
         vest_expire_date = APIHelper.RFC3339DateTime.from_value(dictionary.get("vestExpireDate")).datetime if dictionary.get("vestExpireDate") else APIHelper.SKIP
         vested_status = dictionary.get("vestedStatus") if dictionary.get("vestedStatus") else APIHelper.SKIP
-        additional_properties = APIHelper.get_additional_properties(
-            dictionary={k: v for k, v in dictionary.items() if k not in cls._names.values()},
-            unboxing_function=lambda value: value)
         # Return an object of this model
         return cls(vested_quantity,
                    vested_value,
                    vesting_date,
                    vest_expire_date,
-                   vested_status,
-                   additional_properties)
+                   vested_status)
 
     @classmethod
     def validate(cls, dictionary):
@@ -132,8 +120,7 @@ class Vesting(object):
                 f'vested_value={(self.vested_value if hasattr(self, "vested_value") else None)!r}, '
                 f'vesting_date={(self.vesting_date if hasattr(self, "vesting_date") else None)!r}, '
                 f'vest_expire_date={(self.vest_expire_date if hasattr(self, "vest_expire_date") else None)!r}, '
-                f'vested_status={(self.vested_status if hasattr(self, "vested_status") else None)!r}, '
-                f'additional_properties={self.additional_properties!r})')
+                f'vested_status={(self.vested_status if hasattr(self, "vested_status") else None)!r})')
 
     def __str__(self):
         return (f'{self.__class__.__name__}('
@@ -141,5 +128,4 @@ class Vesting(object):
                 f'vested_value={(self.vested_value if hasattr(self, "vested_value") else None)!s}, '
                 f'vesting_date={(self.vesting_date if hasattr(self, "vesting_date") else None)!s}, '
                 f'vest_expire_date={(self.vest_expire_date if hasattr(self, "vest_expire_date") else None)!s}, '
-                f'vested_status={(self.vested_status if hasattr(self, "vested_status") else None)!s}, '
-                f'additional_properties={self.additional_properties!s})')
+                f'vested_status={(self.vested_status if hasattr(self, "vested_status") else None)!s})')

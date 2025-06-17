@@ -3,8 +3,6 @@
 
 Information about the option security specific to the type of security
 
-*This model accepts additional fields of type Any.*
-
 ## Structure
 
 `OptionSecurityEntity`
@@ -13,12 +11,11 @@ Information about the option security specific to the type of security
 
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `secured` | [`Secured`](../../doc/models/secured.md) | Optional | How the option is secured |
-| `option_type` | [`OptionType`](../../doc/models/option-type.md) | Optional | - |
+| `secured` | [`SecuredEnum`](../../doc/models/secured-enum.md) | Optional | How the option is secured |
+| `option_type` | [`OptionTypeEnum`](../../doc/models/option-type-enum.md) | Optional | - |
 | `strike_price` | `float` | Optional | Strike price / Unit price |
 | `expire_date` | `datetime` | Optional | Expiration date of option |
 | `shares_per_contract` | `float` | Optional | Shares per contract |
-| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -28,11 +25,7 @@ Information about the option security specific to the type of security
   "optionType": "CALL",
   "strikePrice": 0.6,
   "expireDate": "2016-03-13T12:52:32.123Z",
-  "sharesPerContract": 217.4,
-  "exampleAdditionalProperty": {
-    "key1": "val1",
-    "key2": "val2"
-  }
+  "sharesPerContract": 217.4
 }
 ```
 
