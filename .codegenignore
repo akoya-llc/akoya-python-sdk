@@ -1,0 +1,8 @@
+.gitignore
+.github/**
+tests/endpoint_tests/**
+tests/auth_tests/**
+tests/__init__.py
+tests/http_response_catcher.py
+test-requirements.txt
+TESTING.md
