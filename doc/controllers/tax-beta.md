@@ -1,12 +1,12 @@
 # Tax Beta
 
 ```python
-tax_beta_controller = client.tax_beta
+tax_beta_api = client.tax_beta
 ```
 
 ## Class Name
 
-`TaxBetaController`
+`TaxBetaApi`
 
 ## Methods
 
@@ -34,42 +34,42 @@ def tax_forms_search(self,
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `version` | [`VersionEnum`](../../doc/models/version-enum.md) | Template, Required | Endpoint version. |
+| `version` | [`Version`](../../doc/models/version.md) | Template, Required | Endpoint version. |
 | `provider_id` | `str` | Template, Required | Provider to query for Tax data. |
 | `x_akoya_interaction_id` | `str` | Header, Optional | Unique identifier to associate with this request. No specific format required. |
-| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Identifies whether the customer is present (USER) or it is a BATCH operation. Case-insensitive. |
-| `accept` | [`List[MediaTypeEnum]`](../../doc/models/media-type-enum.md) | Header, Optional | Use the [Accept HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) to indicate one or more content types to request for the search result response. Use `application/json` to request data or `application/pdf to request images in comma-separated array format. Use in combination with TaxDataTypeQuery parameter to request`application/json` responses in ''JSON'' or ''BASE64_PDF'' format for tax form data' |
+| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Identifies whether the customer is present (USER) or it is a BATCH operation. Case-insensitive. |
+| `accept` | [`List[MediaType]`](../../doc/models/media-type.md) | Header, Optional | Use the [Accept HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) to indicate one or more content types to request for the search result response. Use `application/json` to request data or `application/pdf to request images in comma-separated array format. Use in combination with TaxDataTypeQuery parameter to request`application/json` responses in ''JSON'' or ''BASE64_PDF'' format for tax form data' |
 | `tax_year` | `str` | Query, Optional | Tax year in which to search for tax forms. |
-| `tax_forms` | [`List[TypeFormTypeEnum]`](../../doc/models/type-form-type-enum.md) | Query, Optional | One or more tax form type enums for the specific documents being requested. Comma separated |
+| `tax_forms` | [`List[TypeFormType]`](../../doc/models/type-form-type.md) | Query, Optional | One or more tax form type enums for the specific documents being requested. Comma separated |
 | `account_id` | `str` | Query, Optional | Unique account identifier (not the account number) |
 
 ## Response Type
 
-[`TaxStatementList`](../../doc/models/tax-statement-list.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`TaxStatementList`](../../doc/models/tax-statement-list.md).
 
 ## Example Usage
 
 ```python
-version = VersionEnum.V2
+version = Version.V2
 
 provider_id = 'providerId6'
 
 x_akoya_interaction_id = 'unique-request-id-001'
 
-x_akoya_interaction_type = InteractionTypeEnum.USER
+x_akoya_interaction_type = InteractionType.USER
 
 accept = [
-    MediaTypeEnum.ENUM_APPLICATIONJSON
+    MediaType.ENUM_APPLICATIONJSON
 ]
 
 tax_year = '2024'
 
 tax_forms = [
-    TypeFormTypeEnum.TAX1099DIV,
-    TypeFormTypeEnum.TAX1099INT
+    TypeFormType.TAX1099DIV,
+    TypeFormType.TAX1099INT
 ]
 
-result = tax_beta_controller.tax_forms_search(
+result = tax_beta_api.tax_forms_search(
     version,
     provider_id,
     x_akoya_interaction_id=x_akoya_interaction_id,
@@ -78,6 +78,11 @@ result = tax_beta_controller.tax_forms_search(
     tax_year=tax_year,
     tax_forms=tax_forms
 )
+
+if result.is_success():
+    print(result.body)
+elif result.is_error():
+    print(result.errors)
 ```
 
 ## Example Response *(as JSON)*
@@ -139,7 +144,7 @@ result = tax_beta_controller.tax_forms_search(
 |  --- | --- | --- |
 | 400 | Bad Request | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | Not Found | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `APIException` |
+| 405 | Method Not Allowed | `ApiException` |
 | 406 | Content Type not Supported | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 409 | Conflict | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
@@ -169,22 +174,22 @@ def get_tax_form(self,
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `version` | [`VersionEnum`](../../doc/models/version-enum.md) | Template, Required | Endpoint version. |
+| `version` | [`Version`](../../doc/models/version.md) | Template, Required | Endpoint version. |
 | `provider_id` | `str` | Template, Required | Provider to query for Tax data. |
 | `tax_form_id` | `str` | Template, Required | Unique identifier of the tax form to request. |
 | `x_akoya_interaction_id` | `str` | Header, Optional | Unique identifier to associate with this request. No specific format required. |
-| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Identifies whether the customer is present (USER) or it is a BATCH operation. Case-insensitive. |
-| `tax_data_type` | [`TypeDataTypeEnum`](../../doc/models/type-data-type-enum.md) | Query, Optional | Use taxDataType to request `application/json` tax form data response in 'JSON' or 'BASE64_PDF' format. Omit if either format is acceptable. Used in combination with AcceptHeader requesting `application/json` response |
-| `accept` | [`List[MediaTypeEnum]`](../../doc/models/media-type-enum.md) | Header, Optional | Use the [Accept HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) to indicate one or more content types to request for the search result response. Use `application/json` to request data or `application/pdf`to request images. In comma-separated array format.         Use in combination with TaxDataTypeQuery parameter to request `application/json` responses in ''JSON'' or ''BASE64_PDF'' format for tax form data' |
+| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Identifies whether the customer is present (USER) or it is a BATCH operation. Case-insensitive. |
+| `tax_data_type` | [`TypeDataType`](../../doc/models/type-data-type.md) | Query, Optional | Use taxDataType to request `application/json` tax form data response in 'JSON' or 'BASE64_PDF' format. Omit if either format is acceptable. Used in combination with AcceptHeader requesting `application/json` response |
+| `accept` | [`List[MediaType]`](../../doc/models/media-type.md) | Header, Optional | Use the [Accept HTTP request header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept) to indicate one or more content types to request for the search result response. Use `application/json` to request data or `application/pdf`to request images. In comma-separated array format.         Use in combination with TaxDataTypeQuery parameter to request `application/json` responses in ''JSON'' or ''BASE64_PDF'' format for tax form data' |
 
 ## Response Type
 
-[`TaxStatement`](../../doc/models/tax-statement.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`TaxStatement`](../../doc/models/tax-statement.md).
 
 ## Example Usage
 
 ```python
-version = VersionEnum.V2
+version = Version.V2
 
 provider_id = 'providerId6'
 
@@ -192,15 +197,15 @@ tax_form_id = 'taxFormId2'
 
 x_akoya_interaction_id = 'unique-request-id-001'
 
-x_akoya_interaction_type = InteractionTypeEnum.USER
+x_akoya_interaction_type = InteractionType.USER
 
-tax_data_type = TypeDataTypeEnum.JSON
+tax_data_type = TypeDataType.JSON
 
 accept = [
-    MediaTypeEnum.ENUM_APPLICATIONJSON
+    MediaType.ENUM_APPLICATIONJSON
 ]
 
-result = tax_beta_controller.get_tax_form(
+result = tax_beta_api.get_tax_form(
     version,
     provider_id,
     tax_form_id,
@@ -209,6 +214,11 @@ result = tax_beta_controller.get_tax_form(
     tax_data_type=tax_data_type,
     accept=accept
 )
+
+if result.is_success():
+    print(result.body)
+elif result.is_error():
+    print(result.errors)
 ```
 
 ## Example Response *(as JSON)*
@@ -340,7 +350,7 @@ result = tax_beta_controller.get_tax_form(
 |  --- | --- | --- |
 | 400 | Account ID is required for searching or validating authorization | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | Tax Form for provided Tax Form ID was not found | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `APIException` |
+| 405 | Method Not Allowed | `ApiException` |
 | 406 | Content Type not Supported | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 409 | Tax forms are not currently available for this account or this year | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |

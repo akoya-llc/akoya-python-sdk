@@ -1,7 +1,9 @@
 
 # Form 1042 S
 
-Foreign Person's U.S. Source Income Subject to Withholding, from WithholdingAgent (boxes 12a-i) to Recipient (boxes 13a-j, 13l as form1042Recipient)
+Foreign Person's U.S. Source Income Subject to Withholding
+
+*This model accepts additional fields of type Any.*
 
 ## Structure
 
@@ -17,12 +19,12 @@ Foreign Person's U.S. Source Income Subject to Withholding, from WithholdingAgen
 | `tax_form_id` | `str` | Optional | Long-term persistent id for this tax form. Depending upon the data provider, this may be the same id as the enclosing tax statement id, or this may be a different id, or this id may be omitted. |
 | `tax_form_date` | `date` | Optional | Date of production or delivery of the tax form |
 | `additional_information` | `str` | Optional | Additional explanation text or content about this tax form |
-| `tax_form_type` | [`TypeFormTypeEnum`](../../doc/models/type-form-type-enum.md) | Optional | Enumerated name of the tax form entity e.g. "TaxW2" |
+| `tax_form_type` | [`TypeFormType`](../../doc/models/type-form-type.md) | Optional | Enumerated name of the tax form entity e.g. "TaxW2" |
 | `issuer` | [`TaxParty`](../../doc/models/tax-party.md) | Optional | Issuer's name, address, phone, and TIN. Issuer data need only be transmitted on enclosing TaxStatement, if it is the same on all its included tax forms. |
 | `recipient` | [`TaxParty`](../../doc/models/tax-party.md) | Optional | Recipient's name, address, phone, and TIN. Recipient data need only be transmitted on enclosing TaxStatement, if it is the same on all its included tax forms. |
 | `attributes` | [`List[TaxFormAttribute]`](../../doc/models/tax-form-attribute.md) | Optional | Additional attributes for this tax form when defined fields are not available. Some specific additional attributes already defined by providers: Fields required by [IRS FIRE](https://www.irs.gov/e-file-providers/filing-information-returns-electronically-fire): Name Control, Type of Identification Number (EIN, SSN, ITIN, ATIN). (ATIN is tax ID number for pending adoptions.) Tax form provider field for taxpayer notification: Recipient Email Address. |
 | `error` | [`Error`](../../doc/models/error.md) | Optional | Present if an error was encountered while retrieving this form |
-| `links` | [`List[HATEOASLink]`](../../doc/models/hateoas-link.md) | Optional | Links to retrieve this form as data or image, or to invoke other APIs |
+| `links` | [`List[HateoasLink]`](../../doc/models/hateoas-link.md) | Optional | Links to retrieve this form as data or image, or to invoke other APIs |
 | `form_id` | `str` | Optional | Unique form identifier |
 | `amended` | `bool` | Optional | Amended |
 | `amendment_number` | `int` | Optional | Amendment number |
@@ -50,6 +52,7 @@ Foreign Person's U.S. Source Income Subject to Withholding, from WithholdingAgen
 | `intermediary` | [`Form1042SAgent`](../../doc/models/form-1042-s-agent.md) | Optional | Boxes 15a-i, Intermediary or flow thru entity |
 | `payer` | [`Form1042SAgent`](../../doc/models/form-1042-s-agent.md) | Optional | Boxes 16a-e, Payer |
 | `state_and_local` | [`StateAndLocalTaxWithholding`](../../doc/models/state-and-local-tax-withholding.md) | Optional | Box 17, State and Local tax withholding |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -85,7 +88,11 @@ Foreign Person's U.S. Source Income Subject to Withholding, from WithholdingAgen
   ],
   "corrected": false,
   "accountId": "accountId6",
-  "taxFormId": "taxFormId6"
+  "taxFormId": "taxFormId6",
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

@@ -1,11 +1,13 @@
 
-# Security Detail IRS Form 1099 B
+# Security Detail Irs Form 1099 B
 
 Tax information for a single security transaction
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
-`SecurityDetailIRSForm1099B`
+`SecurityDetailIrsForm1099B`
 
 ## Fields
 
@@ -24,20 +26,21 @@ Tax information for a single security transaction
 | `cost_basis` | `float` | Optional | Box 1e, Cost or other basis |
 | `corrected_cost_basis` | `float` | Optional | Corrected cost basis. May be supplied in lieu of adjustmentCode code B. If both adjustmentCodes and correctedCostBasis are supplied, costBasis plus adjustmentCode B should equal correctedCostBasis |
 | `wash_sale_loss_disallowed` | `float` | Optional | Box 1g, Wash sale loss disallowed |
-| `long_or_short` | [`SaleTermTypeEnum`](../../doc/models/sale-term-type-enum.md) | Optional | LONG or SHORT (1099-B box 2) |
+| `long_or_short` | [`SaleTermType`](../../doc/models/sale-term-type.md) | Optional | LONG or SHORT (1099-B box 2) |
 | `ordinary` | `bool` | Optional | Box 2, Ordinary |
 | `collectible` | `bool` | Optional | Box 3, Collectibles |
 | `qof` | `bool` | Optional | Box 3, Qualified Opportunity Fund (QOF) |
 | `federal_tax_withheld` | `float` | Optional | Box 4, Federal income tax withheld |
 | `noncovered_security` | `bool` | Optional | Box 5, Noncovered security |
-| `gross_or_net` | [`SaleProceedsTypeEnum`](../../doc/models/sale-proceeds-type-enum.md) | Optional | Box 6, Reported to IRS: GROSS or NET |
+| `gross_or_net` | [`SaleProceedsType`](../../doc/models/sale-proceeds-type.md) | Optional | Box 6, Reported to IRS: GROSS or NET |
 | `loss_not_allowed` | `bool` | Optional | Box 7, Loss not allowed based on proceeds |
 | `basis_reported` | `bool` | Optional | Box 12, Basis reported to IRS |
 | `state_and_local` | [`List[StateAndLocalTaxWithholding]`](../../doc/models/state-and-local-tax-withholding.md) | Optional | Boxes 14-16, State and Local tax withholding |
 | `cusip` | `str` | Optional | CUSIP number |
 | `foreign_account_tax_compliance` | `bool` | Optional | Foreign account tax compliance |
-| `expired_option` | [`ExpiredOptionType1Enum`](../../doc/models/expired-option-type-1-enum.md) | Optional | To indicate gain or loss resulted from option expiration. If salesPrice (1d, proceeds) is zero, use PURCHASED. If costBasis (1e) is zero, use GRANTED |
-| `investment_sale_type` | [`InvestmentSaleTypeEnum`](../../doc/models/investment-sale-type-enum.md) | Optional | Type of investment sale |
+| `expired_option` | [`ExpiredOptionType`](../../doc/models/expired-option-type.md) | Optional | To indicate gain or loss resulted from option expiration. If salesPrice (1d, proceeds) is zero, use PURCHASED. If costBasis (1e) is zero, use GRANTED |
+| `investment_sale_type` | [`InvestmentSaleType`](../../doc/models/investment-sale-type.md) | Optional | Type of investment sale |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -48,7 +51,11 @@ Tax information for a single security transaction
   "checkboxOnForm8949": "checkboxOnForm89498",
   "securityName": "securityName6",
   "numberOfShares": 126.44,
-  "saleDescription": "saleDescription4"
+  "saleDescription": "saleDescription4",
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

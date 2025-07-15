@@ -3,6 +3,8 @@
 
 Tax statement list containing one or more tax statements
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `TaxStatementList`
@@ -12,6 +14,7 @@ Tax statement list containing one or more tax statements
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `statements` | [`List[TaxStatement]`](../../doc/models/tax-statement.md) | Optional | The list of tax statements |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -28,18 +31,34 @@ Tax statement list containing one or more tax statements
           "first": "first0",
           "middle": "middle0",
           "last": "last4",
-          "suffix": "suffix4"
+          "suffix": "suffix4",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
         },
         "businessName": {
           "name1": "name18",
-          "name2": "name22"
+          "name2": "name22",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
         },
         "address": {
           "line1": "line18",
           "line2": "line20",
           "line3": "line38",
           "city": "city6",
-          "state": "state2"
+          "region": "region2",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
+        },
+        "exampleAdditionalProperty": {
+          "key1": "val1",
+          "key2": "val2"
         }
       },
       "recipient": {
@@ -49,23 +68,47 @@ Tax statement list containing one or more tax statements
           "first": "first0",
           "middle": "middle0",
           "last": "last4",
-          "suffix": "suffix4"
+          "suffix": "suffix4",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
         },
         "businessName": {
           "name1": "name18",
-          "name2": "name22"
+          "name2": "name22",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
         },
         "address": {
           "line1": "line18",
           "line2": "line20",
           "line3": "line38",
           "city": "city6",
-          "state": "state2"
+          "region": "region2",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
+        },
+        "exampleAdditionalProperty": {
+          "key1": "val1",
+          "key2": "val2"
         }
       },
-      "taxDataType": "BASE64_PDF"
+      "taxDataType": "BASE64_PDF",
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     }
-  ]
+  ],
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

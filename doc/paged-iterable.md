@@ -9,7 +9,7 @@ This class defines the '__iter__` method that provides it with the iterator func
 
 | Name | Description | Type |
 |  --- | --- | --- |
-| `__iter__` | Provides iterator functionality to sequentially access all items across all pages. It will loop through all items by fetching next pages lazily. | `Iterator of items` |
+| `__iter__` | Provides iterator functionality to sequentially access all items across all pages. It will loop through all items by fetching next pages lazily. | `Iterable[T]` |
 | `pages` | Retrieve an iterable collection of all pages in the paginated data, which can be used to loop through all pages lazily. | <code>Iterable[[`LinkPagedResponse`](../doc/link-paged-response.md) \| [`NumberPagedResponse`](../doc/number-paged-response.md) \| [`CursorPagedResponse`](../doc/cursor-paged-response.md) \| [`OffsetPagedResponse`](../doc/offset-paged-response.md)]</code> |
 
 ## Usage Example
@@ -32,7 +32,7 @@ for page in pagedIterable.pages():
     else:
         print("Unknown Pagination Metadata Type")
 
-    print(page.data)
+    print(page.body)
     # Iterating over items in the current page.
     for item in page.items():
         print(item)

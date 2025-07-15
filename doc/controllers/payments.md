@@ -3,12 +3,12 @@
 Payments
 
 ```python
-payments_controller = client.payments
+payments_api = client.payments
 ```
 
 ## Class Name
 
-`PaymentsController`
+`PaymentsApi`
 
 
 # Payment-Networks
@@ -37,11 +37,11 @@ def payment_networks(self,
 | `version` | `str` | Template, Required | Akoya major version number. Do not use minor version numbers. For instance, use v2 and not v2.2 |
 | `provider_id` | `str` | Template, Required | Id of provider |
 | `account_id` | `str` | Template, Required | Account Identifier |
-| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
 
 ## Response Type
 
-[`ArrayOfAccountPaymentNetworks`](../../doc/models/array-of-account-payment-networks.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`ArrayOfAccountPaymentNetworks`](../../doc/models/array-of-account-payment-networks.md).
 
 ## Example Usage
 
@@ -52,11 +52,16 @@ provider_id = 'mikomo'
 
 account_id = ':accountId'
 
-result = payments_controller.payment_networks(
+result = payments_api.payment_networks(
     version,
     provider_id,
     account_id
 )
+
+if result.is_success():
+    print(result.body)
+elif result.is_error():
+    print(result.errors)
 ```
 
 ## Example Response *(as JSON)*
@@ -83,6 +88,6 @@ result = payments_controller.payment_networks(
 | 401 | Customer not authorized. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 403 | Incorrect providerId or no subscription to provider. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | 701 - Account not found. The `accountId` may be wrong. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `APIException` |
+| 405 | Method Not Allowed | `ApiException` |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 

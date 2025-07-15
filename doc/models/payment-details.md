@@ -3,6 +3,8 @@
 
 Payment details for some transactions
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `PaymentDetails`
@@ -17,6 +19,7 @@ Payment details for some transactions
 | `interest_amount` | `float` | Optional | The amount of payment applied to interest |
 | `pmi_amount` | `float` | Optional | The amount of payment applied to PMI |
 | `principal_amount` | `float` | Optional | The amount of payment applied to principal |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -26,7 +29,11 @@ Payment details for some transactions
   "feesAmount": 83.52,
   "insuranceAmount": 63.4,
   "interestAmount": 64.72,
-  "pmiAmount": 217.98
+  "pmiAmount": 217.98,
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

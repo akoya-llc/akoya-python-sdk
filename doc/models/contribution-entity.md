@@ -3,6 +3,8 @@
 
 Describes how new contributions are distributed among the available securities.
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `ContributionEntity`
@@ -12,7 +14,7 @@ Describes how new contributions are distributed among the available securities.
 | Name | Type | Tags | Description |
 |  --- | --- | --- | --- |
 | `security_id` | `str` | Optional | Unique identifier of security |
-| `security_id_type` | [`SecurityIdTypeEnum`](../../doc/models/security-id-type-enum.md) | Optional | Security identifier type |
+| `security_id_type` | [`SecurityIdType`](../../doc/models/security-id-type.md) | Optional | Security identifier type |
 | `employer_match_percentage` | `float` | Optional | Employer contribution match percentage |
 | `employer_match_amount` | `float` | Optional | Employer contribution match amount |
 | `employee_pre_tax_amount` | `float` | Optional | Employee pre‐tax contribution amount |
@@ -25,6 +27,7 @@ Describes how new contributions are distributed among the available securities.
 | `employer_year_to_date` | `float` | Optional | Employer total year to date contribution |
 | `rollover_contribution_percentage` | `float` | Optional | Rollover contribution percentage |
 | `rollover_contribution_amount` | `float` | Optional | Rollover contribution Amount |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -34,7 +37,11 @@ Describes how new contributions are distributed among the available securities.
   "securityIdType": "VALOR",
   "employerMatchPercentage": 195.92,
   "employerMatchAmount": 120.16,
-  "employeePreTaxAmount": 147.12
+  "employeePreTaxAmount": 147.12,
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 
