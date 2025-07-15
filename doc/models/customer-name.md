@@ -1,6 +1,8 @@
 
 # Customer Name
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `CustomerName`
@@ -15,6 +17,7 @@
 | `prefix` | `str` | Optional | Name prefix, e.g. Mr. |
 | `suffix` | `str` | Optional | Generational or academic suffix |
 | `company` | `str` | Optional | Company name |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -24,7 +27,11 @@
   "middle": "middle2",
   "last": "last4",
   "prefix": "prefix4",
-  "suffix": "suffix4"
+  "suffix": "suffix4",
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

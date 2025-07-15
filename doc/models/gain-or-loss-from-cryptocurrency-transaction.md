@@ -3,6 +3,8 @@
 
 Tax information for a single cryptocurrency transaction. If reported on Form 1099-B, use Tax1099B and SecurityDetail instead of this entity.
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `GainOrLossFromCryptocurrencyTransaction`
@@ -20,7 +22,8 @@ Tax information for a single cryptocurrency transaction. If reported on Form 109
 | `date_of_sale` | `date` | Optional | Date sold or disposed (1099-B box 1c) |
 | `sales_price` | `float` | Optional | Proceeds (not price per share, 1099-B box 1d) |
 | `cost_basis` | `float` | Optional | Cost or other basis (1099-B box 1e) |
-| `long_or_short` | [`SaleTermTypeEnum`](../../doc/models/sale-term-type-enum.md) | Optional | LONG or SHORT (1099-B box 2) |
+| `long_or_short` | [`SaleTermType`](../../doc/models/sale-term-type.md) | Optional | LONG or SHORT (1099-B box 2) |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -31,7 +34,11 @@ Tax information for a single cryptocurrency transaction. If reported on Form 109
   "cryptocurrencyName": "cryptocurrencyName6",
   "symbol": "symbol0",
   "quantity": 100.14,
-  "saleDescription": "saleDescription2"
+  "saleDescription": "saleDescription2",
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

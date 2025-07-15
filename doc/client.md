@@ -14,36 +14,50 @@ The following parameters are configurable for the API Client:
 | backoff_factor | `float` | A backoff factor to apply between attempts after the second try. <br> **Default: 2** |
 | retry_statuses | `Array of int` | The http statuses on which retry is to be done. <br> **Default: [408, 413, 429, 500, 502, 503, 504, 521, 522, 524]** |
 | retry_methods | `Array of string` | The http methods on which retry is to be done. <br> **Default: ['GET', 'PUT']** |
+| logging_configuration | [`LoggingConfiguration`](../doc/logging-configuration.md) | The SDK logging configuration for API calls |
 | authorization_code_auth_credentials | [`AuthorizationCodeAuthCredentials`](auth/oauth-2-authorization-code-grant.md) | The credential object for OAuth 2 Authorization Code Grant |
 
 The API client can be initialized as follows:
 
 ```python
-client = Akoyaapisv240Client(
+client = AkoyaClient(
     authorization_code_auth_credentials=AuthorizationCodeAuthCredentials(
-        o_auth_client_id='OAuthClientId',
-        o_auth_client_secret='OAuthClientSecret',
-        o_auth_redirect_uri='OAuthRedirectUri'
+        oauth_client_id='OAuthClientId',
+        oauth_client_secret='OAuthClientSecret',
+        oauth_redirect_uri='OAuthRedirectUri',
+        oauth_scopes=[
+            OauthScope.OPENID,
+            OauthScope.PROFILE
+        ]
     ),
-    environment=Environment.SANDBOX
+    environment=Environment.SANDBOX,
+    logging_configuration=LoggingConfiguration(
+        log_level=logging.INFO,
+        request_logging_config=RequestLoggingConfiguration(
+            log_body=True
+        ),
+        response_logging_config=ResponseLoggingConfiguration(
+            log_headers=True
+        )
+    )
 )
 ```
 
 ## Akoya APIs v2.4.0 Client
 
-The gateway for the SDK. This class acts as a factory for the Controllers and also holds the configuration of the SDK.
+The gateway for the SDK. This class acts as a factory for the Apis and also holds the configuration of the SDK.
 
-## Controllers
+## Apis
 
 | Name | Description |
 |  --- | --- |
-| account_information | Gets AccountInformationController |
-| balances | Gets BalancesController |
-| customers | Gets CustomersController |
-| investments | Gets InvestmentsController |
-| payments | Gets PaymentsController |
-| statements | Gets StatementsController |
-| tax_beta | Gets TaxBetaController |
-| transactions | Gets TransactionsController |
-| o_auth_authorization | Gets OAuthAuthorizationController |
+| account_information | Gets AccountInformationApi |
+| balances | Gets BalancesApi |
+| customers | Gets CustomersApi |
+| investments | Gets InvestmentsApi |
+| payments | Gets PaymentsApi |
+| statements | Gets StatementsApi |
+| tax_beta | Gets TaxBetaApi |
+| transactions | Gets TransactionsApi |
+| oauth_authorization | Gets OauthAuthorizationApi |
 

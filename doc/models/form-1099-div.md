@@ -1,11 +1,13 @@
 
-# Form 1099 DIV
+# Form 1099 Div
 
 Dividends and Distributions
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
-`Form1099DIV`
+`Form1099Div`
 
 ## Fields
 
@@ -17,12 +19,12 @@ Dividends and Distributions
 | `tax_form_id` | `str` | Optional | Long-term persistent id for this tax form. Depending upon the data provider, this may be the same id as the enclosing tax statement id, or this may be a different id, or this id may be omitted. |
 | `tax_form_date` | `date` | Optional | Date of production or delivery of the tax form |
 | `additional_information` | `str` | Optional | Additional explanation text or content about this tax form |
-| `tax_form_type` | [`TypeFormTypeEnum`](../../doc/models/type-form-type-enum.md) | Optional | Enumerated name of the tax form entity e.g. "TaxW2" |
+| `tax_form_type` | [`TypeFormType`](../../doc/models/type-form-type.md) | Optional | Enumerated name of the tax form entity e.g. "TaxW2" |
 | `issuer` | [`TaxParty`](../../doc/models/tax-party.md) | Optional | Issuer's name, address, phone, and TIN. Issuer data need only be transmitted on enclosing TaxStatement, if it is the same on all its included tax forms. |
 | `recipient` | [`TaxParty`](../../doc/models/tax-party.md) | Optional | Recipient's name, address, phone, and TIN. Recipient data need only be transmitted on enclosing TaxStatement, if it is the same on all its included tax forms. |
 | `attributes` | [`List[TaxFormAttribute]`](../../doc/models/tax-form-attribute.md) | Optional | Additional attributes for this tax form when defined fields are not available. Some specific additional attributes already defined by providers: Fields required by [IRS FIRE](https://www.irs.gov/e-file-providers/filing-information-returns-electronically-fire): Name Control, Type of Identification Number (EIN, SSN, ITIN, ATIN). (ATIN is tax ID number for pending adoptions.) Tax form provider field for taxpayer notification: Recipient Email Address. |
 | `error` | [`Error`](../../doc/models/error.md) | Optional | Present if an error was encountered while retrieving this form |
-| `links` | [`List[HATEOASLink]`](../../doc/models/hateoas-link.md) | Optional | Links to retrieve this form as data or image, or to invoke other APIs |
+| `links` | [`List[HateoasLink]`](../../doc/models/hateoas-link.md) | Optional | Links to retrieve this form as data or image, or to invoke other APIs |
 | `account_number` | `str` | Optional | Account number |
 | `ordinary_dividends` | `float` | Optional | Box 1a, Total ordinary dividends |
 | `qualified_dividends` | `float` | Optional | Box 1b, Qualified dividends |
@@ -47,6 +49,7 @@ Dividends and Distributions
 | `foreign_incomes` | [`List[DescriptionAndAmount]`](../../doc/models/description-and-amount.md) | Optional | Foreign income information |
 | `state_tax_exempt_incomes` | [`List[DescriptionAndAmount]`](../../doc/models/description-and-amount.md) | Optional | Tax exempt income state information |
 | `second_tin_notice` | `bool` | Optional | Second TIN Notice |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -82,7 +85,11 @@ Dividends and Distributions
   ],
   "corrected": false,
   "accountId": "accountId2",
-  "taxFormId": "taxFormId0"
+  "taxFormId": "taxFormId0",
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

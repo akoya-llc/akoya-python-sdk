@@ -1,6 +1,8 @@
 
 # Equity Grant
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `EquityGrant`
@@ -19,6 +21,7 @@
 | `quantity_outstanding` | `float` | Optional | - |
 | `expiration_date` | `datetime` | Optional | Date grant expires |
 | `vestings` | [`List[Vesting]`](../../doc/models/vesting.md) | Optional | An array of equityGrant vestings. Provides the past, present, and future vesting schedule and percentages. |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -28,7 +31,11 @@
   "grantDate": "2016-03-13T12:52:32.123Z",
   "grantType": "grantType0",
   "seqNum": 140.54,
-  "grantPrice": 234.06
+  "grantPrice": 234.06,
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

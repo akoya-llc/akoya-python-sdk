@@ -3,12 +3,12 @@
 Customers
 
 ```python
-customers_controller = client.customers
+customers_api = client.customers
 ```
 
 ## Class Name
 
-`CustomersController`
+`CustomersApi`
 
 ## Methods
 
@@ -40,11 +40,11 @@ def customer_info(self,
 |  --- | --- | --- | --- |
 | `version` | `str` | Template, Required | Akoya major version number. Do not use minor version numbers. For instance, use v2 and not v2.2 |
 | `provider_id` | `str` | Template, Required | Id of provider |
-| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
 
 ## Response Type
 
-[`Customer`](../../doc/models/customer.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`CurrentCustomer`](../../doc/models/current-customer.md).
 
 ## Example Usage
 
@@ -53,17 +53,50 @@ version = 'v2'
 
 provider_id = 'mikomo'
 
-result = customers_controller.customer_info(
+result = customers_api.customer_info(
     version,
     provider_id
 )
+
+if result.is_success():
+    print(result.body)
+elif result.is_error():
+    print(result.errors)
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "customer": {
+    "customerId": "1521963501",
+    "name": {
+      "first": "Philip",
+      "middle": "H",
+      "last": "Lovett"
+    },
+    "addresses": [
+      {
+        "line1": "7572 CHOWNING RD",
+        "city": "SPRINGFIELD",
+        "state": "TN",
+        "postalCode": "37172-6488"
+      }
+    ],
+    "telephones": null,
+    "email": [
+      "PhilipHLovett@mikomotest.com"
+    ],
+    "accounts": null
+  }
+}
 ```
 
 ## Errors
 
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
-| 405 | Method Not Allowed | `APIException` |
+| 405 | Method Not Allowed | `ApiException` |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 
 
@@ -96,11 +129,11 @@ def get_account_holder(self,
 | `account_id` | `str` | Template, Required | Account Identifier |
 | `version` | `str` | Template, Required | Akoya major version number. Do not use minor version numbers. For instance, use v2 and not v2.2 |
 | `provider_id` | `str` | Template, Required | Id of provider |
-| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
 
 ## Response Type
 
-[`AccountContactEntity`](../../doc/models/account-contact-entity.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`AccountContactEntity`](../../doc/models/account-contact-entity.md).
 
 ## Example Usage
 
@@ -111,11 +144,16 @@ version = 'v2'
 
 provider_id = 'mikomo'
 
-result = customers_controller.get_account_holder(
+result = customers_api.get_account_holder(
     account_id,
     version,
     provider_id
 )
+
+if result.is_success():
+    print(result.body)
+elif result.is_error():
+    print(result.errors)
 ```
 
 ## Example Response *(as JSON)*
@@ -169,20 +207,14 @@ result = customers_controller.get_account_holder(
         }
       ],
       "telephones": [
-        {
-          "number": "string",
-          "type": "HOME",
-          "country": "string"
-        }
+        "string"
       ],
       "email": [
         "string"
       ],
       "accounts": [
-        {
-          "accountId": "string",
-          "relationship": "AUTHORIZED_USER"
-        }
+        "account-id-1",
+        "account-id-2"
       ],
       "relationship": "AUTHORIZED_USER"
     }
@@ -218,6 +250,6 @@ result = customers_controller.get_account_holder(
 | HTTP Status Code | Error Description | Exception Class |
 |  --- | --- | --- |
 | 404 | Not Found | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `APIException` |
+| 405 | Method Not Allowed | `ApiException` |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 

@@ -3,6 +3,8 @@
 
 Contact information for the account
 
+*This model accepts additional fields of type Any.*
+
 ## Structure
 
 `AccountContactEntity`
@@ -15,6 +17,7 @@ Contact information for the account
 | `emails` | `List[str]` | Optional | Email addresses associated with the account |
 | `addresses` | [`List[DeliveryAddress]`](../../doc/models/delivery-address.md) | Optional | - |
 | `telephones` | [`List[TelephoneNumber]`](../../doc/models/telephone-number.md) | Optional | Telephone numbers associated with the account. |
+| `additional_properties` | `Dict[str, Any]` | Optional | - |
 
 ## Example (as JSON)
 
@@ -27,10 +30,44 @@ Contact information for the account
         "first": "first6",
         "middle": "middle6",
         "last": "last0",
-        "prefix": "prefix8",
-        "suffix": "suffix0"
+        "exampleAdditionalProperty": {
+          "key1": "val1",
+          "key2": "val2"
+        }
       },
-      "relationship": "PRIMARY"
+      "addresses": [
+        {
+          "line1": "line16",
+          "city": "city4",
+          "state": "state0",
+          "postalCode": "postalCode4",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
+        },
+        {
+          "line1": "line16",
+          "city": "city4",
+          "state": "state0",
+          "postalCode": "postalCode4",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
+        }
+      ],
+      "telephones": [
+        "telephones0"
+      ],
+      "email": [
+        "email8",
+        "email7"
+      ],
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     },
     {
       "customerId": "customerId0",
@@ -38,10 +75,44 @@ Contact information for the account
         "first": "first6",
         "middle": "middle6",
         "last": "last0",
-        "prefix": "prefix8",
-        "suffix": "suffix0"
+        "exampleAdditionalProperty": {
+          "key1": "val1",
+          "key2": "val2"
+        }
       },
-      "relationship": "PRIMARY"
+      "addresses": [
+        {
+          "line1": "line16",
+          "city": "city4",
+          "state": "state0",
+          "postalCode": "postalCode4",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
+        },
+        {
+          "line1": "line16",
+          "city": "city4",
+          "state": "state0",
+          "postalCode": "postalCode4",
+          "exampleAdditionalProperty": {
+            "key1": "val1",
+            "key2": "val2"
+          }
+        }
+      ],
+      "telephones": [
+        "telephones0"
+      ],
+      "email": [
+        "email8",
+        "email7"
+      ],
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     }
   ],
   "emails": [
@@ -53,26 +124,46 @@ Contact information for the account
       "line2": "line28",
       "line3": "line36",
       "city": "city4",
-      "state": "state0"
+      "region": "region0",
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     }
   ],
   "telephones": [
     {
       "type": "FAX",
       "country": "GB",
-      "number": "number4"
+      "number": "number4",
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     },
     {
       "type": "FAX",
       "country": "GB",
-      "number": "number4"
+      "number": "number4",
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     },
     {
       "type": "FAX",
       "country": "GB",
-      "number": "number4"
+      "number": "number4",
+      "exampleAdditionalProperty": {
+        "key1": "val1",
+        "key2": "val2"
+      }
     }
-  ]
+  ],
+  "exampleAdditionalProperty": {
+    "key1": "val1",
+    "key2": "val2"
+  }
 }
 ```
 

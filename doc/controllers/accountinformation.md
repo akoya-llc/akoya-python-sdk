@@ -1,12 +1,12 @@
 # Accountinformation
 
 ```python
-accountinformation_controller = client.accountinformation
+accountinformation_api = client.accountinformation
 ```
 
 ## Class Name
 
-`AccountinformationController`
+`AccountinformationApi`
 
 
 # Get-Accounts-Info
@@ -34,7 +34,8 @@ def get_accounts_info(self,
                      version,
                      provider_id,
                      x_akoya_interaction_type=None,
-                     mode=None)
+                     mode=None,
+                     account_ids=None)
 ```
 
 ## Parameters
@@ -43,12 +44,13 @@ def get_accounts_info(self,
 |  --- | --- | --- | --- |
 | `version` | `str` | Template, Required | Akoya major version number. Do not use minor version numbers. For instance, use v2 and not v2.2 |
 | `provider_id` | `str` | Template, Required | Id of provider |
-| `x_akoya_interaction_type` | [`InteractionTypeEnum`](../../doc/models/interaction-type-enum.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
-| `mode` | [`ModeEnum`](../../doc/models/mode-enum.md) | Query, Optional | BETA. Default is raw. Use standard for FDX-aligned, standardized data values. |
+| `x_akoya_interaction_type` | [`InteractionType`](../../doc/models/interaction-type.md) | Header, Optional | Optional but recommended header to include with each data request.<br>Allowed values are `user` or `batch`.<br>`user` indicates a request is prompted by an end-user action.<br>`batch` indicates the request is part of a batch process. |
+| `mode` | [`Mode`](../../doc/models/mode.md) | Query, Optional | BETA. Default is raw. Use standard for FDX-aligned, standardized data values. |
+| `account_ids` | `str` | Query, Optional | Comma separated list of account ids |
 
 ## Response Type
 
-[`AkoyaAccountInfoProduct`](../../doc/models/akoya-account-info-product.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `body` property of this instance returns the response data which is of type [`AkoyaAccountInfoProduct`](../../doc/models/akoya-account-info-product.md).
 
 ## Example Usage
 
@@ -57,13 +59,18 @@ version = 'v2'
 
 provider_id = 'mikomo'
 
-mode = ModeEnum.RAW
+mode = Mode.RAW
 
-result = account_information_controller.get_accounts_info(
+result = account_information_api.get_accounts_info(
     version,
     provider_id,
     mode=mode
 )
+
+if result.is_success():
+    print(result.body)
+elif result.is_error():
+    print(result.errors)
 ```
 
 ## Example Response *(as JSON)*
@@ -228,7 +235,7 @@ result = account_information_controller.get_accounts_info(
 | 400 | Invalid Input | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 401 | Customer not authorized. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 404 | 701 - Tax Lots not found. The `holdingId` may be wrong. | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
-| 405 | Method Not Allowed | `APIException` |
+| 405 | Method Not Allowed | `ApiException` |
 | 406 | Content Type not Supported | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 408 | Request timed out (round trip call took >10 seconds). | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
 | 429 | 1207 - Too many requests | [`ErrorErrorException`](../../doc/models/error-error-exception.md) |
